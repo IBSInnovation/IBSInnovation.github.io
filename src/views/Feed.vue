@@ -118,4 +118,22 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+button {
+  border: none;
+  padding: 5px 5px;
+  font-size: 18px;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+p,
+h1,
+h2,
+button,
+input {
+  margin: 1em 0 0 1em;
+}
+</style>
