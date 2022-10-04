@@ -1,21 +1,57 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "home",
-      component: HomeView,
+      name: "Register",
+      component: () => import("../views/Register.vue"),
     },
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
+      path: "/feed",
+      name: "feed",
+      component: () => import("../views/Feed.vue"),
+    },
+    {
+      path: "/patients",
+      name: "patients",
+      component: () => import("../views/Patients.vue"),
+    },
+    {
+      path: "/patients/:name",
+      name: "patient",
+      component: () => import("../views/Patient.vue"),
+    },
+    {
+      path: "/newPatient",
+      name: "patientCreator",
+      component: () => import("../components/forms/PatientCreatorForm.vue"),
+    },
+    {
+      path: "/:name/:category/exerciseResults",
+      name: "exerciseResults",
+      component: () => import("../views/ExerciseResults.vue"),
+    },
+    {
+      path: "/:name/:category/selectSensor",
+      name: "selectSensor",
+      component: () => import("../views/SelectSensor.vue"),
+    },
+    {
+      path: "/:name/:category/measureInfo",
+      name: "measureInfo",
+      component: () => import("../views/MeasureInfo.vue"),
+    },
+    {
+      path: "/:name/:category/measure",
+      name: "measure",
+      component: () => import("../views/Measure.vue"),
+    },
+    {
+      path: "/:name/addCategorie",
+      name: "addCategorie",
+      component: () => import("../views/AddCategorie.vue"),
     },
   ],
 });
