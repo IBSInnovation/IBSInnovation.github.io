@@ -4,10 +4,7 @@
   <main>
     <div class="info_container">
       <p class="boxTitle">{{ titleText }}</p>
-      <img
-        id="infoImage"
-        class="infoImage"
-      />
+      <img id="infoImage" class="infoImage" />
       <hr class="line" />
       <p>{{ infoBox1 }}</p>
       <p>{{ infoBox2 }}</p>
@@ -46,7 +43,6 @@
 import { useRoute } from "vue-router";
 import NavBarTop from "../components/navbars/NavBarTop.vue";
 
-
 var textIndex = 1;
 
 export default {
@@ -79,86 +75,146 @@ export default {
   methods: {
     dynamicPanels() {
       const category = this.route.params.category;
-      if (category === "elleboog-flexie-extensie-rechts" || category === "elleboog-flexie-extensie-links") {
-        this.categoryMountText1 = "Plaats de sensor op de rechter onder arm (zoals afgebeeld)";
+      if (
+        category === "elleboog-flexie-extensie-rechts" ||
+        category === "elleboog-flexie-extensie-links"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op de rechter onder arm (zoals afgebeeld)";
         this.categoryMountText2 = "Zorg ervoor dat de sensor stevig vast zit";
-        this.categoryMountImage = "/src/assets/measureImages/Elbow-flexion-extension1.png";
+        this.categoryMountImage =
+          "/src/assets/measureImages/Elbow-flexion-extension1.png";
 
-        this.categoryActionText1 = "Zorg dat de patiënt zijn/haar arm zo recht mogelijk strekt";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar arm zo ver mogelijk terug te laten bewegen (zoals afgebeeld)";
-        this.categoryActionImage = "/src/assets/measureImages/Elbow-flexion-extension2.png";
-      }
-      else if (category === "heup-extensie-links" || category === "heup-extensie-rechts") {
-        this.categoryMountText1 = "Plaats de sensor op het been net onder de heup (zoals afgebeeld)";
+        this.categoryActionText1 =
+          "Zorg dat de patiënt zijn/haar arm zo recht mogelijk strekt";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar arm zo ver mogelijk terug te laten bewegen (zoals afgebeeld)";
+        this.categoryActionImage =
+          "/src/assets/measureImages/Elbow-flexion-extension2.png";
+      } else if (
+        category === "heup-extensie-links" ||
+        category === "heup-extensie-rechts"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op het been net onder de heup (zoals afgebeeld)";
         this.categoryMountText2 = "Zorg dat de sensor stevig vast zit";
-        this.categoryMountImage = "/src/assets/measureImages/Hip-extension1.png";
+        this.categoryMountImage =
+          "/src/assets/measureImages/Hip-extension1.png";
 
-        this.categoryActionText1 = "Zorg dat de patiënt rechtop staat met volledig gestrekte benen";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar been zo ver mogelijk naar achter bewegen (zoals afgebeeld)";
-        this.categoryActionImage = "/src/assets/measureImages/Hip-extension2.png";
-      }
-      else if (category === "heup-flexie-links" || category === "heup-flexie-rechts") {
-        this.categoryMountText1 = "Plaats de sensor op het been net onder de heup (zoals afgebeeld)";
+        this.categoryActionText1 =
+          "Zorg dat de patiënt rechtop staat met volledig gestrekte benen";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar been zo ver mogelijk naar achter bewegen (zoals afgebeeld)";
+        this.categoryActionImage =
+          "/src/assets/measureImages/Hip-extension2.png";
+      } else if (
+        category === "heup-flexie-links" ||
+        category === "heup-flexie-rechts"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op het been net onder de heup (zoals afgebeeld)";
         this.categoryMountText2 = "Zorg dat de sensor stevig vast zit";
         this.categoryMountImage = "/src/assets/measureImages/Hip-flexion1.png";
 
-        this.categoryActionText1 = "Zorg dat de patiënt rechtop staat met volledig gestrekte benen";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar knie zo hoog mogelijk in de lucht heffen";
+        this.categoryActionText1 =
+          "Zorg dat de patiënt rechtop staat met volledig gestrekte benen";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar knie zo hoog mogelijk in de lucht heffen";
         this.categoryActionImage = "/src/assets/measureImages/Hip-flexion2.png";
-      }
-      else if (category === "knie-extensie-flexie-links" || category === "knie-extensie-flexie-rechts") {
-        this.categoryMountText1 = "Plaats de sensor op het been net onder de knie (zoals afgebeeld)";
+      } else if (
+        category === "knie-extensie-flexie-links" ||
+        category === "knie-extensie-flexie-rechts"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op het been net onder de knie (zoals afgebeeld)";
         this.categoryMountText2 = "Zorg dat de sensor stevig vast zit";
-        this.categoryMountImage = "/src/assets/measureImages/Knee-flexion-extension1.png";
+        this.categoryMountImage =
+          "/src/assets/measureImages/Knee-flexion-extension1.png";
 
-        this.categoryActionText1 = "Zorg dat de patiënt plat licht met de benen in de lucht";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar onderbeen zo ver naar achter bewegen (zoals afgebeeld)";
-        this.categoryActionImage = "/src/assets/measureImages/Knee-flexion-extension2.png";
-      }
-      else if (category === "enkel-dorsaalflexie-links" || category === "enkel-dorsaalflexie-rechts") {
-        this.categoryMountText1 = "Plaats de sensor op het been net onder de enkel ";
+        this.categoryActionText1 =
+          "Zorg dat de patiënt plat licht met de benen in de lucht";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar onderbeen zo ver naar achter bewegen (zoals afgebeeld)";
+        this.categoryActionImage =
+          "/src/assets/measureImages/Knee-flexion-extension2.png";
+      } else if (
+        category === "enkel-dorsaalflexie-links" ||
+        category === "enkel-dorsaalflexie-rechts"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op het been net onder de enkel ";
         this.categoryMountText2 = "Zorg dat de sensor stevig vast zit";
-        this.categoryMountImage = "/src/assets/measureImages/Ankle-dorsiflexion1.png";
+        this.categoryMountImage =
+          "/src/assets/measureImages/Ankle-dorsiflexion1.png";
 
         this.categoryActionText1 = "Zorg dat de patiënt stevig recht op staat";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar voet zo ver mogelijk naar boven bewegen zonder het onderbeen te verplaatsen (zoals afgebeeld)";
-        this.categoryActionImage = "/src/assets/measureImages/Ankle-dorsiflexion2.png";
-      }
-      else if (category === "enkel-plantairflexie-links" || category === "enkel-plantairflexie-rechts") {
-        this.categoryMountText1 = "Plaats de sensor op het been net onder de enkel ";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar voet zo ver mogelijk naar boven bewegen zonder het onderbeen te verplaatsen (zoals afgebeeld)";
+        this.categoryActionImage =
+          "/src/assets/measureImages/Ankle-dorsiflexion2.png";
+      } else if (
+        category === "enkel-plantairflexie-links" ||
+        category === "enkel-plantairflexie-rechts"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op het been net onder de enkel ";
         this.categoryMountText2 = "Zorg dat de sensor stevig vast zit";
-        this.categoryMountImage = "/src/assets/measureImages/Ankle-plantar-flexion1.png";
+        this.categoryMountImage =
+          "/src/assets/measureImages/Ankle-plantar-flexion1.png";
 
         this.categoryActionText1 = "Zorg dat de patiënt stevig recht op staat";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar voet zo ver mogelijk naar beneden bewegen zonder het onderbeen te verplaatsen (zoals afgebeeld)";
-        this.categoryActionImage = "/src/assets/measureImages/Ankle-plantar-flexion2.png";
-      }
-      else if (category === "shouder-flexie-links" || category === "shouder-flexie-rechts") {
-        this.categoryMountText1 = "Plaats de sensor op het bovenarm (zoals afgebeeld)";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar voet zo ver mogelijk naar beneden bewegen zonder het onderbeen te verplaatsen (zoals afgebeeld)";
+        this.categoryActionImage =
+          "/src/assets/measureImages/Ankle-plantar-flexion2.png";
+      } else if (
+        category === "shouder-flexie-links" ||
+        category === "shouder-flexie-rechts"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op het bovenarm (zoals afgebeeld)";
         this.categoryMountText2 = "Zorg dat de sensor stevig vast zit";
-        this.categoryMountImage = "/src/assets/measureImages/Shoulder-flexion1.png";
+        this.categoryMountImage =
+          "/src/assets/measureImages/Shoulder-flexion1.png";
 
-        this.categoryActionText1 = "Zorg dat de patiënt recht staat met zijn/haar arm strak langs het lichaam";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar arm zo ver mogelijk naar voren draaien (zoals afgebeeld)";
-        this.categoryActionImage = "/src/assets/measureImages/Shoulder-flexion2.png";
-      }
-      else if (category === "elleboog-pronatie-links" || category === "elleboog-pronatie-rechts") {
-        this.categoryMountText1 = "Plaats de sensor op de pols (zoals afgebeeld)";
+        this.categoryActionText1 =
+          "Zorg dat de patiënt recht staat met zijn/haar arm strak langs het lichaam";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar arm zo ver mogelijk naar voren draaien (zoals afgebeeld)";
+        this.categoryActionImage =
+          "/src/assets/measureImages/Shoulder-flexion2.png";
+      } else if (
+        category === "elleboog-pronatie-links" ||
+        category === "elleboog-pronatie-rechts"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op de pols (zoals afgebeeld)";
         this.categoryMountText2 = "Zorg dat de sensor stevig vast zit";
-        this.categoryMountImage = "/src/assets/measureImages/Elbow-pronation1.png";
+        this.categoryMountImage =
+          "/src/assets/measureImages/Elbow-pronation1.png";
 
-        this.categoryActionText1 = "Laat de patiënt zijn zijn/haar hand met de duim boven voor hem/haar houden (zoals afgebeeld)";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar hand zo ver mogelijk naar rechts draaien (zoals afgebeeld)";
-        this.categoryActionImage = "/src/assets/measureImages/Elbow-pronation2.png";
-      }
-      else if (category === "elleboog-supinatie-links" || category === "elleboog-supinatie-rechts") {
-        this.categoryMountText1 = "Plaats de sensor op de pols (zoals afgebeeld)";
+        this.categoryActionText1 =
+          "Laat de patiënt zijn zijn/haar hand met de duim boven voor hem/haar houden (zoals afgebeeld)";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar hand zo ver mogelijk naar rechts draaien (zoals afgebeeld)";
+        this.categoryActionImage =
+          "/src/assets/measureImages/Elbow-pronation2.png";
+      } else if (
+        category === "elleboog-supinatie-links" ||
+        category === "elleboog-supinatie-rechts"
+      ) {
+        this.categoryMountText1 =
+          "Plaats de sensor op de pols (zoals afgebeeld)";
         this.categoryMountText2 = "Zorg dat de sensor stevig vast zit";
-        this.categoryMountImage = "/src/assets/measureImages/Elbow-supination1.png";
+        this.categoryMountImage =
+          "/src/assets/measureImages/Elbow-supination1.png";
 
-        this.categoryActionText1 = "Laat de patiënt zijn zijn/haar hand met de duim boven voor hem/haar houden (zoals afgebeeld)";
-        this.categoryActionText2 = "Laat de patiënt zijn/haar hand zo ver mogelijk naar links draaien (zoals afgebeeld)";
-        this.categoryActionImage = "/src/assets/measureImages/Elbow-supination2.png";
+        this.categoryActionText1 =
+          "Laat de patiënt zijn zijn/haar hand met de duim boven voor hem/haar houden (zoals afgebeeld)";
+        this.categoryActionText2 =
+          "Laat de patiënt zijn/haar hand zo ver mogelijk naar links draaien (zoals afgebeeld)";
+        this.categoryActionImage =
+          "/src/assets/measureImages/Elbow-supination2.png";
       }
 
       this.indexBox = "1/3";
@@ -167,21 +223,22 @@ export default {
       this.titleText = "Plaats de sensor";
       document.getElementById("infoImage").src = this.categoryMountImage;
 
-      this.infoBox1 = "1. "+this.categoryMountText1;
-      this.infoBox2 = "2. "+this.categoryMountText2;
+      this.infoBox1 = "1. " + this.categoryMountText1;
+      this.infoBox2 = "2. " + this.categoryMountText2;
       this.infoBox3 = "";
       this.infoBox4 = "";
     },
 
     goBackToResults() {
-      this.$router.push({ name: "exerciseResults" ,params:{
-
-      }});
+      this.$router.push({ name: "exerciseResults", params: {} });
     },
     goToConnectSensor() {
       const patientId = this.route.params.name;
       const category = this.route.params.category;
-      this.$router.push({ name: "selectSensor" ,params: {name:patientId,category:category}});
+      this.$router.push({
+        name: "selectSensor",
+        params: { name: patientId, category: category },
+      });
     },
     nextPanel() {
       if (textIndex != 3) {
@@ -194,22 +251,24 @@ export default {
         this.titleText = "Beweging van de meting";
         document.getElementById("infoImage").src = this.categoryActionImage;
 
-        this.infoBox1 = "1. "+this.categoryActionText1;
-        this.infoBox2 = "2. "+this.categoryActionText2;
+        this.infoBox1 = "1. " + this.categoryActionText1;
+        this.infoBox2 = "2. " + this.categoryActionText2;
         this.infoBox3 = "";
         this.infoBox4 = "";
-
       } else if (textIndex == 3) {
         this.indexBox = "3/3";
         document.getElementById("rightArrow").src = "/src/assets/empty.png";
 
         this.titleText = "Start van de meting";
-        document.getElementById("infoImage").src ="/src/assets/measureImages/startStop.png";
+        document.getElementById("infoImage").src =
+          "/src/assets/measureImages/startStop.png";
 
         this.infoBox1 = '1. klik hieronder op "Koppel sensor"';
         this.infoBox2 = "2. koppel een sensor en klik op start";
-        this.infoBox3 = "3. Zorg ervoor dat de patiënt zijn/haar boven arm zo horizontaal mogelijk  houdt";
-        this.infoBox4 = "4. Zodra de patiënt zijn/haar top punt  heeft bereikt; druk op stop";
+        this.infoBox3 =
+          "3. Zorg ervoor dat de patiënt zijn/haar boven arm zo horizontaal mogelijk  houdt";
+        this.infoBox4 =
+          "4. Zodra de patiënt zijn/haar top punt  heeft bereikt; druk op stop";
       }
     },
     previousPanel() {
@@ -218,13 +277,14 @@ export default {
       }
       if (textIndex == 2) {
         this.indexBox = "2/3";
-        document.getElementById("rightArrow").src = "/src/assets/arrowRight.png";
+        document.getElementById("rightArrow").src =
+          "/src/assets/arrowRight.png";
 
         this.titleText = "Beweging van de meting";
         document.getElementById("infoImage").src = this.categoryActionImage;
 
-        this.infoBox1 = "1. "+this.categoryActionText1;
-        this.infoBox2 = "2. "+this.categoryActionText2;
+        this.infoBox1 = "1. " + this.categoryActionText1;
+        this.infoBox2 = "2. " + this.categoryActionText2;
         this.infoBox3 = "";
         this.infoBox4 = "";
       } else if (textIndex == 1) {
@@ -234,8 +294,8 @@ export default {
         this.titleText = "Plaats de sensor";
         document.getElementById("infoImage").src = this.categoryMountImage;
 
-        this.infoBox1 = "1. "+this.categoryMountText1;
-        this.infoBox2 = "2. "+this.categoryMountText2;
+        this.infoBox1 = "1. " + this.categoryMountText1;
+        this.infoBox2 = "2. " + this.categoryMountText2;
         this.infoBox3 = "";
         this.infoBox4 = "";
       }

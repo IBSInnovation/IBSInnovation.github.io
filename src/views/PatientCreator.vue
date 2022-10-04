@@ -14,39 +14,37 @@
       </div>
       <div class="form-group">
         <label for="gewicht" style="font-weight: bold"> Gewicht (kg)</label>
-        <Field
-          name="gewicht" type="number" class="form-control"
-        />
+        <Field name="gewicht" type="number" class="form-control" />
         <ErrorMessage name="gewicht" class="error-feedback" />
       </div>
       <div class="form-group">
         <label for="lengte" style="font-weight: bold"> Lengte (m)</label>
-        <Field
-          name="lengte" type="number" class="form-control"
-        />
+        <Field name="lengte" type="number" class="form-control" />
         <ErrorMessage name="lengte" class="error-feedback" />
       </div>
       <div class="form-group">
         <label for="geslacht" style="font-weight: bold"> Geslacht</label>
         <select name="geslacht" class="form-control">
-          <option> Man </option>
-          <option> Vrouw </option>
-          <option> Ander </option>
+          <option>Man</option>
+          <option>Vrouw</option>
+          <option>Ander</option>
         </select>
         <ErrorMessage name="geslacht" class="error-feedback" />
       </div>
       <div class="form-group">
         <label for="date" style="font-weight: bold"> Geboorte datum</label>
-        <Field
-          name="date" type="date" class="form-control"
-        />
+        <Field name="date" type="date" class="form-control" />
         <ErrorMessage name="date" class="error-feedback" />
       </div>
       <div id="submit_btn_cover">
-        <button class="registerButton" style="font-weight: bold"><b>Voeg patient toe</b></button>
+        <button class="registerButton" style="font-weight: bold">
+          <b>Voeg patient toe</b>
+        </button>
       </div>
     </Form>
-    <button class="returnButton" @click="goBackToPatients()"><b>Terug</b></button>
+    <button class="returnButton" @click="goBackToPatients()">
+      <b>Terug</b>
+    </button>
     <div v-if="firebaseError !== ''" id="errorText">{{ firebaseError }}</div>
 
     <div
@@ -95,7 +93,7 @@ export default {
         .number()
         .required("Dit veld is verplicht")
         .lessThan(3, "Voer een valide lengte in")
-        .moreThan(0, "Voer een valide lengte in")
+        .moreThan(0, "Voer een valide lengte in"),
     });
     return {
       successful: false,
@@ -117,7 +115,7 @@ export default {
       this.loading = false;
     },
     goBackToPatients() {
-      this.$emit("close")
+      this.$emit("close");
     },
   },
 };

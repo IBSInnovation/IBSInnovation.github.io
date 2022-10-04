@@ -8,7 +8,7 @@
     <button class="returnButton" @click="goBack()">
       <b>Terug</b>
     </button>
-    
+
     <div v-if="firebaseError !== ''" id="errorText">{{ firebaseError }}</div>
 
     <div
@@ -150,5 +150,4 @@ label {
   background: #0161b6;
   border: none;
 }
-
 </style>

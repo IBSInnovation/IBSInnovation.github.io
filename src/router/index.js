@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "../store/userStore";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: "/",
@@ -54,6 +55,12 @@ const router = createRouter({
       component: () => import("../views/AddCategorie.vue"),
     },
   ],
+});
+
+router.beforeEach(async (to) => {
+  // console.log(import.meta.env.BASE_URL);
+  if (to.name !== "Register" && !store.getters.isLogedIn)
+    return { name: "Register" };
 });
 
 export default router;

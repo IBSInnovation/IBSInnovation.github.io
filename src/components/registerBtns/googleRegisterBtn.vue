@@ -39,7 +39,6 @@
   background-color: rgb(240, 240, 240);
 }
 
-
 .g-sign-in-button .content-wrapper {
   height: 100%;
   width: 100%;

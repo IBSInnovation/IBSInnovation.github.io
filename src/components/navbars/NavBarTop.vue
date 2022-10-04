@@ -69,9 +69,7 @@ export default {
       user: {},
     };
   },
-  computed: {
- 
-  },
+  computed: {},
   methods: {
     logOut() {
       logOut();

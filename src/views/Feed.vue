@@ -5,7 +5,13 @@ Register.vue - base vue
 
   <p><button @click="getData()">connect</button></p>
   <p><button @click="sync()">synchronize</button></p>
-  <input type="text" name="device name" placeholder="enter new device name" :value="device_name" @change="updateDeviceName">
+  <input
+    type="text"
+    name="device name"
+    placeholder="enter new device name"
+    :value="device_name"
+    @change="updateDeviceName"
+  />
   <p><button @click="identify()">identify device</button></p>
   <h2>Device name: {{ device_name }}</h2>
   <h2>Battery level: {{ batterylevel }}</h2>
@@ -39,16 +45,6 @@ export default {
       XsensDotSensor: null,
       angle: null,
     };
-  },
-  created() {
-    window.addEventListener("beforeunload", this.handler);
-    this.XsensDotSensor = XsensDotSensor
-    this.batterylevel = this.XsensDotSensor.battery_level;
-    this.x = this.XsensDotSensor.rotation.x;
-    this.y = this.XsensDotSensor.rotation.y;
-    this.z = this.XsensDotSensor.rotation.z;
-    this.device_name = this.XsensDotSensor.device_name;
-    this.sensorstatus = this.XsensDotSensor.sensor_status;
   },
   watch: {
     "XsensDotSensor.device_name": {
@@ -87,6 +83,16 @@ export default {
       deep: true,
     },
   },
+  created() {
+    window.addEventListener("beforeunload", this.handler);
+    this.XsensDotSensor = XsensDotSensor;
+    this.batterylevel = this.XsensDotSensor.battery_level;
+    this.x = this.XsensDotSensor.rotation.x;
+    this.y = this.XsensDotSensor.rotation.y;
+    this.z = this.XsensDotSensor.rotation.z;
+    this.device_name = this.XsensDotSensor.device_name;
+    this.sensorstatus = this.XsensDotSensor.sensor_status;
+  },
   methods: {
     getData() {
       this.XsensDotSensor.findAndConnect();
@@ -107,12 +113,9 @@ export default {
       this.XsensDotSensor.stopRTStream();
     },
     updateDeviceName(e) {
-      this.XsensDotSensor.writeDeviceName(e.target.value.trim())
+      this.XsensDotSensor.writeDeviceName(e.target.value.trim());
     },
   },
 };
 </script>
-<style scoped>
-
-
-</style>
+<style scoped></style>

@@ -8,14 +8,12 @@
     <div class="textBox">
       <div><b class="categoryTitle">Elleboog flexie & extensie links</b></div>
       <div class="categorySubText">1 Xsens sensor vereist</div>
-
     </div>
     <img
       class="addImage"
       src="@/assets/add.png"
       @click="addSelected('elleboog-flexie-extensie-links')"
     />
-    
   </div>
 
   <div class="categoryBox">
@@ -346,6 +344,3 @@ footer {
   background-color: #f4f4f4;
 }
 </style>
-
-
-

@@ -18,8 +18,6 @@ export default {
       <PWAPrompt />
     </div>
   </header>
-
-  <RouterView />
 </template>
 
 <style>

@@ -58,10 +58,7 @@
 import NavBarTop from "../components/navbars/NavBarTop.vue";
 import MovementPercentageInTime from "../components/tiles/charts/MovementPercentageInTime.vue";
 import DeleteForm from "../components/forms/DeleteForm.vue";
-import {
-  getCategoryResults,
-  deleteCategory,
-} from "../db/fdb";
+import { getCategoryResults, deleteCategory } from "../db/fdb";
 import { useRoute } from "vue-router";
 
 export default {
@@ -87,8 +84,8 @@ export default {
       let docIdPatient = this.route.params.name;
       let docIdCategory = this.route.params.category;
 
-       let age = this.$store.state.age;
-       let gender = this.$store.state.gender;
+      let age = this.$store.state.age;
+      let gender = this.$store.state.gender;
 
       // await addResultToCategory(docIdPatient, docIdCategory,90  ,"nog niet bekend");
 

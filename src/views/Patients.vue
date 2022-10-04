@@ -4,7 +4,6 @@
 
     <h1 class="title">Patiënten</h1>
 
-
     <main>
       <template v-for="[docKey, patient] in patients" :key="patient">
         <div class="patient">
@@ -13,7 +12,9 @@
             <p>
               <b>{{ patient.name }} </b>
             </p>
-            <p class="text" style="word-break: break-word;">{{ patient.email }}</p>
+            <p class="text" style="word-break: break-word">
+              {{ patient.email }}
+            </p>
           </div>
           <button class="seeResultsButton" @click="goToPatient(docKey)">
             <b> Ga naar patiënt</b>

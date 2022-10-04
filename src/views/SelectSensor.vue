@@ -26,7 +26,6 @@ import NavBarTop from "../components/navbars/NavBarTop.vue";
 import { XsensDotSensor } from "/src/libraries/bluetooth.js";
 import store from "../store/userStore.js";
 
-
 var loading = false;
 
 export default {
@@ -41,7 +40,7 @@ export default {
     };
   },
   created() {
-    this.XsensDotSensor = XsensDotSensor
+    this.XsensDotSensor = XsensDotSensor;
   },
   mounted() {
     window.onclick = function () {

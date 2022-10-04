@@ -125,7 +125,7 @@ export const payloadIDsEnum = Object.freeze({
   deltaQuantities: 0x13, // Medium Payload containing timestamp, dq, dv
   rateQuantitiesMag: 0x14, // Medium Payload containing timestamp, acceleration, angular velocity, magnetic field
   rateQuantities: 0x15, // Medium Payload containing timestamp, acceleration, angular velocity
-})
+});
 
 /**
  * getKeyByValue function takes an Enum object where it searches for

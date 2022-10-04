@@ -4,7 +4,7 @@
     :data="dataProp"
     xtitle="Datum"
     ytitle="Beweegbaarheid (%)"
-    language= "de"
+    language="de"
   ></line-chart>
 </template>
 

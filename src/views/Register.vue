@@ -40,7 +40,7 @@ import {
 } from "../db/firebaseAuth.js";
 
 export default {
-  name: "register",
+  name: "Register",
   components: {
     GoogleRegisterButton,
     EmailRegisterButton,

@@ -8,8 +8,6 @@ export default new Vuex.Store({
     user: "",
     gender: null,
     age: null,
-
-    
   },
   getters: {
     getUser() {
@@ -18,25 +16,22 @@ export default new Vuex.Store({
     isLogedIn() {
       return localStorage.getItem("user") !== null;
     },
-    getPatientGender(state){
+    getPatientGender(state) {
       return state.gender;
     },
-    getPatientGender(state){
+    getPatientGender(state) {
       return state.age;
-    }
-
+    },
   },
   mutations: {
     changeProfilePicture(state, photoUrl) {
       state.user.photoUrl = photoUrl;
     },
     setPatientGender(state, gender) {
-      state.gender = gender
+      state.gender = gender;
     },
-    setPatientAge(state,age){
+    setPatientAge(state, age) {
       state.age = age;
-
-
     },
 
     setUser(state, user) {

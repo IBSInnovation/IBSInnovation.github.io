@@ -19,7 +19,7 @@
       </div>
       <div class="form-group">
         <label for="lengte" style="font-weight: bold"> Lengte (m)</label>
-        <Field name="lengte" type="number" class="form-control"/>
+        <Field name="lengte" type="number" class="form-control" />
         <ErrorMessage name="lengte" class="error-feedback" />
       </div>
       <div class="form-group">
@@ -33,7 +33,11 @@
         <ErrorMessage name="date" class="error-feedback" />
       </div>
       <div id="submit_btn_cover">
-        <button class="registerButton" style="font-weight: bold" @click="editPatient()">
+        <button
+          class="registerButton"
+          style="font-weight: bold"
+          @click="editPatient()"
+        >
           <b>Opslaan</b>
         </button>
       </div>
@@ -73,18 +77,10 @@ export default {
         .string()
         .email("Email is ongeldig")
         .max(50, "Karakter limiet bereikt"),
-      naam: yup
-        .string()
-        .max(50, "Karakter limiet bereikt"),
-      geslacht: yup
-        .string()
-        .max(50, "Karakter limiet bereikt"),
-      gewicht: yup
-        .number()
-        .typeError("Dit veld is verplicht"),
-      date: yup
-        .string()
-        .max(50, "Karakter limiet bereikt"),
+      naam: yup.string().max(50, "Karakter limiet bereikt"),
+      geslacht: yup.string().max(50, "Karakter limiet bereikt"),
+      gewicht: yup.number().typeError("Dit veld is verplicht"),
+      date: yup.string().max(50, "Karakter limiet bereikt"),
       lengte: yup
         .number()
         .lessThan(2.5, "Voer een valide lengte in")
@@ -98,13 +94,13 @@ export default {
       schema,
     };
   },
-  mounted() { 
-      // Replace the '-' with the patient's corresponding data
-      document.getElementsByName('email')[0].placeholder='-';
-      document.getElementsByName('naam')[0].placeholder='-';
-      document.getElementsByName('geslacht')[0].placeholder='-';
-      document.getElementsByName('gewicht')[0].placeholder='-';
-      document.getElementsByName('lengte')[0].placeholder='-';
+  mounted() {
+    // Replace the '-' with the patient's corresponding data
+    document.getElementsByName("email")[0].placeholder = "-";
+    document.getElementsByName("naam")[0].placeholder = "-";
+    document.getElementsByName("geslacht")[0].placeholder = "-";
+    document.getElementsByName("gewicht")[0].placeholder = "-";
+    document.getElementsByName("lengte")[0].placeholder = "-";
   },
 
   methods: {
@@ -115,7 +111,6 @@ export default {
     editPatient() {
       this.$emit("edit");
     },
-
   },
 };
 </script>
