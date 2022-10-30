@@ -6,6 +6,7 @@ createApp(App).use(Vuex);
 export default new Vuex.Store({
   state: {
     user: "",
+    patients: [],
     gender: null,
     age: null,
   },
@@ -19,9 +20,12 @@ export default new Vuex.Store({
     getPatientGender(state) {
       return state.gender;
     },
-    getPatientGender(state) {
+    getPatientAge(state) {
       return state.age;
     },
+    getPatientList(state){
+      return state.patients
+    }
   },
   mutations: {
     changeProfilePicture(state, photoUrl) {
@@ -33,10 +37,12 @@ export default new Vuex.Store({
     setPatientAge(state, age) {
       state.age = age;
     },
-
     setUser(state, user) {
       state.user = user;
       localStorage.setItem("user", JSON.stringify(state.user));
+    },
+    setPatientList(state, patients){
+      state.patients = patients;
     },
   },
   actions: {
