@@ -37,12 +37,6 @@
             aria-labelledby="navbarDropdownMenuAvatar"
           >
             <li>
-              <a class="dropdown-item">Mijn profiel</a>
-            </li>
-            <li>
-              <a class="dropdown-item">Settings</a>
-            </li>
-            <li>
               <a @click="logOut()" class="dropdown-item">Log uit</a>
             </li>
             <li>
