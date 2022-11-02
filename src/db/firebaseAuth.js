@@ -17,9 +17,6 @@ export async function registerWithEmail(value) {
       let user = userCredential.user;
       store.commit("setUser", user);
       createFysio("", user.email, user.uid);
-      router.push({ path: "/patients" });
-
-      return null;
     })
     .catch((error) => {
       console.log(error.code);

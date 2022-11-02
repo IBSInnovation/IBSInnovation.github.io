@@ -14,7 +14,7 @@
     </p>
   </div>
   <RegisterForm
-    :firebaseError="firebaseErrorFromRegister"
+    :firebaseError="authenticationErrorFromRegister"
     @send="registerWithEmail"
     @close="closeForm"
     v-if="showForm && !showLoginForm"
@@ -38,6 +38,7 @@ import {
   login,
   RegisterWithGoogle,
 } from "../db/firebaseAuth.js";
+import router from "../router";
 
 export default {
   name: "Register",
@@ -54,7 +55,7 @@ export default {
       showLoginForm: false,
       errorMessage: "",
       registerMessage: "",
-      firebaseErrorFromRegister: "",
+      authenticationErrorFromRegister: "",
     };
   },
   methods: {
@@ -87,7 +88,8 @@ export default {
 
     registerWithEmail(value) {
       registerWithEmail(value).then((data) => {
-        this.firebaseErrorFromRegister = data.error;
+        router.push({ path: "/patients" });
+        this.authenticationErrorFromRegister = data.error;
       });
     },
 
