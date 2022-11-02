@@ -1,6 +1,6 @@
 // Register.vue - base vue
 <template>
-  <div class="container" @click="closeForm()" :style="blurrStyle()">
+  <div class="container" :style="blurrStyle()" @click="closeForm()">
     <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
 
     <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
@@ -10,26 +10,26 @@
     <EmailRegisterButton @click="showLogForm"></EmailRegisterButton>
     <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
     <p>
-      <button @click="showRegisterForm" class="loginBTN">Registreer</button>
+      <button class="registerBtn" @click="showRegisterForm">Registreer</button>
     </p>
   </div>
   <RegisterForm
-    :firebaseError="firebaseErrorFromRegister"
+    v-if="showForm && !showLoginForm"
+    :firebase-error="firebaseErrorFromRegister"
     @send="registerWithEmail"
     @close="closeForm"
-    v-if="showForm && !showLoginForm"
   ></RegisterForm>
   <LoginForm
-    :errorMessage="errorMessage"
+    v-if="showLoginForm"
+    :error-message="errorMessage"
     @send="login"
     @close="closeForm"
-    v-if="showLoginForm"
   ></LoginForm>
 </template>
 
 <script>
-import GoogleRegisterButton from "../components/registerButtons/GoogleRegisterButton.vue";
-import EmailRegisterButton from "../components/registerButtons/EmailRegisterButton.vue";
+import GoogleRegisterButton from "../components/buttons/GoogleLoginButton.vue";
+import EmailRegisterButton from "../components/buttons/EmailLoginButton.vue";
 import RegisterForm from "../components/forms/RegisterForm.vue";
 import LoginForm from "../components/forms/LoginForm.vue";
 
@@ -121,23 +121,29 @@ export default {
   height: auto;
   margin-top: 3em;
 }
-.loginBTN {
-  color: #e6302b;
-  border: none;
-  background-color: inherit;
-  padding: 5px 5px;
-  font-size: 18px;
-  cursor: pointer;
+.registerBtn {
+  margin: 10px;
   display: inline-block;
-  font-weight: bold;
+  width: 240px;
+  height: 50px;
+  background-color: #e6302b;
+  color: #fff;
+  border-radius: 15px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
 }
 
-.loginBTN:hover {
-  color: #d3322c;
+.registerBtn:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+  box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+  background: #d3322c;
 }
 
 .acountText {
   color: white;
-  margin-bottom: -5px;
+  margin: 1em 0em 0;
 }
 </style>

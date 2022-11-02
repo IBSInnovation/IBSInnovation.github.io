@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "RegisterButton",
+  name: "EmailLoginButton",
   props: {
     textColor: String,
     backgroudnColor: String,
