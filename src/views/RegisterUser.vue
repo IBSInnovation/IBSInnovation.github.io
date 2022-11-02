@@ -31,7 +31,7 @@
 import GoogleRegisterButton from "../components/registerButtons/GoogleRegisterButton.vue";
 import EmailRegisterButton from "../components/registerButtons/EmailRegisterButton.vue";
 import RegisterForm from "../components/forms/RegisterForm.vue";
-import LoginForm from "../components/forms/LogInForm.vue";
+import LoginForm from "../components/forms/LoginForm.vue";
 
 import {
   registerWithEmail,
