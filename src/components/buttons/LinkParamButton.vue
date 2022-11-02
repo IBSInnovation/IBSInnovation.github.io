@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "LinkButton",
+  name: "LinkParamButton",
   props: {
     navigateTo: { type: String, required: true },
     icon: { type: String, required: true },

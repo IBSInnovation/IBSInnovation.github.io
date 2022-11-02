@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import NavBarTop from "../components/navbars/NavBarTop.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
 import MovementPercentageInTime from "../components/tiles/charts/MovementPercentageInTime.vue";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import { getCategoryResults, deleteCategory } from "../db/fdb";

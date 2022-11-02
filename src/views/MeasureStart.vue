@@ -55,12 +55,11 @@
 </template>
 
 <script>
-import NavBarTop from "../components/navbars/NavBarTop.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { XsensDotSensor } from "/src/libraries/bluetooth.js";
 import { addResultToCategory, getSinglePatient } from "../db/fdb";
 import { useRoute } from "vue-router";
 import jsonMovementData from "/src/libraries/movement_data.json";
-import { getUnixOfToday } from "../components/calculators/UnixCalculator.js";
 import { formatBirthDateToAge } from "../components/calculators/AgeCalculator";
 
 var measureState = "idle";

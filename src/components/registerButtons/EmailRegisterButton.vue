@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "RegisterBtn",
+  name: "RegisterButton",
   props: {
     textColor: String,
     backgroudnColor: String,

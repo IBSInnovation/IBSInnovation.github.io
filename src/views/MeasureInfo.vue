@@ -41,7 +41,7 @@
 
 <script>
 import { useRoute } from "vue-router";
-import NavBarTop from "../components/navbars/NavBarTop.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
 
 var textIndex = 1;
 
