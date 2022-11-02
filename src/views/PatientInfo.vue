@@ -88,7 +88,7 @@
 import NavBarTop from "../components/navbars/NavBarTop.vue";
 import _ from "lodash";
 import LinkButton from "../components/btns/LinkButton.vue";
-import { formatBirthDateToAge } from "../Controllers/AgeCalculatorController.js";
+import { formatBirthDateToAge } from "../components/calculators/AgeCalculator.js";
 import { getSinglePatient, deletePatient, getCategories } from "../db/fdb";
 import { useRoute } from "vue-router";
 import DeleteForm from "../components/forms/DeleteForm.vue";

@@ -60,8 +60,8 @@ import { XsensDotSensor } from "/src/libraries/bluetooth.js";
 import { addResultToCategory, getSinglePatient } from "../db/fdb";
 import { useRoute } from "vue-router";
 import jsonMovementData from "/src/libraries/movement_data.json";
-import { getUnixOfToday } from "../controllers/unix.js";
-import { formatBirthDateToAge } from "../Controllers/AgeCalculatorController";
+import { getUnixOfToday } from "../components/calculators/UnixCalculator.js";
+import { formatBirthDateToAge } from "../components/calculators/AgeCalculator";
 
 var measureState = "idle";
 var timer;
