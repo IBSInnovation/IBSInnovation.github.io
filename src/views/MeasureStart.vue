@@ -67,7 +67,7 @@ var measureState = "idle";
 var timer;
 
 export default {
-  name: "SelectSensor",
+  name: "MeasureStart",
   components: {
     NavBarTop,
   },

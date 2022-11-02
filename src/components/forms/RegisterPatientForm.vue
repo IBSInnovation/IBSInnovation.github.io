@@ -59,7 +59,7 @@ import { addPatient } from "@/db/fdb.js";
 
 import * as yup from "yup";
 export default {
-  name: "Register",
+  name: "RegisterPatientForm",
   props: {
     firebaseError: String,
   },

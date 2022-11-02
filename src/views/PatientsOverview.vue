@@ -44,10 +44,10 @@ import _ from "lodash";
 import LinkParamButton from "../components/btns/LinkParamButton.vue";
 import LinkButton from "../components/btns/LinkButton.vue";
 import { getPatients } from "../db/fdb";
-import PatientForm from "../components/forms/PatientCreatorForm.vue";
+import PatientForm from "../components/forms/RegisterPatientForm.vue";
 
 export default {
-  name: "patients",
+  name: "PatientsOverview",
   components: {
     NavBarTop,
     IconButton,

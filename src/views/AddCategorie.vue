@@ -233,7 +233,7 @@ import { addCategorie } from "../db/fdb";
 import { useRoute } from "vue-router";
 
 export default {
-  name: "Select Sensor",
+  name: "AddCategory",
   components: {
     NavBarTop,
   },

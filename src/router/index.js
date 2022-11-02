@@ -6,28 +6,28 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "Register",
-      component: () => import("../views/Register.vue"),
+      name: "register",
+      component: () => import("../views/RegisterUser.vue"),
     },
     {
-      path: "/feed",
-      name: "feed",
-      component: () => import("../views/Feed.vue"),
+      path: "/dev",
+      name: "dev",
+      component: () => import("../views/DevelopmentSensors.vue"),
     },
     {
       path: "/patients",
       name: "patients",
-      component: () => import("../views/Patients.vue"),
+      component: () => import("../views/PatientsOverview.vue"),
     },
     {
       path: "/patients/:name",
       name: "patient",
-      component: () => import("../views/Patient.vue"),
+      component: () => import("../views/PatientInfo.vue"),
     },
     {
       path: "/newPatient",
       name: "patientCreator",
-      component: () => import("../components/forms/PatientCreatorForm.vue"),
+      component: () => import("../components/forms/RegisterPatientForm.vue"),
     },
     {
       path: "/:name/:category/exerciseResults",
@@ -47,7 +47,7 @@ const router = createRouter({
     {
       path: "/:name/:category/measure",
       name: "measure",
-      component: () => import("../views/Measure.vue"),
+      component: () => import("../views/MeasureStart.vue"),
     },
     {
       path: "/:name/addCategorie",
@@ -59,8 +59,8 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   // console.log(import.meta.env.BASE_URL);
-  if (to.name !== "Register" && !store.getters.isLogedIn)
-    return { name: "Register" };
+  if (to.name !== "register" && !store.getters.isLogedIn)
+    return { name: "register" };
 });
 
 export default router;

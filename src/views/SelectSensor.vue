@@ -29,7 +29,7 @@ import store from "../store/userStore.js";
 var loading = false;
 
 export default {
-  name: "Select Sensor",
+  name: "SelectSensor",
   components: {
     NavBarTop,
   },

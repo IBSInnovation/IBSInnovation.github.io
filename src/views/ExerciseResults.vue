@@ -62,7 +62,7 @@ import { getCategoryResults, deleteCategory } from "../db/fdb";
 import { useRoute } from "vue-router";
 
 export default {
-  name: "Exercise results",
+  name: "ExerciseResults",
   components: {
     NavBarTop,
     MovementPercentageInTime,

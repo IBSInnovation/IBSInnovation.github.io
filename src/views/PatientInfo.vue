@@ -97,7 +97,7 @@ import EditForm from "../components/forms/EditPatientForm.vue";
 
 
 export default {
-  name: "patients",
+  name: "PatientInfo",
   components: {
     NavBarTop,
     LinkButton,

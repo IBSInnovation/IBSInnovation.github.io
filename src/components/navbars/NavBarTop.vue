@@ -72,7 +72,7 @@ export default {
       this.$router.push({ name: "patients" });
     },
     goToDevelop() {
-      this.$router.push({ name: "feed" });
+      this.$router.push({ name: "dev" });
     },
     getDisplayName() {
       // if registered with mail  -> mail is the displayName

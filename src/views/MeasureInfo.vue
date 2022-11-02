@@ -46,7 +46,7 @@ import NavBarTop from "../components/navbars/NavBarTop.vue";
 var textIndex = 1;
 
 export default {
-  name: "Measure info",
+  name: "MeasureInfo",
   components: {
     NavBarTop,
   },

@@ -30,7 +30,7 @@ import NavBarTop from "../components/navbars/NavBarTop.vue";
 import { XsensDotSensor } from "/src/libraries/bluetooth.js";
 
 export default {
-  name: "Feed",
+  name: "DevelopmentSensors",
   components: {
     NavBarTop,
   },

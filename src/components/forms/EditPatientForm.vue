@@ -62,7 +62,7 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 
 import * as yup from "yup";
 export default {
-  name: "Register",
+  name: "EditPatientForm",
   props: {
     firebaseError: String,
   },
