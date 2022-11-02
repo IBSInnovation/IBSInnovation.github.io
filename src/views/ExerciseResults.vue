@@ -56,7 +56,7 @@
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import MovementPercentageInTime from "../components/tiles/charts/MovementPercentageInTime.vue";
+import MovementPercentageInTime from "../components/charts/MovementPercentageInTime.vue";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import { getCategoryResults, deleteCategory } from "../db/fdb";
 import { useRoute } from "vue-router";
