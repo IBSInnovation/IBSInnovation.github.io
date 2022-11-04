@@ -73,14 +73,14 @@
     </footer>
   </div>
   <DeleteForm
+    v-if="showFormDelete && !showFormEdit"
     @close="closeForm"
     @delete="deletePatientWithFireStore"
-    v-if="showFormDelete && !showFormEdit"
   ></DeleteForm>
   <EditForm
+    v-if="showFormEdit && !showFormDelete"
     @close="closeForm"
     @edit="editPatient"
-    v-if="showFormEdit && !showFormDelete"
   ></EditForm>
 </template>
 

@@ -48,9 +48,9 @@
     </footer>
   </div>
   <DeleteForm
+    v-if="showForm"
     @close="closeForm"
     @delete="deleteCategory"
-    v-if="showForm"
   ></DeleteForm>
 </template>
 
@@ -77,6 +77,9 @@ export default {
       route: useRoute(),
       routeName: "",
     };
+  },
+  mounted() {
+    this.getCategoryResults();
   },
 
   methods: {
@@ -144,9 +147,6 @@ export default {
       this.errorMessage = "";
       return;
     },
-  },
-  mounted() {
-    this.getCategoryResults();
   },
 };
 </script>

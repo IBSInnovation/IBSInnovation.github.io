@@ -64,7 +64,7 @@ export default {
       categoryMountText2: "",
       categoryMountImage: "",
       categoryActionText1: "",
-      categoryActionText1: "",
+      categoryActionText2: "",
       categoryActionImage: "",
     };
   },

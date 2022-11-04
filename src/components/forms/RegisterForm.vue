@@ -1,7 +1,7 @@
 <template>
   <form class="form">
     <h3><b>Registreer met email</b></h3>
-    <Form @submit="handleRegister" :validation-schema="schema">
+    <Form :validation-schema="schema" @submit="handleRegister">
       <div class="form-group">
         <label for="email" style="font-weight: bold">Email</label>
         <Field name="email" class="form-control" />
@@ -47,13 +47,13 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 export default {
   name: "RegisterForm",
-  props: {
-    firebaseError: String,
-  },
   components: {
     Form,
     Field,
     ErrorMessage,
+  },
+  props: {
+    firebaseError: String,
   },
   data() {
     const schema = yup.object().shape({

@@ -1,7 +1,7 @@
 <template>
   <form class="form">
     <h3><b>Patiënt Toevoegen</b></h3>
-    <Form @submit="createPatientWithFireStore" :validation-schema="schema">
+    <Form :validation-schema="schema" @submit="createPatientWithFireStore">
       <div class="form-group">
         <label for="email" style="font-weight: bold">Email</label>
         <Field name="email" type="email" class="form-control" />
@@ -60,13 +60,13 @@ import { addPatient } from "@/db/fdb.js";
 import * as yup from "yup";
 export default {
   name: "RegisterPatientForm",
-  props: {
-    firebaseError: String,
-  },
   components: {
     Form,
     Field,
     ErrorMessage,
+  },
+  props: {
+    firebaseError: String,
   },
   data() {
     const schema = yup.object().shape({

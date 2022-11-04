@@ -31,9 +31,9 @@
     </footer>
   </div>
   <PatientForm
+    v-if="showForm && !showLoginForm"
     @send="registerWithEmail"
     @close="closeForm"
-    v-if="showForm && !showLoginForm"
   ></PatientForm>
 </template>
 

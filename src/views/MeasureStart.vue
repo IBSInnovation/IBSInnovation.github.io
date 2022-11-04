@@ -25,24 +25,24 @@
       </tr>
     </table>
 
-    <button class="measureButtonBlue" @click="measure()" id="button1">
+    <button id="button1" class="measureButtonBlue" @click="measure()">
       <b>{{ button1text }}</b>
     </button>
 
     <button
-      class="measureButtonBlue"
-      @click="saveMeasurement()"
-      style="margin-top: 0.5rem; display: none"
       id="button2"
+      class="measureButtonBlue"
+      style="margin-top: 0.5rem; display: none"
+      @click="saveMeasurement()"
     >
       <b>Sla meting op</b>
     </button>
 
     <button
-      class="measureButtonRed"
-      @click="deleteMeasurement()"
-      style="margin-top: 0.5rem; display: none"
       id="button3"
+      class="measureButtonRed"
+      style="margin-top: 0.5rem; display: none"
+      @click="deleteMeasurement()"
     >
       <b>Verwijder meting</b>
     </button>
