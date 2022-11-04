@@ -84,18 +84,18 @@ export default {
     },
     RegisterWithGoogle() {
       RegisterWithGoogle();
+      router.push({ path: "/patients" });
     },
 
     registerWithEmail(value) {
-      registerWithEmail(value).then((data) => {
+      registerWithEmail(value).then(() => {
         router.push({ path: "/patients" });
-        this.authenticationErrorFromRegister = data.error;
       });
     },
 
     login(value) {
-      login(value).then((data) => {
-        this.errorMessage = data.error;
+      login(value).then(() => {
+        router.push({ path: "/patients" });
       });
     },
   },

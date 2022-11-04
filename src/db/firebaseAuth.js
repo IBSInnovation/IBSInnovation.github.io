@@ -31,11 +31,8 @@ export async function login(value) {
       const user = userCredential.user;
       store.commit("setUser", user);
       createFysio("", user.email, user.uid);
-      router.push({ path: "/patients" });
-
       return { succes: true, errorMessage: "" };
     })
-
     .catch((error) => {
       switch (error.code) {
         case "auth/invalid-email":
@@ -55,6 +52,7 @@ export async function login(value) {
       }
     });
 }
+
 export async function RegisterWithGoogle() {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
@@ -62,11 +60,7 @@ export async function RegisterWithGoogle() {
     .then((result) => {
       const user = result.user;
       createFysio(user.displayName, user.email, user.uid);
-
-      // getPatients(user.uid);
-
       store.commit("setUser", user);
-      router.push({ path: "/patients" });
     })
     .catch((error) => {
       const errorCode = error.code;
