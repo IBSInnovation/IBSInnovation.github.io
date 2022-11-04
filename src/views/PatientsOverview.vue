@@ -39,10 +39,6 @@
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import IconButton from "../components/buttons/IconButton.vue";
-import _ from "lodash";
-import LinkParamButton from "../components/buttons/LinkParamButton.vue";
-import LinkButton from "../components/buttons/LinkButton.vue";
 import { getPatients } from "../db/fdb";
 import PatientForm from "../components/forms/RegisterPatientForm.vue";
 
@@ -50,10 +46,7 @@ export default {
   name: "PatientsOverview",
   components: {
     NavBarTop,
-    IconButton,
-    LinkParamButton,
     PatientForm,
-    LinkButton,
   },
   data() {
     return {

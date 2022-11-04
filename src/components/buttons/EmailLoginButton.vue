@@ -11,17 +11,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "EmailLoginButton",
-  props: {
-    textColor: String,
-    backgroudnColor: String,
-    activeColor: String,
-  },
-  methods: {},
-};
-</script>
+<script></script>
 
 <style scoped>
 *,
