@@ -61,6 +61,7 @@ export async function RegisterWithGoogle() {
       const user = result.user;
       createFysio(user.displayName, user.email, user.uid);
       store.commit("setUser", user);
+      router.push({ path: "/patients" });
     })
     .catch((error) => {
       const errorCode = error.code;

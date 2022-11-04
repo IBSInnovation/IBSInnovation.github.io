@@ -79,12 +79,10 @@ export default {
       this.showForm = false;
       this.showLoginForm = false;
       this.errorMessage = "";
-
-      return;
     },
     RegisterWithGoogle() {
       RegisterWithGoogle();
-      router.push({ path: "/patients" });
+
     },
 
     registerWithEmail(value) {

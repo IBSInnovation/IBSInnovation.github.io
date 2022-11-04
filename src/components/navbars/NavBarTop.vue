@@ -54,6 +54,7 @@
 
 <script>
 import { logOut } from "@/db/firebaseAuth.js";
+import router from "../../router";
 
 export default {
   name: "NavBarTop",
@@ -67,6 +68,7 @@ export default {
   methods: {
     logOut() {
       logOut();
+      this.$router.push({ path: "/" });
     },
     goBackToHome() {
       this.$router.push({ name: "patients" });
