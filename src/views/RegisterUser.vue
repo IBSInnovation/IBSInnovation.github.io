@@ -5,9 +5,9 @@
 
     <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
 
-    <GoogleRegisterButton @click="RegisterWithGoogle()"></GoogleRegisterButton>
+    <GoogleLoginButton @click="RegisterWithGoogle()"></GoogleLoginButton>
 
-    <EmailRegisterButton @click="showLogForm"></EmailRegisterButton>
+    <EmailLoginButton @click="showLogForm"></EmailLoginButton>
     <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
     <p>
       <button class="registerBtn" @click="showRegisterForm">Registreer</button>
@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import GoogleRegisterButton from "../components/buttons/GoogleLoginButton.vue";
-import EmailRegisterButton from "../components/buttons/EmailLoginButton.vue";
+import GoogleLoginButton from "../components/buttons/GoogleLoginButton.vue";
+import EmailLoginButton from "../components/buttons/EmailLoginButton.vue";
 import RegisterForm from "../components/forms/RegisterForm.vue";
 import LoginForm from "../components/forms/LoginForm.vue";
 
@@ -42,8 +42,8 @@ import {
 export default {
   name: "RegisterUser",
   components: {
-    GoogleRegisterButton,
-    EmailRegisterButton,
+    GoogleLoginButton,
+    EmailLoginButton,
     RegisterForm,
     LoginForm,
   },
