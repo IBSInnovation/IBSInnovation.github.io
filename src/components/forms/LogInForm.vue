@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form v-on:submit.prevent>
     <h3><b>Log in met email</b></h3>
     <label for="email" style="font-weight: bold">Email</label>
     <div class="input_box">
@@ -21,7 +21,7 @@
     </div>
     <div v-if="errorMessage !== ''" id="errorText">{{ errorMessage }}</div>
     <div id="submit_btn_cover">
-      <button class="logInButton" type="button" @click="submitForm()">
+      <button class="logInButton" type="submit" @click="submitForm()">
         Login
       </button>
       <button class="returnButton" @click="goBackToRegister()">Terug</button>
