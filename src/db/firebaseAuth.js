@@ -56,6 +56,7 @@ export async function login(value) {
 export async function RegisterWithGoogle() {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
+
   signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;

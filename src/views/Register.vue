@@ -82,7 +82,6 @@ export default {
     },
     RegisterWithGoogle() {
       RegisterWithGoogle();
-
     },
 
     registerWithEmail(value) {
