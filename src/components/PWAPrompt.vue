@@ -1,5 +1,5 @@
 <template>
-  <div class="pwa-prompt" v-if="shown">
+  <div v-if="shown" class="pwa-prompt">
     Add app to home screen?
 
     <button @click="installPWA">Install!</button>

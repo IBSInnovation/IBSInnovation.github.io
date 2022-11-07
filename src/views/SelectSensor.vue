@@ -22,14 +22,14 @@
 </template>
 
 <script>
-import NavBarTop from "../components/navbars/NavBarTop.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { XsensDotSensor } from "/src/libraries/bluetooth.js";
 import store from "../store/userStore.js";
 
 var loading = false;
 
 export default {
-  name: "Select Sensor",
+  name: "SelectSensor",
   components: {
     NavBarTop,
   },

@@ -25,14 +25,14 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 
 export default {
-  name: "Register",
-  props: {
-    firebaseError: String,
-  },
+  name: "DeleteForm",
   components: {
     Form,
     Field,
     ErrorMessage,
+  },
+  props: {
+    firebaseError: String,
   },
   data() {
     return {

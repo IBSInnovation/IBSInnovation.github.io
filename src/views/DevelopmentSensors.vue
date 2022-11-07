@@ -26,11 +26,11 @@ Register.vue - base vue
 </template>
 
 <script>
-import NavBarTop from "../components/navbars/NavBarTop.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { XsensDotSensor } from "/src/libraries/bluetooth.js";
 
 export default {
-  name: "Feed",
+  name: "DevelopmentSensors",
   components: {
     NavBarTop,
   },

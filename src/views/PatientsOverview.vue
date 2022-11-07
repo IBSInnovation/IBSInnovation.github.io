@@ -31,29 +31,22 @@
     </footer>
   </div>
   <PatientForm
+    v-if="showForm && !showLoginForm"
     @send="registerWithEmail"
     @close="closeForm"
-    v-if="showForm && !showLoginForm"
   ></PatientForm>
 </template>
 
 <script>
-import NavBarTop from "../components/navbars/NavBarTop.vue";
-import IconButton from "../components/btns/IconButton.vue";
-import _ from "lodash";
-import LinkParamButton from "../components/btns/LinkParamButton.vue";
-import LinkButton from "../components/btns/LinkButton.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { getPatients } from "../db/fdb";
-import PatientForm from "../components/forms/PatientCreatorForm.vue";
+import PatientForm from "../components/forms/RegisterPatientForm.vue";
 
 export default {
-  name: "patients",
+  name: "PatientsOverview",
   components: {
     NavBarTop,
-    IconButton,
-    LinkParamButton,
     PatientForm,
-    LinkButton,
   },
   data() {
     return {

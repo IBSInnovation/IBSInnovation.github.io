@@ -41,12 +41,12 @@
 
 <script>
 import { useRoute } from "vue-router";
-import NavBarTop from "../components/navbars/NavBarTop.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
 
 var textIndex = 1;
 
 export default {
-  name: "Measure info",
+  name: "MeasureInfo",
   components: {
     NavBarTop,
   },
@@ -64,7 +64,7 @@ export default {
       categoryMountText2: "",
       categoryMountImage: "",
       categoryActionText1: "",
-      categoryActionText1: "",
+      categoryActionText2: "",
       categoryActionImage: "",
     };
   },

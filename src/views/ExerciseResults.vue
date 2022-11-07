@@ -48,21 +48,21 @@
     </footer>
   </div>
   <DeleteForm
+    v-if="showForm"
     @close="closeForm"
     @delete="deleteCategory"
-    v-if="showForm"
   ></DeleteForm>
 </template>
 
 <script>
-import NavBarTop from "../components/navbars/NavBarTop.vue";
-import MovementPercentageInTime from "../components/tiles/charts/MovementPercentageInTime.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
+import MovementPercentageInTime from "../components/charts/MovementPercentageInTime.vue";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import { getCategoryResults, deleteCategory } from "../db/fdb";
 import { useRoute } from "vue-router";
 
 export default {
-  name: "Exercise results",
+  name: "ExerciseResults",
   components: {
     NavBarTop,
     MovementPercentageInTime,
@@ -77,6 +77,9 @@ export default {
       route: useRoute(),
       routeName: "",
     };
+  },
+  mounted() {
+    this.getCategoryResults();
   },
 
   methods: {
@@ -144,9 +147,6 @@ export default {
       this.errorMessage = "";
       return;
     },
-  },
-  mounted() {
-    this.getCategoryResults();
   },
 };
 </script>

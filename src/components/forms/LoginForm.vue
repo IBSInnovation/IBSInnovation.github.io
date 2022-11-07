@@ -4,18 +4,18 @@
     <label for="email" style="font-weight: bold">Email</label>
     <div class="input_box">
       <input
+        id="email_adress"
         v-model="userData.email"
         type="email"
-        id="email_adress"
         name="emailAdress"
       />
     </div>
     <label for="password" style="font-weight: bold">Wachtwoord</label>
     <div class="input_box">
       <input
+        id="password"
         v-model="userData.password"
         type="password"
-        id="password"
         name="password"
       />
     </div>

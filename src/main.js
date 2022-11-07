@@ -15,7 +15,7 @@ const firebaseConfig = {
   projectId: "ibs-fysiotherapy",
   storageBucket: "ibs-fysiotherapy.appspot.com",
   messagingSenderId: "767042773850",
-  appId: "1:767042773850:web:c38e45c3058e7d3ab80963"
+  appId: "1:767042773850:web:c38e45c3058e7d3ab80963",
 };
 
 import "bootstrap/dist/css/bootstrap.min.css";

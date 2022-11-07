@@ -17,9 +17,9 @@
         </p>
         <div class="dropdown">
           <a
+            id="navbarDropdownMenuAvatar"
             class="dropdown-toggle d-flex align-items-center hidden-arrow"
             href="#"
-            id="navbarDropdownMenuAvatar"
             role="button"
             data-mdb-toggle="dropdown"
             aria-expanded="false"
@@ -37,10 +37,10 @@
             aria-labelledby="navbarDropdownMenuAvatar"
           >
             <li>
-              <a @click="logOut()" class="dropdown-item">Log uit</a>
+              <a class="dropdown-item" @click="logOut()">Log uit</a>
             </li>
             <li>
-              <a @click="goToDevelop()" class="dropdown-item">Development</a>
+              <a class="dropdown-item" @click="goToDevelop()">Development</a>
             </li>
           </ul>
         </div>
@@ -74,7 +74,7 @@ export default {
       this.$router.push({ name: "patients" });
     },
     goToDevelop() {
-      this.$router.push({ name: "feed" });
+      this.$router.push({ name: "dev" });
     },
     getDisplayName() {
       // if registered with mail  -> mail is the displayName

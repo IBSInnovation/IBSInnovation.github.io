@@ -73,22 +73,20 @@
     </footer>
   </div>
   <DeleteForm
+    v-if="showFormDelete && !showFormEdit"
     @close="closeForm"
     @delete="deletePatientWithFireStore"
-    v-if="showFormDelete && !showFormEdit"
   ></DeleteForm>
   <EditForm
+    v-if="showFormEdit && !showFormDelete"
     @close="closeForm"
     @edit="editPatient"
-    v-if="showFormEdit && !showFormDelete"
   ></EditForm>
 </template>
 
 <script>
-import NavBarTop from "../components/navbars/NavBarTop.vue";
-import _ from "lodash";
-import LinkButton from "../components/btns/LinkButton.vue";
-import { formatBirthDateToAge } from "../Controllers/AgeCalculatorController.js";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
+import { formatBirthDateToAge } from "../components/calculators/AgeCalculator.js";
 import { getSinglePatient, deletePatient, getCategories } from "../db/fdb";
 import { useRoute } from "vue-router";
 import DeleteForm from "../components/forms/DeleteForm.vue";
@@ -97,10 +95,9 @@ import EditForm from "../components/forms/EditPatientForm.vue";
 
 
 export default {
-  name: "patients",
+  name: "PatientInfo",
   components: {
     NavBarTop,
-    LinkButton,
     DeleteForm,
     EditForm,
   },

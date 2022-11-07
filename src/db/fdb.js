@@ -7,24 +7,17 @@
 import {
   getFirestore,
   collection,
-  addDoc,
   getDocs,
   updateDoc,
   doc,
   setDoc,
   deleteDoc,
-  Timestamp,
   where,
   getDoc,
   query,
-  orderBy,
-  limit,
   arrayUnion,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-const auth = getAuth(); // Wordt gebruikt in testPatient functie
-import store from "../store/userStore";
-import { getUnixOfToday } from "../controllers/unix.js";
+import { getUnixOfToday } from "../components/calculators/UnixCalculator.js";
 
 const db = getFirestore();
 

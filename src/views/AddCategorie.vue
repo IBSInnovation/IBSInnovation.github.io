@@ -228,12 +228,12 @@
 </template>
 
 <script>
-import NavBarTop from "../components/navbars/NavBarTop.vue";
+import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { addCategorie } from "../db/fdb";
 import { useRoute } from "vue-router";
 
 export default {
-  name: "Select Sensor",
+  name: "AddCategory",
   components: {
     NavBarTop,
   },
