@@ -14,6 +14,7 @@
     </p>
   </div>
   <RegisterForm
+    v-if="showForm && !showLoginForm"
     :firebaseError="authenticationErrorFromRegister"
     @send="registerWithEmail"
     @close="closeForm"
