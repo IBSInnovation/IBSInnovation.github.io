@@ -95,7 +95,7 @@ export default {
     },
 
     addNewPatient() {
-      this.$router.push({ name: "patientCreator" });
+      this.$router.push({ name: "registerPatient" });
     },
   },
 };
