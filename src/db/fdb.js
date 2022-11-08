@@ -17,7 +17,7 @@ import {
   query,
   arrayUnion,
 } from "firebase/firestore";
-import { getUnixOfToday } from "../components/calculators/UnixCalculator.js";
+import { getUnixOfToday } from "../service/calculators/UnixCalculator.js";
 
 const db = getFirestore();
 

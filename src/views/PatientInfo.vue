@@ -86,7 +86,7 @@
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { formatBirthDateToAge } from "../components/calculators/AgeCalculator.js";
+import { formatBirthDateToAge } from "../service/calculators/AgeCalculator.js";
 import { getSinglePatient, deletePatient, getCategories } from "../db/fdb";
 import { useRoute } from "vue-router";
 import DeleteForm from "../components/forms/DeleteForm.vue";

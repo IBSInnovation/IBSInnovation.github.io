@@ -23,7 +23,7 @@
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { XsensDotSensor } from "/src/libraries/bluetooth.js";
+import { XsensDotSensor } from "/src/service/bluetooth.js";
 import store from "../store/userStore.js";
 
 var loading = false;

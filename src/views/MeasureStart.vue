@@ -56,11 +56,11 @@
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { XsensDotSensor } from "/src/libraries/bluetooth.js";
+import { XsensDotSensor } from "/src/service/bluetooth.js";
 import { addResultToCategory, getSinglePatient } from "../db/fdb";
 import { useRoute } from "vue-router";
-import jsonMovementData from "/src/libraries/movement_data.json";
-import { formatBirthDateToAge } from "../components/calculators/AgeCalculator";
+import jsonMovementData from "/src/service/movement_data.json";
+import { formatBirthDateToAge } from "../service/calculators/AgeCalculator";
 
 var measureState = "idle";
 var timer;
