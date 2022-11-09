@@ -1,7 +1,11 @@
 <template>
   <form class="form">
     <h3><b>Patiënt gegevens aanpassen</b></h3>
-    <Form :validation-schema="schema" @submit="editPatientWithFireStore">
+    <Form
+      ref="editForm"
+      :validation-schema="schema"
+      @submit="editPatientWithFireStore"
+    >
       <div class="form-group">
         <label for="email" style="font-weight: bold">Email</label>
         <Field name="email" type="email" class="form-control" />
@@ -25,7 +29,7 @@
       <div class="form-group">
         <label for="geslacht" style="font-weight: bold">Geslacht</label>
         <Field name="geslacht" type="name" class="form-control" as="select">
-          <option value="" disabled selected hidden>-</option>
+          <option value="" disabled selected hidden></option>
           <option value="Man">Man</option>
           <option value="Vrouw">Vrouw</option>
           <option value="Anders">Anders</option>
@@ -36,7 +40,7 @@
         <ErrorMessage name="geslacht" class="error-feedback" />
       </div>
       <div class="form-group">
-        <label for="date" style="font-weight: bold"> Geboorte datum</label>
+        <label for="date" style="font-weight: bold">Geboorte datum</label>
         <Field name="date" type="date" class="form-control" />
         <ErrorMessage name="date" class="error-feedback" />
       </div>
@@ -103,26 +107,19 @@ export default {
       message: "",
       schema,
       route: useRoute(),
+      age: "",
     };
   },
   mounted() {
-    // Replace the '-' with the patient's corresponding data
-    const formCollection = document.getElementsByClassName("table_data");
-    const formData = [];
-    for (let i = 0; i < formCollection.length; i++) {
-      formData.push(formCollection[i].textContent);
-    }
-
-    document.getElementsByName("email")[0].placeholder = formData[1];
-    document.getElementsByName("naam")[0].placeholder = formData[0];
-    document.getElementsByName("gewicht")[0].placeholder = formData[2];
-    document.getElementsByName("lengte")[0].placeholder = formData[3];
-
-    // document.getElementsByName("email")[0].value = formData[1];
-    // document.getElementsByName("naam")[0].value = formData[0];
-    // document.getElementsByName("gewicht")[0].value = parseFloat(formData[2]);
-    // document.getElementsByName("lengte")[0].value = parseFloat(formData[3]);
-    // // document.getElementsByName("geslacht")[0].value = formData[2];
+    // Fill edit form with current patient info from the store
+    this.$refs.editForm.setValues({
+      email: this.$store.getters.getPatientEmail,
+      naam: this.$store.getters.getPatientName,
+      gewicht: this.$store.getters.getPatientWeight,
+      lengte: this.$store.getters.getPatientLength,
+      geslacht: this.$store.getters.getPatientGender,
+      date: this.$store.getters.getPatientBirthdate,
+    });
   },
 
   methods: {
