@@ -122,16 +122,13 @@ export default {
   mounted() {
     this.getPatientData();
     this.getCategories();
-    console.log(this.categories);
   },
 
   methods: {
     async getCategories() {
       const docIdPatient = this.route.params.name;
-      console.log(docIdPatient);
       let categories = await getCategories(docIdPatient);
       this.categories = categories;
-      console.log(this.categories);
     },
     async getPatientData() {
       
