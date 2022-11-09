@@ -75,7 +75,6 @@ export async function editPatient(
   heightInM,
   email,
   gender,
-  fysiotherapeutNummer
   ) {
     const docRef = doc(db, "patienten", docKey);
     await updateDoc(docRef, {
@@ -85,7 +84,6 @@ export async function editPatient(
       heightInM: heightInM,
       email: email,
       gender: gender,
-      fysiotherapeutNummer: fysiotherapeutNummer
     });
 }
 

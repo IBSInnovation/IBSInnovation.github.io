@@ -1,7 +1,7 @@
 <template>
   <form class="form">
     <h3><b>Patiënt gegevens aanpassen</b></h3>
-    <Form :validation-schema="schema" @submit="createPatientWithFireStore">
+    <Form :validation-schema="schema" @submit="editPatientWithFireStore">
       <div class="form-group">
         <label for="email" style="font-weight: bold">Email</label>
         <Field name="email" type="email" class="form-control" />
@@ -13,24 +13,26 @@
         <ErrorMessage name="naam" class="error-feedback" />
       </div>
       <div class="form-group">
-        <label for="gewicht" style="font-weight: bold"> Gewicht (kg)</label>
+        <label for="gewicht" style="font-weight: bold">Gewicht (kg)</label>
         <Field name="gewicht" type="number" class="form-control" />
         <ErrorMessage name="gewicht" class="error-feedback" />
       </div>
       <div class="form-group">
-        <label for="lengte" style="font-weight: bold"> Lengte (m)</label>
+        <label for="lengte" style="font-weight: bold">Lengte (m)</label>
         <Field name="lengte" type="number" class="form-control" />
         <ErrorMessage name="lengte" class="error-feedback" />
       </div>
       <div class="form-group">
-        <label for="geslacht" style="font-weight: bold"> Geslacht</label>
-        <select id="geslacht" name="geslacht" class="form-control">
+        <label for="geslacht" style="font-weight: bold">Geslacht</label>
+        <Field name="geslacht" type="name" class="form-control" as="select">
           <option value="" disabled selected hidden>-</option>
-          <option value="Man"> Man</option>
-          <option value="Vrouw"> Vrouw</option>
-          <option value="Anders"> Anders</option>
-          <option value="Wil ik liever niet zeggen"> Wil ik liever niet zeggen</option>
-        </select>
+          <option value="Man">Man</option>
+          <option value="Vrouw">Vrouw</option>
+          <option value="Anders">Anders</option>
+          <option value="Wil ik liever niet zeggen">
+            Wil ik liever niet zeggen
+          </option>
+        </Field>
         <ErrorMessage name="geslacht" class="error-feedback" />
       </div>
       <div class="form-group">
@@ -39,11 +41,7 @@
         <ErrorMessage name="date" class="error-feedback" />
       </div>
       <div id="submit_btn_cover">
-        <button
-          class="registerButton"
-          style="font-weight: bold"
-          @click="editPatient()"
-        >
+        <button class="registerButton" style="font-weight: bold">
           <b>Opslaan</b>
         </button>
       </div>
@@ -68,6 +66,7 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import { editPatient } from "@/db/fdb.js";
 
 import * as yup from "yup";
+import { useRoute } from "vue-router";
 export default {
   name: "EditPatientForm",
   components: {
@@ -99,6 +98,7 @@ export default {
       loading: false,
       message: "",
       schema,
+      route: useRoute(),
     };
   },
   mounted() {
@@ -116,7 +116,17 @@ export default {
     },
 
     editPatientWithFireStore(patient) {
-      update
+      const docKey = this.route.params.name;
+
+      editPatient(
+        docKey,
+        patient.naam,
+        patient.gewicht,
+        patient.date,
+        patient.lengte,
+        patient.email,
+        patient.geslacht
+      );
 
       this.goBackToPatient();
     },
