@@ -7,8 +7,12 @@ export default new Vuex.Store({
   state: {
     user: "",
     patients: [],
+    name: null,
+    email: null,
+    weight: null,
+    length: null,
     gender: null,
-    age: null,
+    birthdate: null,
   },
   getters: {
     getUser() {
@@ -17,11 +21,23 @@ export default new Vuex.Store({
     isLogedIn() {
       return localStorage.getItem("user") !== null;
     },
+    getPatientName(state) {
+      return state.name;
+    },
+    getPatientEmail(state) {
+      return state.email;
+    },
+    getPatientWeight(state) {
+      return state.weight;
+    },
+    getPatientLength(state) {
+      return state.length;
+    },
     getPatientGender(state) {
       return state.gender;
     },
-    getPatientAge(state) {
-      return state.age;
+    getPatientBirthdate(state) {
+      return state.birthdate;
     },
     getPatientList(state) {
       return state.patients;
@@ -31,11 +47,23 @@ export default new Vuex.Store({
     changeProfilePicture(state, photoUrl) {
       state.user.photoUrl = photoUrl;
     },
+    setPatientName(state, name) {
+      state.name = name;
+    },
+    setPatientEmail(state, email) {
+      state.email = email;
+    },
+    setPatientWeight(state, weight) {
+      state.weight = weight;
+    },
+    setPatientLength(state, length) {
+      state.length = length;
+    },
     setPatientGender(state, gender) {
       state.gender = gender;
     },
-    setPatientAge(state, age) {
-      state.age = age;
+    setPatientBirthdate(state, birthdate) {
+      state.birthdate = birthdate;
     },
     setUser(state, user) {
       state.user = user;
