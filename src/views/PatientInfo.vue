@@ -137,11 +137,12 @@ export default {
     async getPatientData() {
       const docKey = this.route.params.name;
       let patient = await getSinglePatient(docKey);
+      this.$store.commit("setPatientName", patient.name);
+      this.$store.commit("setPatientEmail", patient.email);
+      this.$store.commit("setPatientWeight", patient.weight);
+      this.$store.commit("setPatientLength", patient.heightInM);
       this.$store.commit("setPatientGender", patient.gender);
-      this.$store.commit(
-        "setPatientAge",
-        formatBirthDateToAge(patient.dateOfBirth)
-      );
+      this.$store.commit("setPatientBirthdate", patient.dateOfBirth);
       this.name = patient.name;
       this.weight = patient.weight;
       this.age = formatBirthDateToAge(patient.dateOfBirth);
