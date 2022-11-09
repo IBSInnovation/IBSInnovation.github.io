@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent>
+  <form @submit.prevent>
     <h3><b>Log in met email</b></h3>
     <label for="email" style="font-weight: bold">Email</label>
     <div class="input_box">
@@ -33,8 +33,12 @@
 export default {
   name: "LoginForm",
   props: {
-    errorMessage: String,
+    errorMessage: {
+      type: String,
+      required: true,
+    },
   },
+  emits: ["send", "close"],
   data() {
     return {
       userData: { email: "", password: "" },

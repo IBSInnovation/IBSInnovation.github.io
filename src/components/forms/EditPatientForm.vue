@@ -75,8 +75,12 @@ export default {
     ErrorMessage,
   },
   props: {
-    firebaseError: String,
+    firebaseError: {
+      type: String,
+      required: true,
+    },
   },
+  emits: ["close"],
   data() {
     const schema = yup.object().shape({
       email: yup

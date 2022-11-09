@@ -104,7 +104,6 @@ export async function addCategorie(docIdPatient, type) {
   // console.log(docIdPatient);
   const docRef = doc(db, "patienten", docIdPatient);
   const colRef = collection(docRef, "excersizeCategory");
-  const map = new Map();
   setDoc(doc(colRef, type), {
     name: type,
     results: [],

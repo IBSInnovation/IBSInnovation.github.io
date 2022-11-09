@@ -34,6 +34,7 @@ export default {
   props: {
     firebaseError: String,
   },
+  emits: ["close", "delete"],
   data() {
     return {
       successful: false,

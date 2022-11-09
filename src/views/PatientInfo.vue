@@ -46,9 +46,9 @@
     <template v-for="[name] in categories" :key="docKeyCategory">
       <div class="category">
         <div class="text-holder">
-          <p>
-            <div style="max-width: 100%; word-break: break-word;"><b>{{ name }}</b></div>
-          </p>
+          <div style="max-width: 100%; word-break: break-word">
+            <b>{{ name }}</b>
+          </div>
           <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
         </div>
         <!-- TOO set param for patient -> category -> results -->
@@ -92,8 +92,6 @@ import { useRoute } from "vue-router";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import EditForm from "../components/forms/EditPatientForm.vue";
 
-
-
 export default {
   name: "PatientInfo",
   components: {
@@ -131,11 +129,13 @@ export default {
       this.categories = categories;
     },
     async getPatientData() {
-      
       const docKey = this.route.params.name;
       let patient = await getSinglePatient(docKey);
-      this.$store.commit("setPatientGender",patient.gender);
-      this.$store.commit("setPatientAge", formatBirthDateToAge(patient.dateOfBirth))
+      this.$store.commit("setPatientGender", patient.gender);
+      this.$store.commit(
+        "setPatientAge",
+        formatBirthDateToAge(patient.dateOfBirth)
+      );
       this.name = patient.name;
       this.weight = patient.weight;
       this.age = formatBirthDateToAge(patient.dateOfBirth);

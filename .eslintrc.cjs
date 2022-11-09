@@ -8,7 +8,10 @@ module.exports = {
     "eslint:recommended",
     "@vue/eslint-config-prettier",
   ],
-  rules: { "prettier/prettier": ["error", { endOfLine: "auto" }] },
+  rules: {
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
+    "vue/attribute-hyphenation": "off",
+  },
   parserOptions: {
     ecmaVersion: "latest",
   },

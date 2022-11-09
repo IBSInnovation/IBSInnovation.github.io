@@ -53,7 +53,7 @@ export default new Vuex.Store({
       state.patientEmail = "";
       localStorage.removeItem("patientEmail");
     },
-    deletePatient() {
+    deletePatient(state) {
       state.patientEmail = "";
       localStorage.removeItem("patientEmail");
     },

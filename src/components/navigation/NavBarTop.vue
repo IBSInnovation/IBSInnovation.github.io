@@ -54,6 +54,7 @@
 
 <script>
 import { logOut } from "@/db/firebaseAuth.js";
+// eslint-disable-next-line no-unused-vars
 import router from "../../router";
 
 export default {
