@@ -25,7 +25,7 @@
       <div class="form-group">
         <label for="geslacht" style="font-weight: bold">Geslacht</label>
         <Field name="geslacht" type="name" class="form-control" as="select">
-          <option value="" disabled selected hidden>-</option>
+          <option value="" disabled selected hidden></option>
           <option value="Man">Man</option>
           <option value="Vrouw">Vrouw</option>
           <option value="Anders">Anders</option>

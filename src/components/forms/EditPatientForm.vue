@@ -14,12 +14,12 @@
       </div>
       <div class="form-group">
         <label for="gewicht" style="font-weight: bold">Gewicht (kg)</label>
-        <Field name="gewicht" type="number" class="form-control" />
+        <Field name="gewicht" type="numeric" class="form-control" />
         <ErrorMessage name="gewicht" class="error-feedback" />
       </div>
       <div class="form-group">
         <label for="lengte" style="font-weight: bold">Lengte (m)</label>
-        <Field name="lengte" type="number" class="form-control" />
+        <Field name="lengte" type="numeric" class="form-control" />
         <ErrorMessage name="lengte" class="error-feedback" />
       </div>
       <div class="form-group">
@@ -103,11 +103,22 @@ export default {
   },
   mounted() {
     // Replace the '-' with the patient's corresponding data
-    document.getElementsByName("email")[0].placeholder = "-";
-    document.getElementsByName("naam")[0].placeholder = "-";
-    document.getElementsByName("geslacht")[0].placeholder = "-";
-    document.getElementsByName("gewicht")[0].placeholder = "-";
-    document.getElementsByName("lengte")[0].placeholder = "-";
+    const formCollection = document.getElementsByClassName("table_data");
+    const formData = [];
+    for (let i = 0; i < formCollection.length; i++) {
+      formData.push(formCollection[i].textContent);
+    }
+
+    document.getElementsByName("email")[0].placeholder = formData[1];
+    document.getElementsByName("naam")[0].placeholder = formData[0];
+    document.getElementsByName("gewicht")[0].placeholder = formData[2];
+    document.getElementsByName("lengte")[0].placeholder = formData[3];
+
+    // document.getElementsByName("email")[0].value = formData[1];
+    // document.getElementsByName("naam")[0].value = formData[0];
+    // document.getElementsByName("gewicht")[0].value = parseFloat(formData[2]);
+    // document.getElementsByName("lengte")[0].value = parseFloat(formData[3]);
+    // // document.getElementsByName("geslacht")[0].value = formData[2];
   },
 
   methods: {
