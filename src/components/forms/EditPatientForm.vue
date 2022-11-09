@@ -59,6 +59,7 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
+import { editPatient } from "@/db/fdb.js";
 
 import * as yup from "yup";
 export default {
@@ -108,8 +109,10 @@ export default {
       this.$emit("close");
     },
 
-    editPatient() {
-      this.$emit("edit");
+    editPatientWithFireStore(patient) {
+      update
+
+      this.goBackToPatient();
     },
   },
 };

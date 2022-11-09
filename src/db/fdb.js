@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /** ------------ Dit is tijdelijk om de functionaliteit te testen binnen nodeJS */
 // import promptSync from "prompt-sync";
 // const prompt = promptSync();
@@ -64,6 +65,28 @@ export async function addPatient(
   } catch (error) {
     console.error("Error creating patient", error);
   }
+}
+
+export async function editPatient(
+  docKey,
+  name,
+  weight,
+  dateOfBirth,
+  heightInM,
+  email,
+  gender,
+  fysiotherapeutNummer
+  ) {
+    const docRef = doc(db, "patienten", docKey);
+    await updateDoc(docRef, {
+      name: name,
+      weight: weight,
+      dateOfBirth: dateOfBirth,
+      heightInM: heightInM,
+      email: email,
+      gender: gender,
+      fysiotherapeutNummer: fysiotherapeutNummer
+    });
 }
 
 export async function getSinglePatient(docKey) {
