@@ -74,13 +74,13 @@
   </div>
   <DeleteForm
     v-if="showFormDelete && !showFormEdit"
-    @close="closeForm"
     @delete="deletePatientWithFireStore"
+    @close="closeForm"
   ></DeleteForm>
   <EditForm
     v-if="showFormEdit && !showFormDelete"
-    @close="closeForm"
     @edit="editPatient"
+    @close="closeForm"
   ></EditForm>
 </template>
 
@@ -189,6 +189,7 @@ export default {
       this.showFormDelete = false;
       this.showFormEdit = false;
       this.errorMessage = "";
+      this.getPatientData();
       return;
     },
     editPatient() {
