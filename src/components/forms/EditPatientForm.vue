@@ -24,7 +24,13 @@
       </div>
       <div class="form-group">
         <label for="geslacht" style="font-weight: bold"> Geslacht</label>
-        <Field name="geslacht" type="name" class="form-control" />
+        <select id="geslacht" name="geslacht" class="form-control">
+          <option value="" disabled selected hidden>-</option>
+          <option value="Man"> Man</option>
+          <option value="Vrouw"> Vrouw</option>
+          <option value="Anders"> Anders</option>
+          <option value="Wil ik liever niet zeggen"> Wil ik liever niet zeggen</option>
+        </select>
         <ErrorMessage name="geslacht" class="error-feedback" />
       </div>
       <div class="form-group">
