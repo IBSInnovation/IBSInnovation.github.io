@@ -13,24 +13,26 @@
         <ErrorMessage name="naam" class="error-feedback" />
       </div>
       <div class="form-group">
-        <label for="gewicht" style="font-weight: bold"> Gewicht (kg)</label>
+        <label for="gewicht" style="font-weight: bold">Gewicht (kg)</label>
         <Field name="gewicht" type="number" class="form-control" />
         <ErrorMessage name="gewicht" class="error-feedback" />
       </div>
       <div class="form-group">
-        <label for="lengte" style="font-weight: bold"> Lengte (m)</label>
+        <label for="lengte" style="font-weight: bold">Lengte (m)</label>
         <Field name="lengte" type="number" class="form-control" />
         <ErrorMessage name="lengte" class="error-feedback" />
       </div>
       <div class="form-group">
-        <label for="geslacht" style="font-weight: bold"> Geslacht</label>
-        <select id="geslacht" name="geslacht" class="form-control">
+        <label for="geslacht" style="font-weight: bold">Geslacht</label>
+        <Field name="geslacht" type="name" class="form-control" as="select">
           <option value="" disabled selected hidden>-</option>
-          <option value="Man"> Man</option>
-          <option value="Vrouw"> Vrouw</option>
-          <option value="Anders"> Anders</option>
-          <option value="Wil ik liever niet zeggen"> Wil ik liever niet zeggen</option>
-        </select>
+          <option value="Man">Man</option>
+          <option value="Vrouw">Vrouw</option>
+          <option value="Anders">Anders</option>
+          <option value="Wil ik liever niet zeggen">
+            Wil ik liever niet zeggen
+          </option>
+        </Field>
         <ErrorMessage name="geslacht" class="error-feedback" />
       </div>
       <div class="form-group">
