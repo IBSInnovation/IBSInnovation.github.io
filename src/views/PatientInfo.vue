@@ -32,7 +32,13 @@
           </td>
         </tr>
         <tr>
-          <td class="header_name"><b>leeftijd </b></td>
+          <td class="header_name"><b>Geslacht</b></td>
+          <td>
+            <div class="table_data">{{ gender }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>Leeftijd</b></td>
           <td>
             <div class="table_data">{{ age }} jaar</div>
           </td>
