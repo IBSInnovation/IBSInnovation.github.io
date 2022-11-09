@@ -32,7 +32,10 @@ export default {
     ErrorMessage,
   },
   props: {
-    firebaseError: String,
+    firebaseError: {
+      type: String,
+      default: "",
+    },
   },
   emits: ["close", "delete"],
   data() {

@@ -77,7 +77,7 @@ export default {
   props: {
     firebaseError: {
       type: String,
-      required: true,
+      default: "",
     },
   },
   emits: ["close"],
