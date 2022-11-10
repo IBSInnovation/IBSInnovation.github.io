@@ -61,7 +61,7 @@ export default {
   methods: {
     handleLogin(user) {
       this.message = "";
-      this.successful = false;
+      this.successful = false; 
       this.loading = true;
       this.$emit("send", user);
       this.successful = true;
