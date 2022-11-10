@@ -1,36 +1,21 @@
-/** ------------ Dit is tijdelijk om de functionaliteit te testen binnen nodeJS */
-// import promptSync from "prompt-sync";
-// const prompt = promptSync();
-/** ------------ Dit is tijdelijk om de functionaliteit te testen binnen nodeJS */
-
-/** IMPORTS */
 import {
   getFirestore,
   collection,
-  addDoc,
   getDocs,
   updateDoc,
   doc,
   setDoc,
   deleteDoc,
-  Timestamp,
   where,
   getDoc,
   query,
-  orderBy,
-  limit,
   arrayUnion,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-const auth = getAuth(); // Wordt gebruikt in testPatient functie
-import { getUnixOfToday } from "../controllers/unix.js";
+import { getUnixOfToday } from "@/service/calculators/UnixCalculator";
 
 const db = getFirestore();
 
-/**--------------------------- FUNCTIONS --------------------------- */
-
 export async function createFysio(name, email, uid) {
-  // https://stackoverflow.com/questions/49682327/how-to-update-a-single-firebase-firestore-document
   try {
     const fysioRef = collection(db, "fysio");
 
@@ -51,12 +36,9 @@ export async function addPatient(
   heightInM,
   email,
   gender,
-  physiotherapistNumber
+  fysiotherapeutNummer
 ) {
-  // voor het verkrijgen van de user id: https://stackoverflow.com/a/37901056
-
   try {
-    // const docRef = doc(db, "fysio", user.uid);
     const colRef = collection(db, "patienten");
     setDoc(doc(colRef), {
       name: name,
@@ -65,35 +47,54 @@ export async function addPatient(
       heightInM: heightInM,
       email: email,
       gender: gender,
-      fysiotherapeutNummer: physiotherapistNumber,
+      fysiotherapeutNummer: fysiotherapeutNummer,
     });
   } catch (error) {
     console.error("Error creating patient", error);
   }
 }
 
+export async function editPatient(
+  docKey,
+  name,
+  weight,
+  dateOfBirth,
+  heightInM,
+  email,
+  gender
+) {
+  const docRef = doc(db, "patienten", docKey);
+  await updateDoc(docRef, {
+    name: name,
+    weight: weight,
+    dateOfBirth: dateOfBirth,
+    heightInM: heightInM,
+    email: email,
+    gender: gender,
+  });
+}
+
 export async function getSinglePatient(docKey) {
   const docRef = doc(db, "patienten", docKey);
-  // const docRef = doc(db, "fysio", uid, "patienten", email);
   const docSnap = await getDoc(docRef);
   return docSnap.data();
 }
 
 export async function deletePatient(docKey) {
-  // console.log(docKey);
   const docRef = doc(db, "patienten", docKey);
   await deleteDoc(docRef);
 }
 
 export async function addCategorie(docIdPatient, type) {
-  // console.log(docIdPatient);
   const docRef = doc(db, "patienten", docIdPatient);
   const colRef = collection(docRef, "excersizeCategory");
-  const map = new Map();
-  setDoc(doc(colRef, type), {
-    name: type,
-    results: [],
-  });
+  setDoc(
+    doc(colRef, type),
+    {
+      name: type,
+    },
+    { merge: true }
+  );
 }
 
 export async function addResultToCategory(docIdPatient, type, beweging, norm) {
@@ -108,7 +109,6 @@ export async function addResultToCategory(docIdPatient, type, beweging, norm) {
 
 export async function getCategories(docIdPatient) {
   try {
-    // console.log(docIdPatient);
     let map = new Map();
     const docRef = doc(db, "patienten", docIdPatient);
     const colRef = collection(docRef, "excersizeCategory");
@@ -116,7 +116,6 @@ export async function getCategories(docIdPatient) {
     querySnapshot.forEach((doc) => {
       map.set(doc.data().name, doc.data().results);
     });
-    // console.log(map);
     return map;
   } catch (error) {
     console.error("Error getting categories", error);
@@ -129,7 +128,6 @@ export async function getCategoryResults(docIdPatient, excersizeCategory) {
   const docRef2 = doc(colRef, excersizeCategory);
 
   const docSnap = await getDoc(docRef2);
-  // console.log(docSnap.data().results);
   return docSnap.data();
 }
 
@@ -140,7 +138,6 @@ export async function deleteCategory(docIdPatient, excersizeCategory) {
   await deleteDoc(docRef2);
 }
 
-// https://firebase.google.com/docs/firestore/query-data/queries
 export async function getPatients(uid) {
   const map = new Map();
   try {
@@ -151,8 +148,6 @@ export async function getPatients(uid) {
       map.set(doc.id, doc.data());
     });
     return map;
-
-    // return list;
   } catch (error) {
     console.error("Error getting objects from Firebase Database", error);
   }
