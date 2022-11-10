@@ -58,7 +58,7 @@
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import MovementPercentageInTime from "../components/charts/MovementPercentageInTime.vue";
 import DeleteForm from "../components/forms/DeleteForm.vue";
-import { getCategoryResults, deleteCategory } from "../db/fdb";
+import { deleteCategory, getCategoryResults } from "@/db/fdb";
 import { useRoute } from "vue-router";
 
 export default {
@@ -86,26 +86,17 @@ export default {
     async getCategoryResults() {
       let docIdPatient = this.route.params.name;
       let docIdCategory = this.route.params.category;
-
-
-      // await addResultToCategory(docIdPatient, docIdCategory,90  ,"nog niet bekend");
-
       const getCategoryResultsConst = await getCategoryResults(
         docIdPatient,
         docIdCategory
       );
       const results = getCategoryResultsConst.results;
-      const name = getCategoryResultsConst.results;
       this.routeName = getCategoryResultsConst.name;
 
-      // 24-11-1998 11:20:30 van de results alle dates in een list en beweging in graden
-      // {[date]:beweging}
-
-      const graphResults = results.reduce((res, val, i) => {
+      this.graphResults = results.reduce((res, val) => {
         res[val.date] = val.beweging;
         return res;
       }, {});
-      this.graphResults = graphResults;
 
       this.results = results;
       // this.graphResults = this.results;
@@ -133,8 +124,7 @@ export default {
     },
     blurrStyle() {
       if (this.showForm) {
-        let style = "filter: blur(24px); opacity: 0.6;";
-        return style;
+        return "filter: blur(24px); opacity: 0.6;";
       } else {
         return "";
       }
@@ -146,7 +136,6 @@ export default {
     closeForm() {
       this.showForm = false;
       this.errorMessage = "";
-      return;
     },
   },
 };
