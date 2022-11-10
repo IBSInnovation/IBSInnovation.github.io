@@ -36,16 +36,16 @@ export async function login(value) {
     .catch((error) => {
       switch (error.code) {
         case "auth/invalid-email":
-          throw { succes: false, error: "Invalid email" };
+          return { succes: false, error: "Invalid email" };
         case "auth/user-not-found":
-          throw {
+          return {
             succes: false,
             error: "No account with that email was found",
           };
         case "auth/wrong-password":
-          throw { succes: false, error: "Incorrect password" };
+          return { succes: false, error: "Incorrect password" };
         default:
-          throw {
+          return {
             succes: false,
             error: "Email or password was incorrect",
           };
@@ -69,7 +69,6 @@ export async function RegisterWithGoogle() {
       const errorMessage = error.message;
       const email = error.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
-      console.log(errorCode, errorMessage, email, credential);
     });
 }
 

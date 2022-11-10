@@ -1,37 +1,37 @@
 <template>
-  <form @submit.prevent>
+  <form class="form">
     <h3><b>Log in met email</b></h3>
-    <label for="email" style="font-weight: bold">Email</label>
-    <div class="input_box">
-      <input
-        id="email_adress"
-        v-model="userData.email"
-        type="email"
-        name="emailAdress"
-      />
-    </div>
-    <label for="password" style="font-weight: bold">Wachtwoord</label>
-    <div class="input_box">
-      <input
-        id="password"
-        v-model="userData.password"
-        type="password"
-        name="password"
-      />
-    </div>
-    <div v-if="errorMessage !== ''" id="errorText">{{ errorMessage }}</div>
-    <div id="submit_btn_cover">
-      <button class="logInButton" type="submit" @click="submitForm()">
-        Login
-      </button>
-      <button class="returnButton" @click="goBackToRegister()">Terug</button>
-    </div>
+    <Form @submit="handleLogin" :validation-schema="schema">
+      <div class="form-group">
+        <label for="email" style="font-weight: bold">Email</label>
+        <Field name="email" class="form-control" />
+        <ErrorMessage name="email" class="error-feedback" />
+      </div>
+      <div class="form-group">
+        <label for="password" style="font-weight: bold">Wachtwoord</label>
+        <Field name="password" type="password" class="form-control" />
+        <ErrorMessage name="password" class="error-feedback" />
+      </div>
+      <div v-if="errorMessage !== ''" id="errorText">{{ errorMessage }}</div>
+      <div id="submit_btn_cover">
+        <button class="logInButton" type="submit">Login</button>
+        <button class="returnButton" @click="goBackToRegister()">Terug</button>
+      </div>
+    </Form>
   </form>
 </template>
 
 <script>
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
+
 export default {
   name: "LoginForm",
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
   props: {
     errorMessage: {
       type: String,
@@ -40,13 +40,32 @@ export default {
   },
   emits: ["send", "close"],
   data() {
+    const schema = yup.object().shape({
+      email: yup
+        .string()
+        .required("Dit veld is verplicht")
+        .email("Email is ongeldig"),
+      password: yup
+        .string()
+        .required("Dit veld is verplicht")
+        .min(6, "Wachtwoord moet minimaal 6 karakters zijn")
+        .max(40, "Karakter limiet bereikt"),
+    });
     return {
-      userData: { email: "", password: "" },
+      successful: false,
+      loading: false,
+      message: "",
+      schema,
     };
   },
   methods: {
-    submitForm() {
-      this.$emit("send", this.userData);
+    handleLogin(user) {
+      this.message = "";
+      this.successful = false;
+      this.loading = true;
+      this.$emit("send", user);
+      this.successful = true;
+      this.loading = false;
     },
     goBackToRegister() {
       this.$emit("close");
