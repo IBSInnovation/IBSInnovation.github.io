@@ -87,8 +87,6 @@ export default {
       let docIdPatient = this.route.params.name;
       let docIdCategory = this.route.params.category;
 
-      let age = this.$store.state.age;
-      let gender = this.$store.state.gender;
 
       // await addResultToCategory(docIdPatient, docIdCategory,90  ,"nog niet bekend");
 
@@ -123,12 +121,15 @@ export default {
         params: { name: name, category: category },
       });
     },
-    async deleteCategory() {
+    deleteCategory() {
       let docIdPatient = this.route.params.name;
       let docIdCategory = this.route.params.category;
-      await deleteCategory(docIdPatient, docIdCategory);
+      deleteCategory(docIdPatient, docIdCategory);
 
-      this.$router.push({ name: "patient" });
+      this.$router.push({
+        name: "patient",
+        params: { name: docIdPatient },
+      });
     },
     blurrStyle() {
       if (this.showForm) {
