@@ -23,7 +23,6 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const auth = getAuth(); // Wordt gebruikt in testPatient functie
-import { getUnixOfToday } from "../controllers/unix.js";
 
 const db = getFirestore();
 
