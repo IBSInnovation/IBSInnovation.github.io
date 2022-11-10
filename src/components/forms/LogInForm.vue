@@ -14,7 +14,7 @@
       </div>
       <div v-if="errorMessage !== ''" id="errorText">{{ errorMessage }}</div>
       <div id="submit_btn_cover">
-        <button class="logInButton" type="submit" @click="handleLogin()">
+        <button class="logInButton" type="submit">
           Login
         </button>
         <button class="returnButton" @click="goBackToRegister()">Terug</button>
@@ -57,11 +57,11 @@ export default {
     };
   },
   methods: {
-    handleLogin() {
+    handleLogin(user) {
       this.message = "";
       this.successful = false;
       this.loading = true;
-      this.$emit("send", this.userData);
+      this.$emit("send", user);
       this.successful = true;
       this.loading = false;
     },

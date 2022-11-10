@@ -23,7 +23,6 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const auth = getAuth(); // Wordt gebruikt in testPatient functie
-import store from "../store/userStore";
 import { getUnixOfToday } from "../controllers/unix.js";
 
 const db = getFirestore();
@@ -52,7 +51,7 @@ export async function addPatient(
   heightInM,
   email,
   gender,
-  fysiotherapeutNummer
+  physiotherapistNumber
 ) {
   // voor het verkrijgen van de user id: https://stackoverflow.com/a/37901056
 
@@ -66,7 +65,7 @@ export async function addPatient(
       heightInM: heightInM,
       email: email,
       gender: gender,
-      fysiotherapeutNummer: fysiotherapeutNummer,
+      fysiotherapeutNummer: physiotherapistNumber,
     });
   } catch (error) {
     console.error("Error creating patient", error);
