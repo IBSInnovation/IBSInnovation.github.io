@@ -2,7 +2,7 @@
   <div :style="blurrStyle()">
     <nav-bar-top></nav-bar-top>
 
-    <h1 class="title">{{ routeName }}</h1>
+    <h1 class="title">{{ capitalizeString(route.params.category) }}</h1>
     <main>
       <div class="result_container">
         <b>Meest recente metingen </b>
@@ -60,6 +60,7 @@ import MovementPercentageInTime from "../components/charts/MovementPercentageInT
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import { deleteCategory, getCategoryResults } from "@/db/fdb";
 import { useRoute } from "vue-router";
+import { capitalizeString } from "../service/CapitalizeString";
 
 export default {
   name: "ExerciseResults",
@@ -80,6 +81,7 @@ export default {
   },
   mounted() {
     this.getCategoryResults();
+    console.log(this.route.params.category);
   },
 
   methods: {
@@ -112,6 +114,7 @@ export default {
         params: { name: name, category: category },
       });
     },
+    capitalizeString,
     deleteCategory() {
       let docIdPatient = this.route.params.name;
       let docIdCategory = this.route.params.category;

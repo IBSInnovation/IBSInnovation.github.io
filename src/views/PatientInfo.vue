@@ -53,7 +53,7 @@
       <div class="category">
         <div class="text-holder">
           <div style="max-width: 100%; word-break: break-word">
-            <b>{{ capitalizeCategory(name) }}</b>
+            <b>{{ capitalizeString(name) }}</b>
           </div>
           <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
         </div>
@@ -97,6 +97,7 @@ import { getSinglePatient, deletePatient, getCategories } from "@/db/fdb";
 import { useRoute } from "vue-router";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import EditForm from "../components/forms/EditPatientForm.vue";
+import { capitalizeString } from "../service/CapitalizeString";
 
 export default {
   name: "PatientInfo",
@@ -165,17 +166,7 @@ export default {
         params: { name: docKey, category: category },
       });
     },
-    capitalizeCategory(category) {
-      var newStr = category.replace(/-/g, " ");
-      const words = newStr.split(" ");
-      console.log(words);
-
-      for (let i = 0; i < words.length; i++) {
-        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-      }
-
-      return words.join(" ");
-    },
+    capitalizeString,
     goToCategory() {
       const name = this.route.params.name;
       this.$router.push({
