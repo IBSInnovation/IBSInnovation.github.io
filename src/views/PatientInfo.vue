@@ -53,7 +53,7 @@
       <div class="category">
         <div class="text-holder">
           <div style="max-width: 100%; word-break: break-word">
-            <b>{{ name }}</b>
+            <b>{{ capitalizeCategory(name) }}</b>
           </div>
           <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
         </div>
@@ -165,7 +165,17 @@ export default {
         params: { name: docKey, category: category },
       });
     },
+    capitalizeCategory(category) {
+      var newStr = category.replace(/-/g, " ");
+      const words = newStr.split(" ");
+      console.log(words);
 
+      for (let i = 0; i < words.length; i++) {
+        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+      }
+
+      return words.join(" ");
+    },
     goToCategory() {
       const name = this.route.params.name;
       this.$router.push({
