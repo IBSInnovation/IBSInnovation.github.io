@@ -107,7 +107,7 @@ export async function addCategorie(docIdPatient, type) {
   setDoc(doc(colRef, type), {
     name: type,
     results: [],
-  });
+  }, {merge: true});
 }
 
 export async function addResultToCategory(docIdPatient, type, beweging, norm) {
