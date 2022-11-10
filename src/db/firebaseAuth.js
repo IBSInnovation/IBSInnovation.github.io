@@ -36,16 +36,16 @@ export async function login(value) {
     .catch((error) => {
       switch (error.code) {
         case "auth/invalid-email":
-          return { succes: false, error: "Invalid email" };
+          throw { succes: false, error: "Invalid email" };
         case "auth/user-not-found":
-          return {
+          throw {
             succes: false,
             error: "No account with that email was found",
           };
         case "auth/wrong-password":
-          return { succes: false, error: "Incorrect password" };
+          throw { succes: false, error: "Incorrect password" };
         default:
-          return {
+          throw {
             succes: false,
             error: "Email or password was incorrect",
           };

@@ -91,9 +91,13 @@ export default {
     },
 
     login(value) {
-      login(value).then(() => {
-        router.push({ path: "/patients" });
-      });
+      login(value)
+        .then(() => {
+          router.push({ path: "/patients" });
+        })
+        .catch((data) => {
+          window.alert(data.error);
+        });
     },
   },
 };
