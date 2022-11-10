@@ -49,7 +49,7 @@
       </button>
     </div>
 
-    <template v-for="[name] in categories" :key="docKeyCategory">
+    <template v-for="[name] in categories" :key="name.id">
       <div class="category">
         <div class="text-holder">
           <div style="max-width: 100%; word-break: break-word">

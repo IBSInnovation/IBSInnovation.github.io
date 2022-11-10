@@ -98,6 +98,7 @@ export default {
       gewicht: yup
         .number()
         .required("Dit veld is verplicht")
+        .lessThan(700, "Voer een valide gewicht in")
         .typeError("Dit veld is verplicht"),
       date: yup
         .string()

@@ -29,7 +29,6 @@
       <div class="form-group">
         <label for="geslacht" style="font-weight: bold">Geslacht</label>
         <Field name="geslacht" type="name" class="form-control" as="select">
-          <option value="" disabled selected hidden></option>
           <option value="Man">Man</option>
           <option value="Vrouw">Vrouw</option>
           <option value="Anders">Anders</option>
@@ -89,14 +88,29 @@ export default {
     const schema = yup.object().shape({
       email: yup
         .string()
+        .required("Dit veld is verplicht")
         .email("Email is ongeldig")
         .max(50, "Karakter limiet bereikt"),
-      naam: yup.string().max(50, "Karakter limiet bereikt"),
-      geslacht: yup.string().max(50, "Karakter limiet bereikt"),
-      gewicht: yup.number().typeError("Dit veld is verplicht"),
-      date: yup.string().max(50, "Karakter limiet bereikt"),
+      naam: yup
+        .string()
+        .required("Dit veld is verplicht")
+        .max(50, "Karakter limiet bereikt"),
+      geslacht: yup
+        .string()
+        .required("Dit veld is verplicht")
+        .max(50, "Karakter limiet bereikt"),
+      gewicht: yup
+        .number()
+        .required("Dit veld is verplicht")
+        .lessThan(700, "Voer een valide gewicht in")
+        .typeError("Dit veld is verplicht"),
+      date: yup
+        .string()
+        .required("Dit veld is verplicht")
+        .max(50, "Karakter limiet bereikt"),
       lengte: yup
         .number()
+        .required("Dit veld is verplicht")
         .lessThan(2.5, "Voer een valide lengte in")
         .moreThan(0, "Voer een valide lengte in")
         .typeError("Dit veld is verplicht"),
