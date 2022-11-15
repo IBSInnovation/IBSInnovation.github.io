@@ -1,30 +1,35 @@
 // Register.vue - base vue
 <template>
-  <div class="container" :style="blurrStyle()" @click="closeForm()">
-    <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
+  <div class="container-fluid" :style="blurrStyle()" @click="closeForm()">
+    <div class="registerButtons">
+      <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
 
-    <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
+      <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
 
-    <GoogleLoginButton @click="RegisterWithGoogle()"></GoogleLoginButton>
+      <GoogleLoginButton @click="RegisterWithGoogle()"></GoogleLoginButton>
 
-    <EmailLoginButton @click="showLogForm"></EmailLoginButton>
-    <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
-    <p>
-      <button class="registerBtn" @click="showRegisterForm">Registreer</button>
-    </p>
+      <EmailLoginButton @click="showLogForm"></EmailLoginButton>
+      <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
+      <p>
+        <button class="registerBtn" @click="showRegisterForm">Registreer</button>
+      </p>
+      <RegisterForm
+          v-if="showForm && !showLoginForm"
+          :firebaseError="authenticationErrorFromRegister"
+          @send="registerWithEmail"
+          @close="closeForm"
+      ></RegisterForm>
+      <LoginForm
+          v-if="showLoginForm"
+          :error-message="errorMessage"
+          @send="login"
+          @close="closeForm"
+      ></LoginForm>
+    </div>
+    <div class="background">
+      <img class="background-image" alt="hogeschool utrecht achtergrond" src="@/assets/stockImages/huImage.jpg">
+    </div>
   </div>
-  <RegisterForm
-    v-if="showForm && !showLoginForm"
-    :firebaseError="authenticationErrorFromRegister"
-    @send="registerWithEmail"
-    @close="closeForm"
-  ></RegisterForm>
-  <LoginForm
-    v-if="showLoginForm"
-    :error-message="errorMessage"
-    @send="login"
-    @close="closeForm"
-  ></LoginForm>
 </template>
 
 <script>
@@ -104,19 +109,38 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  text-align: center;
+.container-fluid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: "background register";
+  min-height: 100vh;
+  --bs-gutter-x: 0;
 }
-.title {
-  margin-top: 1em;
-}
+
 .main-text {
   color: white;
-  /* font-weight: bold; */
   margin-top: 1em;
   margin-bottom: 1em;
   font-size: 2em;
   padding: 5px;
+}
+.background {
+  grid-area: background;
+  height: 100%;
+  width: auto;
+}
+
+.background-image {
+  height: 100%;
+  width: auto;
+}
+
+.registerButtons {
+  grid-area: register;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo {
@@ -124,6 +148,7 @@ export default {
   height: auto;
   margin-top: 3em;
 }
+
 .registerBtn {
   margin: 10px;
   display: inline-block;
