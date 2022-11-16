@@ -89,6 +89,7 @@ export default {
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  border-bottom: 2px solid white;
 }
 .container-fluid1 {
   width: 100%;
