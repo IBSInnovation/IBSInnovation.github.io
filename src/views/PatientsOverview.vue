@@ -162,12 +162,13 @@ p {
 }
 
 .addPatientButton {
-  flex: 0 0 100%;
+  flex-basis: 25%;
   border: none;
   background: #0275d8;
   color: white;
   border: none;
   padding: 0.5em;
+  margin-left: 36%;
   transition: all 0.2s ease-in-out;
   border-radius: 10px;
 }
