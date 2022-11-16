@@ -12,7 +12,7 @@
             <p>
               <b>{{ patient.name }} </b>
             </p>
-            <p class="text" style="word-break: break-word">
+            <p class="text">
               {{ patient.email }}
             </p>
           </div>
@@ -25,7 +25,7 @@
 
     <div style="margin-top: 80px"></div>
     <footer>
-      <button class="seeResultsButton" @click="showPatientForm">
+      <button class="addPatientButton" @click="showPatientForm">
         <b>Patiënt toevoegen</b>
       </button>
     </footer>
@@ -102,6 +102,12 @@ export default {
 </script>
 
 <style scoped>
+main {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  margin: 0 2rem 2rem 2rem;
+}
 .title {
   color: white;
   margin-bottom: 3%;
@@ -115,15 +121,11 @@ export default {
 p {
   margin: 0;
   color: black;
+  word-break: break-word;
 }
 .patient {
   cursor: pointer;
   background: white;
-
-  margin-right: 5%;
-  margin-left: 5%;
-  margin-bottom: 2%;
-  width: 90%;
   padding: 1em;
   border: 1px solid white;
   color: white;
@@ -133,19 +135,21 @@ p {
 }
 
 .patient-text-holder {
-  margin: 20px;
+  margin: 1em 1em 2em 1em;
 }
 
-.icons {
-  font-size: 4em;
+.text {
+  font-size: 1.3em;
 }
+
 .seeResultsButton {
-  flex: 0 0 100%;
-  border: none;
+  position: relative;
+  width: 100%;
+  height: 3em;
+  bottom: 0.2em;
   background: #0275d8;
   color: white;
   border: none;
-  padding: 0.5em;
   transition: all 0.2s ease-in-out;
   border-radius: 10px;
 }
@@ -157,33 +161,15 @@ p {
   border: none;
 }
 
-/*Any Mobile Device*/
-@media only screen and (max-width: 500px) {
-  .text {
-    padding: 0;
-    font-size: 0.8em;
-  }
-}
-@media only screen and (max-width: 767px) and (min-width: 500px) {
-  .text {
-    padding: 0;
-    font-size: 0.8em;
-  }
-}
-/* everything in between */
-@media only screen and (max-width: 1281px) and (min-width: 767px) {
-  .text {
-    padding: 0;
-    font-size: 1.3em;
-  }
-}
-
-/* desktops */
-@media (min-width: 1281px) {
-  .text {
-    padding: 0;
-    font-size: 1.3em;
-  }
+.addPatientButton {
+  flex: 0 0 100%;
+  border: none;
+  background: #0275d8;
+  color: white;
+  border: none;
+  padding: 0.5em;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
 }
 
 footer {
@@ -201,5 +187,6 @@ footer {
 .userIcon {
   font-size: 4rem;
   color: #0275d8;
+  width: 100%;
 }
 </style>
