@@ -80,7 +80,7 @@ export default {
 
 <style scoped>
 .navbar1 {
-  background-color: #f8f9fa;
+  background-color: #1b2235;
   position: sticky;
   top: 0;
   display: flex;
@@ -103,21 +103,18 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-/* .item-left-side {
-  align-items: center !important;
-  display: flex !important;
-} */
 
 /* pages dropdown */
 .dropdown {
-  border: 1px solid #00a1e1;
-  border-radius: 7px;
-  background-color: #00a1e1;
+  border: 1px solid #e43a23;
+  border-radius: 18px;
+  background-color: #e43a23;
+  margin-right: 1em;
 }
 
 #dropdownMenuButton {
   text-decoration: none;
-  margin: 5px 5px;
+  padding: 5px 10px 5px 10px;
   color: #f8f9fa;
 }
 
@@ -127,7 +124,6 @@ export default {
 
 button {
   border: none;
-  background-color: #f8f9fa;
-  color: red;
+  background-color: #1b2235;
 }
 </style>
