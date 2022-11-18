@@ -6,7 +6,7 @@
 
     <main>
       <template v-for="[docKey, patient] in patients" :key="patient">
-        <div class="patient">
+        <div class="patient" @click="goToPatient(docKey)">
           <i class="bi bi-person-square userIcon"></i>
           <div class="patient-text-holder">
             <p>
@@ -126,12 +126,17 @@ p {
 .patient {
   cursor: pointer;
   background: white;
+  color: white;
   padding: 1em;
   border: 1px solid white;
-  color: white;
-  border-radius: 1em;
+  border-radius: 0.5em;
   display: flex;
   flex-wrap: wrap;
+}
+
+.patient:hover {
+  transform: scale(1.1);
+  z-index: 3;
 }
 
 .patient-text-holder {
