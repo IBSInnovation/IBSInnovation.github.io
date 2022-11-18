@@ -35,16 +35,17 @@
       </div>
     </main>
 
-    <button class="delete_categoryBtn" @click="showDeleteForm">
-      <b>Verwijder categorie</b>
-    </button>
-
     <div style="margin-top: 80px"></div>
     <footer>
-      <button class="backBtn" @click="goBackToPatient()"><b>Terug</b></button>
       <button class="addMeasurement" @click="addMeasurement()">
         <b>Niewe meting</b>
       </button>
+
+      <button class="delete_categoryBtn" @click="showDeleteForm">
+        <b>Verwijder categorie</b>
+      </button>
+
+      <button class="backBtn" @click="goBackToPatient()"><b>Terug</b></button>
     </footer>
   </div>
   <DeleteForm
@@ -208,52 +209,40 @@ th {
 }
 
 /* buttons */
-
-.addMeasurement {
-  width: 70%;
-  background-color: #0275d8;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.addMeasurement:hover {
-  background: #0161b6;
-  border: none;
-}
-
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
-}
-
+.backBtn,
+.addMeasurement,
 .delete_categoryBtn {
-  margin-left: 5%;
-  width: 90%;
-  margin-right: 5%;
-  margin-bottom: 5rem;
-  padding: 0.5rem;
-  background-color: #e6302b;
+  border: 1px solid #e43a23;
+  border-radius: 18px;
+  background-color: #e43a23;
+  margin-right: 1em;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5em;
   color: white;
   border: none;
 }
 
+.addMeasurement {
+  margin-left: 16px;
+  width: 150px;
+}
+
+.backBtn {
+  margin-left: auto;
+  width: 100px;
+}
+
+.delete_categoryBtn {
+  width: 200px;
+}
+
+.addMeasurement:hover,
+.backBtn:hover,
 .delete_categoryBtn:hover {
   background: #d3322c;
   border: none;
 }
+
 /* footer */
 
 footer {
@@ -265,6 +254,6 @@ footer {
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #1b2235;
 }
 </style>

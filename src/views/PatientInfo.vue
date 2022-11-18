@@ -70,11 +70,12 @@
 
     <div style="margin-top: 80px"></div>
     <footer>
-      <button class="backBtn" @click="goBackToPatientList()">
-        <b>Terug</b>
-      </button>
       <button class="addCategory" @click="goToCategory()">
         <b>Categorie toevoegen</b>
+      </button>
+
+      <button class="backBtn" @click="goBackToPatientList()">
+        <b>Terug</b>
       </button>
     </footer>
   </div>
@@ -309,21 +310,6 @@ table {
   border: none;
 }
 
-.addCategory {
-  width: 70%;
-  background-color: #0275d8;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.addCategory:hover {
-  background: #0161b6;
-  border: none;
-}
-
 .editButton {
   background-color: #0275d8;
   border-radius: 10px;
@@ -342,17 +328,29 @@ table {
   border: none;
 }
 
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
+.backBtn,
+.addCategory {
+  border: 1px solid #e43a23;
+  border-radius: 18px;
+  background-color: #e43a23;
+  margin-right: 1em;
   padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.5em;
+  color: white;
   border: none;
 }
 
-.backBtn:hover {
+.addCategory {
+  margin-left: 16px;
+  width: 200px;
+}
+
+.backBtn {
+  margin-left: auto;
+  width: 100px;
+}
+.backBtn:hover,
+.addCategory:hover {
   background: #d3322c;
   border: none;
 }
@@ -368,6 +366,6 @@ footer {
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #1b2235;
 }
 </style>
