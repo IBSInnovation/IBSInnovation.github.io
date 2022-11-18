@@ -188,7 +188,7 @@ body:before {
 
 .form {
   position: absolute;
-  top: 85%;
+  top: 60%;
   right: 0;
   left: 0;
   background-color: #fff;
