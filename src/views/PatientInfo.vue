@@ -73,10 +73,7 @@
       <button class="addCategory" @click="goToCategory()">
         <b>Categorie toevoegen</b>
       </button>
-
-      <button class="backBtn" @click="goBackToPatientList()">
-        <b>Terug</b>
-      </button>
+      <BackButton></BackButton>
     </footer>
   </div>
   <DeleteForm
@@ -99,6 +96,7 @@ import { useRoute } from "vue-router";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import EditForm from "../components/forms/EditPatientForm.vue";
 import { capitalizeString } from "../service/CapitalizeString";
+import BackButton from "../components/buttons/BackButton.vue";
 
 export default {
   name: "PatientInfo",
@@ -106,6 +104,7 @@ export default {
     NavBarTop,
     DeleteForm,
     EditForm,
+    BackButton,
   },
   data() {
     return {
@@ -155,9 +154,6 @@ export default {
     deletePatientWithFireStore() {
       let docKey = this.route.params.name;
       deletePatient(docKey);
-      this.$router.push({ name: "patients" });
-    },
-    goBackToPatientList() {
       this.$router.push({ name: "patients" });
     },
     goToExerciseResults(category) {
@@ -328,7 +324,6 @@ table {
   border: none;
 }
 
-.backBtn,
 .addCategory {
   border: 1px solid #e43a23;
   border-radius: 18px;
@@ -344,12 +339,6 @@ table {
   margin-left: 16px;
   width: 200px;
 }
-
-.backBtn {
-  margin-left: auto;
-  width: 100px;
-}
-.backBtn:hover,
 .addCategory:hover {
   background: #d3322c;
   border: none;
