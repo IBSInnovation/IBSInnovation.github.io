@@ -66,7 +66,6 @@
       <button class="addCategory" @click="goToCategory()">
         <b>Categorie toevoegen</b>
       </button>
-
       <button class="editButton" @click="showEditForm">
         <b>Gegevens aanpassen</b>
       </button>
@@ -75,9 +74,7 @@
         <b>Verwijder patiënt</b>
       </button>
 
-      <button class="backBtn" @click="goBackToPatientList()">
-        <b>Terug</b>
-      </button>
+      <BackButton></BackButton>
     </footer>
   </div>
   <DeleteForm
@@ -100,6 +97,7 @@ import { useRoute } from "vue-router";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import EditForm from "../components/forms/EditPatientForm.vue";
 import { capitalizeString } from "../service/CapitalizeString";
+import BackButton from "../components/buttons/BackButton.vue";
 
 export default {
   name: "PatientInfo",
@@ -107,6 +105,7 @@ export default {
     NavBarTop,
     DeleteForm,
     EditForm,
+    BackButton,
   },
   data() {
     return {
@@ -156,9 +155,6 @@ export default {
     deletePatientWithFireStore() {
       let docKey = this.route.params.name;
       deletePatient(docKey);
-      this.$router.push({ name: "patients" });
-    },
-    goBackToPatientList() {
       this.$router.push({ name: "patients" });
     },
     goToExerciseResults(category) {

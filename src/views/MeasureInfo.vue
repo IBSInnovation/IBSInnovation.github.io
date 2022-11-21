@@ -34,13 +34,12 @@
   </button>
 
   <div style="margin-top: 80px"></div>
-  <footer>
-    <button class="backBtn" @click="goBackToResults()"><b>Terug</b></button>
-  </footer>
+  <footer><BackButton></BackButton></footer>
 </template>
 
 <script>
 import { useRoute } from "vue-router";
+import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 
 var textIndex = 1;
@@ -49,6 +48,7 @@ export default {
   name: "MeasureInfo",
   components: {
     NavBarTop,
+    BackButton,
   },
 
   data() {
@@ -228,11 +228,7 @@ export default {
       this.infoBox3 = "";
       this.infoBox4 = "";
     },
-
-    goBackToResults() {
-      this.$router.push({ name: "exerciseResults", params: {} });
-    },
-    goToConnectSensor() {
+    checkConnectedSensor() {
       const patientId = this.route.params.name;
       const category = this.route.params.category;
       this.$router.push({
@@ -381,22 +377,6 @@ export default {
 }
 
 /* buttons */
-
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
-}
-
 .connectSensorButton {
   margin-left: 5%;
   margin-right: 5%;

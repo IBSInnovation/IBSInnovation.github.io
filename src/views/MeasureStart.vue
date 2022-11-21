@@ -49,9 +49,7 @@
   </div>
 
   <div style="margin-top: 80px"></div>
-  <footer>
-    <button class="backBtn" @click="goBackToSelect()"><b>Terug</b></button>
-  </footer>
+  <footer><BackButton></BackButton></footer>
 </template>
 
 <script>
@@ -61,6 +59,7 @@ import { addResultToCategory, getSinglePatient } from "../db/fdb";
 import { useRoute } from "vue-router";
 import jsonMovementData from "/src/service/movement_data.json";
 import { formatBirthDateToAge } from "../service/calculators/AgeCalculator";
+import BackButton from "../components/buttons/BackButton.vue";
 
 var measureState = "idle";
 var timer;
@@ -69,6 +68,7 @@ export default {
   name: "MeasureStart",
   components: {
     NavBarTop,
+    BackButton,
   },
 
   data() {
@@ -100,10 +100,6 @@ export default {
     },
     deleteMeasurement() {
       this.$router.push({ name: "exerciseResults", params: {} });
-    },
-    goBackToSelect() {
-      clearInterval(timer);
-      this.$router.push({ name: "selectSensor" });
     },
 
     //bron: https://dev.to/walternascimentobarroso/creating-a-timer-with-javascript-8b7
@@ -290,21 +286,6 @@ table {
 }
 
 /* buttons */
-
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
-}
 
 .measureButtonBlue {
   margin-left: 1%;

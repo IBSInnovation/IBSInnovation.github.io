@@ -15,13 +15,12 @@
       <b>Koppel sensor</b>
     </button>
 
-    <footer>
-      <button class="backBtn" @click="goBackToInfo()"><b>Terug</b></button>
-    </footer>
+    <footer><BackButton></BackButton></footer>
   </div>
 </template>
 
 <script>
+import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { XsensDotSensor } from "/src/service/bluetooth.js";
 // import store from "../store/userStore.js";
@@ -32,6 +31,7 @@ export default {
   name: "SelectSensor",
   components: {
     NavBarTop,
+    BackButton,
   },
   data() {
     return {
@@ -56,9 +56,6 @@ export default {
     // Function copied from https://masteringjs.io/tutorials/fundamentals/wait-1-second-then#:~:text=To%20delay%20a%20function%20execution,call%20fn%20after%201%20second.
     delay(time) {
       return new Promise((resolve) => setTimeout(resolve, time));
-    },
-    goBackToInfo() {
-      this.$router.push({ name: "measureInfo" });
     },
     connectSensor() {
       this.delay(100).then(() => this.connect());
@@ -153,21 +150,6 @@ export default {
 }
 
 /* buttons */
-
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
-}
 
 .connectSensorButton {
   margin-left: 5%;

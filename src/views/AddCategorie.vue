@@ -222,20 +222,20 @@
 
   <!-- EINDE MOET DYNAMISC -->
   <div style="margin-top: 80px"></div>
-  <footer>
-    <button class="backBtn" @click="goBackToPatient()"><b>Terug</b></button>
-  </footer>
+  <footer><BackButton></BackButton></footer>
 </template>
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { addCategorie } from "../db/fdb";
 import { useRoute } from "vue-router";
+import BackButton from "../components/buttons/BackButton.vue";
 
 export default {
   name: "AddCategory",
   components: {
     NavBarTop,
+    BackButton,
   },
   data() {
     return {
@@ -244,10 +244,6 @@ export default {
   },
 
   methods: {
-    goBackToPatient() {
-      this.$router.push({ name: "patient" });
-    },
-
     addSelected(type) {
       let docIdPatient = this.route.params.name;
       console.log(type);
@@ -311,23 +307,6 @@ export default {
   color: black;
   margin-bottom: 0px;
   display: inline;
-}
-
-/* buttons */
-
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
 }
 
 /* footer */

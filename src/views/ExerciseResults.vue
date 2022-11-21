@@ -44,8 +44,7 @@
       <button class="delete_categoryBtn" @click="showDeleteForm">
         <b>Verwijder categorie</b>
       </button>
-
-      <button class="backBtn" @click="goBackToPatient()"><b>Terug</b></button>
+      <BackButton></BackButton>
     </footer>
   </div>
   <DeleteForm
@@ -62,6 +61,7 @@ import DeleteForm from "../components/forms/DeleteForm.vue";
 import { deleteCategory, getCategoryResults } from "@/db/fdb";
 import { useRoute } from "vue-router";
 import { capitalizeString } from "../service/CapitalizeString";
+import BackButton from "../components/buttons/BackButton.vue";
 
 export default {
   name: "ExerciseResults",
@@ -69,6 +69,7 @@ export default {
     NavBarTop,
     MovementPercentageInTime,
     DeleteForm,
+    BackButton,
   },
 
   data() {
@@ -103,9 +104,6 @@ export default {
 
       this.results = results;
       // this.graphResults = this.results;
-    },
-    goBackToPatient() {
-      this.$router.push({ name: "patient" });
     },
     addMeasurement() {
       let name = this.route.params.name;
@@ -209,7 +207,6 @@ th {
 }
 
 /* buttons */
-.backBtn,
 .addMeasurement,
 .delete_categoryBtn {
   border: 1px solid #e43a23;
@@ -227,17 +224,11 @@ th {
   width: 150px;
 }
 
-.backBtn {
-  margin-left: auto;
-  width: 100px;
-}
-
 .delete_categoryBtn {
   width: 200px;
 }
 
 .addMeasurement:hover,
-.backBtn:hover,
 .delete_categoryBtn:hover {
   background: #d3322c;
   border: none;
