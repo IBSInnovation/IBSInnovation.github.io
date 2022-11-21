@@ -35,7 +35,7 @@ const router = createRouter({
       component: () => import("../views/ExerciseResults.vue"),
     },
     {
-      path: "/:name/:category/selectSensor",
+      path: "/selectSensor",
       name: "selectSensor",
       component: () => import("../views/SelectSensor.vue"),
     },

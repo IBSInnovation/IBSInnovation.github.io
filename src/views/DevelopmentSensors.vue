@@ -3,7 +3,7 @@ Register.vue - base vue
   <nav-bar-top></nav-bar-top>
   <h1>XsensDotSensor Development</h1>
 
-  <p><button @click="getData()">connect</button></p>
+  <p><button @click="goToSelectSensor()">connect</button></p>
   <p><button @click="sync()">synchronize</button></p>
   <input
     type="text"
@@ -94,8 +94,8 @@ export default {
     this.sensorstatus = this.XsensDotSensor.sensor_status;
   },
   methods: {
-    getData() {
-      this.XsensDotSensor.findAndConnect();
+    goToSelectSensor() {
+      this.$router.push({ name: "selectSensor" });
     },
     sync() {
       this.XsensDotSensor.getSyncStatusSensor();

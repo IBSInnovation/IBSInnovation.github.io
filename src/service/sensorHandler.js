@@ -23,12 +23,11 @@ class sensorHandler {
   }
 
   getSensor() {
-    //voor nu hebben we maar 1 sensor
-    const sensors = store.getters.getSensors;
-    if (sensors.length > 0) {
-      return store.getters.getSensors.indexOf(0);
-    }
-    return this.addToStore(this.createSensor());
+    return null;
+  }
+
+  isConnected() {
+    return true;
   }
 }
 

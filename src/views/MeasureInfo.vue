@@ -29,12 +29,8 @@
     </div>
   </main>
 
-  <button class="connectSensorButton" @click="goToConnectSensor()">
+  <button class="connectSensorButton" @click="checkConnectedSensor()">
     <b>Koppel sensor</b>
-  </button>
-
-  <button class="connectSensorButton">
-    <b>test</b>
   </button>
 
   <div style="margin-top: 80px"></div>
@@ -46,6 +42,7 @@
 <script>
 import { useRoute } from "vue-router";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
+import { sensorService } from "../service/sensorHandler";
 
 var textIndex = 1;
 
@@ -236,13 +233,19 @@ export default {
     goBackToResults() {
       this.$router.push({ name: "exerciseResults", params: {} });
     },
-    goToConnectSensor() {
+    checkConnectedSensor() {
       const patientId = this.route.params.name;
       const category = this.route.params.category;
-      this.$router.push({
-        name: "selectSensor",
-        params: { name: patientId, category: category },
-      });
+
+      const connected = sensorService.isConnected();
+      if (connected) {
+        this.$router.push({
+          name: "measure",
+          params: { name: patientId, category: category },
+        });
+      } else {
+        this.$router.push({ name: "selectSensor" });
+      }
     },
     nextPanel() {
       if (textIndex != 3) {
