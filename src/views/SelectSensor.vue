@@ -35,12 +35,7 @@ export default {
   data() {
     return {
       loadingText: "",
-      XsensDotSensor: null,
     };
-  },
-  created() {
-    this.XsensDotSensor = sensorService.createSensor();
-    console.log(this.XsensDotSensor);
   },
   mounted() {
     window.onclick = function () {
@@ -50,6 +45,9 @@ export default {
         loading = false;
       }
     };
+  },
+  created() {
+    console.log(sensorService.isConnected());
   },
 
   methods: {
@@ -66,9 +64,8 @@ export default {
       this.loadingText = "loading...";
       loading = true;
       this.loadAnimation();
-      this.XsensDotSensor.findAndConnect().then(() => {
+      sensorService.connectSensor().then(() => {
         return new Promise((resolve) => {
-          this.$router.push({ name: "measure" });
           document.getElementById("screen").style = "";
           this.loadingText = "";
           loading = false;

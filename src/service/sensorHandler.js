@@ -7,6 +7,10 @@ class sensorHandler {
     return XsensDotSensor;
   }
 
+  getSensor() {
+    return store.getters.getSensors[0];
+  }
+
   addToStore(sensor) {
     let sensorList = store.getters.getSensors;
     sensorList.push(sensor);
@@ -22,11 +26,21 @@ class sensorHandler {
     store.commit("setSensorList", sensorList);
   }
 
-  getSensor() {
-    return null;
+  connectSensor() {
+    const sensor = XsensDotSensor;
+    return sensor
+      .findAndConnect()
+      .then(() => {
+        this.addToStore(sensor);
+        return Promise.resolve();
+      })
+      .catch(() => {
+        return Promise.reject();
+      });
   }
 
   isConnected() {
+    console.log(store.getters.getSensors);
     return true;
   }
 }

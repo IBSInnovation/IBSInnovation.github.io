@@ -85,13 +85,18 @@ export default {
   },
   created() {
     window.addEventListener("beforeunload", this.handler);
-    this.XsensDotSensor = sensorService.createSensor();
-    this.batterylevel = this.XsensDotSensor.battery_level;
-    this.x = this.XsensDotSensor.rotation.x;
-    this.y = this.XsensDotSensor.rotation.y;
-    this.z = this.XsensDotSensor.rotation.z;
-    this.device_name = this.XsensDotSensor.device_name;
-    this.sensorstatus = this.XsensDotSensor.sensor_status;
+    this.XsensDotSensor = sensorService.getSensor();
+
+    if (this.XsensDotSensor != null) {
+      this.batterylevel = this.XsensDotSensor.battery_level;
+      this.x = this.XsensDotSensor.rotation.x;
+      this.y = this.XsensDotSensor.rotation.y;
+      this.z = this.XsensDotSensor.rotation.z;
+      this.device_name = this.XsensDotSensor.device_name;
+      this.sensorstatus = this.XsensDotSensor.sensor_status;
+    }
+
+    sensorService.isConnected();
   },
   methods: {
     goToSelectSensor() {

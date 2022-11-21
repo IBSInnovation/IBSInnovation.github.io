@@ -85,7 +85,7 @@ export default {
     };
   },
   created() {
-    this.XsensDotSensor = sensorService.createSensor();
+    this.XsensDotSensor = sensorService.getSensor();
   },
   methods: {
     async saveMeasurement() {
