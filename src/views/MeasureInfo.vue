@@ -33,6 +33,10 @@
     <b>Koppel sensor</b>
   </button>
 
+  <button class="connectSensorButton">
+    <b>test</b>
+  </button>
+
   <div style="margin-top: 80px"></div>
   <footer>
     <button class="backBtn" @click="goBackToResults()"><b>Terug</b></button>

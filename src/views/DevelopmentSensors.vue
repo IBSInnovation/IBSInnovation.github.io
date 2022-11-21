@@ -27,7 +27,7 @@ Register.vue - base vue
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { XsensDotSensor } from "/src/service/bluetooth.js";
+import { sensorService } from "../service/sensorHandler";
 
 export default {
   name: "DevelopmentSensors",
@@ -85,7 +85,7 @@ export default {
   },
   created() {
     window.addEventListener("beforeunload", this.handler);
-    this.XsensDotSensor = XsensDotSensor;
+    this.XsensDotSensor = sensorService.createSensor();
     this.batterylevel = this.XsensDotSensor.battery_level;
     this.x = this.XsensDotSensor.rotation.x;
     this.y = this.XsensDotSensor.rotation.y;
