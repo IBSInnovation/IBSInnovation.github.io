@@ -1,6 +1,9 @@
 // Register.vue - base vue
 <template>
-  <div class="container-fluid" :style="blurrStyle()" @click="closeForm()">
+  <div class="fullPage">
+    <div class="background">
+      <img class="background-image" alt="hogeschool utrecht achtergrond" src="@/assets/stockImages/huImage.jpg">
+    </div>
     <div class="registerButtons">
       <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
 
@@ -25,9 +28,6 @@
           @send="login"
           @close="closeForm"
       ></LoginForm>
-    </div>
-    <div class="background">
-      <img class="background-image" alt="hogeschool utrecht achtergrond" src="@/assets/stockImages/huImage.jpg">
     </div>
   </div>
 </template>
@@ -72,14 +72,6 @@ export default {
       event.stopPropagation();
       this.showForm = true;
     },
-    blurrStyle() {
-      if (this.showForm || this.showLoginForm) {
-        let style = "filter: blur(24px); opacity: 0.6;";
-        return style;
-      } else {
-        return "";
-      }
-    },
     closeForm() {
       this.showForm = false;
       this.showLoginForm = false;
@@ -109,12 +101,10 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-areas: "background register";
-  min-height: 100vh;
-  --bs-gutter-x: 0;
+.fullPage {
+  width: 100vw;
+  height: 100vh;
+  background-color: inherit;
 }
 
 .main-text {
@@ -124,23 +114,33 @@ export default {
   font-size: 2em;
   padding: 5px;
 }
+
 .background {
   grid-area: background;
   height: 100%;
-  width: auto;
+  width: 100%;
+  float: left;
+  margin: 0;
+  padding: 0;
 }
 
 .background-image {
-  height: 100%;
-  width: auto;
+  height: 100vh;
+  width: 100vw;
+  background-size: contain;
+  object-fit: cover;
 }
 
 .registerButtons {
-  grid-area: register;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  width: 800px;
+  height: 100vh;
+  overflow: auto;
+  margin-left: -800px;
+  margin-right: 0px;
+  background: #1b2236;
+  float: left;
+  padding: 90px 150px 50px 100px;
 }
 
 .logo {
