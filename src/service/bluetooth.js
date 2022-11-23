@@ -9,7 +9,6 @@ import * as THREE from 'three';
 // =========================================================================
 
 class XsensDot {
-
     constructor(verbose = true) {
         this.device = null;
         this.device_name = null;
@@ -25,11 +24,10 @@ class XsensDot {
         this.min = new THREE.Euler(Infinity, Infinity, Infinity, 'XYZ')
         this.max = new THREE.Euler(-Infinity, -Infinity, -Infinity, 'XYZ')
         this.max_angle = 0
-        this.minQuat = undefined
-        this.maxQuat = undefined
         this.ackEnum = recMsgEnum
         this.NotificationHandler = new notification_handler();
     }
+
 
     /**
      * requestDevice allows you to select a bluetooth device to connect to
@@ -439,6 +437,27 @@ class XsensDot {
         console.log("Recording duurde:", (this.rawTime / 1000).toFixed(2), "seconden")
     }
 
+}
+
+export function deserialize(data) {
+    let sensor = new XsensDot();
+    sensor.device = data.device;
+    sensor.device_name = data.device_name;
+    sensor.sensor_status = data.sensor_status;
+    sensor.onDisconnected = sensor.onDisconnected.bind(this);
+    sensor.verbose = data.verbose;
+    sensor.battery_level = data.battery_level;
+    sensor.rotation = data.rotation;
+    sensor.quaternion = data.quaternion;
+    sensor.data = data.data;
+    sensor.timeArr = data.timeArr;
+    sensor.rawTime = data.rawTime;
+    sensor.min = data.min;
+    sensor.max = data.max;
+    sensor.max_angle = data.max_angle
+    sensor.ackEnum = data.ackEnum;
+    sensor.NotificationHandler = data.NotificationHandler;
+    return sensor;
 }
 
 let XsensDotSensor = new XsensDot()

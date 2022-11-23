@@ -41,7 +41,7 @@
 import { useRoute } from "vue-router";
 import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { sensorService } from "../service/sensorHandler";
+import sensorService from "../service/sensorHandler";
 
 var textIndex = 1;
 

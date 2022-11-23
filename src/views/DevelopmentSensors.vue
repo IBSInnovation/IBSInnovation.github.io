@@ -3,7 +3,11 @@ Register.vue - base vue
   <nav-bar-top></nav-bar-top>
   <h1>XsensDotSensor Development</h1>
 
+  <p><button @click="clearList()">clear sensor list</button></p>
+
   <p><button @click="goToSelectSensor()">connect</button></p>
+  <p><button @click="goToSelectSensor()">disconnect</button></p>
+
   <p><button @click="sync()">synchronize</button></p>
   <input
     type="text"
@@ -27,7 +31,7 @@ Register.vue - base vue
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { sensorService } from "../service/sensorHandler";
+import sensorService from "../service/sensorHandler";
 
 export default {
   name: "DevelopmentSensors",
@@ -42,7 +46,6 @@ export default {
       batterylevel: 0,
       device_name: "",
       sensorstatus: "",
-      XsensDotSensor: null,
       angle: null,
     };
   },
@@ -85,40 +88,41 @@ export default {
   },
   created() {
     window.addEventListener("beforeunload", this.handler);
-    this.XsensDotSensor = sensorService.getSensor();
+    let XsensDotSensor = sensorService.getSensor();
 
-    if (this.XsensDotSensor != null) {
-      this.batterylevel = this.XsensDotSensor.battery_level;
-      this.x = this.XsensDotSensor.rotation.x;
-      this.y = this.XsensDotSensor.rotation.y;
-      this.z = this.XsensDotSensor.rotation.z;
-      this.device_name = this.XsensDotSensor.device_name;
-      this.sensorstatus = this.XsensDotSensor.sensor_status;
+    if (XsensDotSensor != null) {
+      this.batterylevel = XsensDotSensor.battery_level;
+      this.x = XsensDotSensor.rotation.x;
+      this.y = XsensDotSensor.rotation.y;
+      this.z = XsensDotSensor.rotation.z;
+      this.device_name = XsensDotSensor.device_name;
+      this.sensorstatus = XsensDotSensor.sensor_status;
     }
-
-    sensorService.isConnected();
   },
   methods: {
     goToSelectSensor() {
       this.$router.push({ name: "selectSensor" });
     },
     sync() {
-      this.XsensDotSensor.getSyncStatusSensor();
+      sensorService.getSyncStatusSensor();
     },
     identify() {
-      this.XsensDotSensor.blinkDeviceLED();
+      sensorService.blinkDeviceLED();
     },
     startDataExport() {
-      this.XsensDotSensor.downloadDataToCSV();
+      sensorService.downloadDataToCSV();
     },
     streamData() {
-      this.XsensDotSensor.startRTStream();
+      sensorService.startRTStream();
     },
     stopDataStream() {
-      this.XsensDotSensor.stopRTStream();
+      sensorService.stopRTStream();
     },
     updateDeviceName(e) {
-      this.XsensDotSensor.writeDeviceName(e.target.value.trim());
+      sensorService.writeDeviceName(e.target.value.trim());
+    },
+    clearList() {
+      sensorService.clearList();
     },
   },
 };

@@ -54,7 +54,7 @@
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { sensorService } from "../service/sensorHandler";
+import sensorService from "../service/sensorHandler";
 import { addResultToCategory, getSinglePatient } from "../db/fdb";
 import { useRoute } from "vue-router";
 import jsonMovementData from "/src/service/movement_data.json";
@@ -81,15 +81,11 @@ export default {
       button1text: "Start meting",
       norm: 0.0,
       patient: null,
-      XsensDotSensor: null,
     };
-  },
-  created() {
-    this.XsensDotSensor = sensorService.getSensor();
   },
   methods: {
     async saveMeasurement() {
-      if (!this.maxAngle == 0) {
+      if (!this.maxAngle === 0) {
         // console.log("Unix: " + getUnixOfToday())
         let docIdPatient = this.route.params.name;
         let docIdCategory = this.route.params.category;
@@ -119,11 +115,11 @@ export default {
     },
 
     async measure() {
-      if (this.XsensDotSensor.device == null) {
-        console.log("No device connected");
-      }
+      // if (this.XsensDotSensor.device == null) {
+      //   console.log("No device connected");
+      // }
       if (measureState == "idle") {
-        this.XsensDotSensor.startRTStream();
+        sensorService.startRTStream();
 
         document
           .getElementById("button1")
@@ -152,7 +148,7 @@ export default {
         clearInterval(timer);
         measureState = "results";
 
-        await this.XsensDotSensor.stopRTStream();
+        await sensorService.stopRTStream();
 
         const docKey = this.route.params.name;
         let patient = await getSinglePatient(docKey);
@@ -220,7 +216,7 @@ export default {
           TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
         }
 
-        this.maxAngle = this.XsensDotSensor.max_angle;
+        this.maxAngle = sensorService.getMaxAngle();
         this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
       } else if (measureState == "results") {
         document.getElementById("button2").style =

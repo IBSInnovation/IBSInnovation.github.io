@@ -79,6 +79,9 @@ export default new Vuex.Store({
     setSensorList(state, sensors) {
       state.sensors = sensors;
     },
+    clearList(state) {
+      state.sensors.length = 0;
+    },
   },
   actions: {
     logOutUser(state) {
