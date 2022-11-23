@@ -29,7 +29,7 @@
     </div>
   </main>
 
-  <button class="connectSensorButton" @click="goToConnectSensor()">
+  <button class="connectSensorButton" @click="checkConnectedSensor()">
     <b>Koppel sensor</b>
   </button>
 
