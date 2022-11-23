@@ -44,9 +44,6 @@
           </td>
         </tr>
       </table>
-      <button class="editButton" @click="showEditForm">
-        <b>Gegevens aanpassen</b>
-      </button>
     </div>
 
     <template v-for="[name] in categories" :key="name.id">
@@ -64,14 +61,18 @@
       </div>
     </template>
 
-    <button class="deletePatientBtn" @click="showDeleteForm">
-      <b>Verwijder patiënt</b>
-    </button>
-
     <div style="margin-top: 80px"></div>
     <footer>
       <button class="addCategory" @click="goToCategory()">
         <b>Categorie toevoegen</b>
+      </button>
+
+      <button class="editButton" @click="showEditForm">
+        <b>Gegevens aanpassen</b>
+      </button>
+
+      <button class="deletePatientBtn" @click="showDeleteForm">
+        <b>Verwijder patiënt</b>
       </button>
 
       <button class="backBtn" @click="goBackToPatientList()">
@@ -293,43 +294,15 @@ table {
   border: none;
 }
 
-.deletePatientBtn {
-  margin-left: 5%;
-  width: 90%;
-  margin-right: 5%;
-  padding: 0.5rem;
-  background-color: #e6302b;
-  margin-top: 1rem;
-  margin-bottom: 3rem;
-  color: white;
-  border: none;
-}
-
 .deletePatientBtn:hover {
   background: #d3322c;
   border: none;
 }
 
-.editButton {
-  background-color: #0275d8;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-  margin-top: 1rem;
-  margin-left: 0%;
-  width: 98%;
-  margin-right: 2%;
-}
-
-.editButton:hover {
-  background: #0161b6;
-  border: none;
-}
-
 .backBtn,
-.addCategory {
+.addCategory,
+.editButton,
+.deletePatientBtn {
   border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
@@ -345,11 +318,21 @@ table {
   width: 200px;
 }
 
+.editButton {
+  width: 200px;
+}
+
+.deletePatientBtn {
+  width: 200px;
+}
 .backBtn {
   margin-left: auto;
   width: 100px;
 }
+
 .backBtn:hover,
+.editButton:hover,
+.deletePatientBtn:hover,
 .addCategory:hover {
   background: #d3322c;
   border: none;
