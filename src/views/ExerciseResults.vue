@@ -212,18 +212,13 @@ th {
   border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
-  margin-right: 1em;
   padding-top: 0.5rem;
   padding-bottom: 0.5em;
   color: white;
   border: none;
 }
 
-.addMeasurement {
-  margin-left: 16px;
-  width: 150px;
-}
-
+.addMeasurement,
 .delete_categoryBtn {
   width: 200px;
 }
@@ -238,10 +233,11 @@ th {
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-left: 5%;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;

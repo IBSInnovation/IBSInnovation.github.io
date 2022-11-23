@@ -312,7 +312,6 @@ table {
 .editButton,
 .deletePatientBtn {
   width: 200px;
-  margin-left: 1em;
 }
 
 .editButton:hover,
@@ -327,11 +326,10 @@ table {
 footer {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 1em;
+  gap: 1em;
+  padding-left: 5%;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
