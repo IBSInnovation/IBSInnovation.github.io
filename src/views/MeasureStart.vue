@@ -115,9 +115,6 @@ export default {
     },
 
     async measure() {
-      // if (this.XsensDotSensor.device == null) {
-      //   console.log("No device connected");
-      // }
       if (measureState == "idle") {
         sensorService.startRTStream();
 

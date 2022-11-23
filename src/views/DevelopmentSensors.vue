@@ -6,7 +6,7 @@ Register.vue - base vue
   <p><button @click="clearList()">clear sensor list</button></p>
 
   <p><button @click="goToSelectSensor()">connect</button></p>
-  <p><button @click="goToSelectSensor()">disconnect</button></p>
+  <p><button @click="disconnect()">disconnect</button></p>
 
   <p><button @click="sync()">synchronize</button></p>
   <input
@@ -102,6 +102,9 @@ export default {
   methods: {
     goToSelectSensor() {
       this.$router.push({ name: "selectSensor" });
+    },
+    disconnect() {
+      sensorService.disconnectSensor();
     },
     sync() {
       sensorService.getSyncStatusSensor();

@@ -46,9 +46,6 @@ export default {
       }
     };
   },
-  created() {
-    console.log(sensorService.isConnected());
-  },
 
   methods: {
     // Function copied from https://masteringjs.io/tutorials/fundamentals/wait-1-second-then#:~:text=To%20delay%20a%20function%20execution,call%20fn%20after%201%20second.

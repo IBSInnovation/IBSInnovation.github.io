@@ -233,8 +233,7 @@ export default {
       const patientId = this.route.params.name;
       const category = this.route.params.category;
 
-      const connected = sensorService.isConnected();
-      if (connected) {
+      if (sensorService.isConnected()) {
         this.$router.push({
           name: "measure",
           params: { name: patientId, category: category },

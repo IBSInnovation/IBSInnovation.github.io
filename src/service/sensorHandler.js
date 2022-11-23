@@ -60,7 +60,10 @@ class SensorHandler {
   }
 
   isConnected() {
-    this.getSensor();
+    if (this.sensorMap.size < 1) {
+      console.log("There are no sensors properly connected");
+      return false;
+    }
     return true;
   }
 
