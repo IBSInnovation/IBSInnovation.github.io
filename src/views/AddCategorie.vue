@@ -313,13 +313,13 @@ export default {
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-left: 5%;
   position: fixed;
-  bottom: -1px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  bottom: 0;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
 }
 </style>
