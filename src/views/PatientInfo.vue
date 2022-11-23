@@ -302,31 +302,19 @@ table {
   border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
-  margin-right: 1em;
   padding-top: 0.5rem;
   padding-bottom: 0.5em;
   color: white;
   border: none;
 }
 
-.addCategory {
-  margin-left: 16px;
-  width: 200px;
-}
-
-.editButton {
-  width: 200px;
-}
-
+.addCategory,
+.editButton,
 .deletePatientBtn {
   width: 200px;
-}
-.backBtn {
-  margin-left: auto;
-  width: 100px;
+  margin-left: 1em;
 }
 
-.backBtn:hover,
 .editButton:hover,
 .deletePatientBtn:hover,
 .addCategory:hover {
@@ -338,6 +326,8 @@ table {
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 1em;
   position: fixed;
   bottom: 0;
   padding-left: 0.5rem;
