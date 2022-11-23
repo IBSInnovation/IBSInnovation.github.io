@@ -1,92 +1,93 @@
 <template>
-  <div :style="blurrStyle()">
-    <NavBarTop></NavBarTop>
+  <main>
+    <div :style="blurrStyle()">
+      <NavBarTop></NavBarTop>
 
-    <h1 class="title">{{ name }}</h1>
+      <h1 class="title">{{ name }}</h1>
 
-    <div class="info_container">
-      <b>Patiënt gegevens</b>
-      <table>
-        <tr>
-          <td class="header_name"><b class="table_content">Naam </b></td>
-          <td>
-            <div class="table_data">{{ name }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>E-mail</b></td>
-          <td>
-            <div class="table_data">{{ email }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Gewicht</b></td>
-          <td>
-            <div class="table_data">{{ weight }} kg</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Lengte</b></td>
-          <td>
-            <div class="table_data">{{ heightInM }} m</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Geslacht</b></td>
-          <td>
-            <div class="table_data">{{ gender }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Leeftijd</b></td>
-          <td>
-            <div class="table_data">{{ age }} jaar</div>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <template v-for="[name] in categories" :key="name.id">
-      <div class="category">
-        <div class="text-holder">
-          <div style="max-width: 100%; word-break: break-word">
-            <b>{{ capitalizeString(name) }}</b>
-          </div>
-          <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
-        </div>
-        <!-- TOO set param for patient -> category -> results -->
-        <button class="see-results" @click="goToExerciseResults(name)">
-          Bekijk
-        </button>
+      <div class="info_container">
+        <b>Patiënt gegevens</b>
+        <table>
+          <tr>
+            <td class="header_name"><b class="table_content">Naam </b></td>
+            <td>
+              <div class="table_data">{{ name }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>E-mail</b></td>
+            <td>
+              <div class="table_data">{{ email }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Gewicht</b></td>
+            <td>
+              <div class="table_data">{{ weight }} kg</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Lengte</b></td>
+            <td>
+              <div class="table_data">{{ heightInM }} m</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Geslacht</b></td>
+            <td>
+              <div class="table_data">{{ gender }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Leeftijd</b></td>
+            <td>
+              <div class="table_data">{{ age }} jaar</div>
+            </td>
+          </tr>
+        </table>
       </div>
-    </template>
 
-    <div style="margin-top: 80px"></div>
-    <footer>
-      <button class="addCategory" @click="goToCategory()">
-        <b>Categorie toevoegen</b>
-      </button>
-      <button class="editButton" @click="showEditForm">
-        <b>Gegevens aanpassen</b>
-      </button>
+      <template v-for="[name] in categories" :key="name.id">
+        <div class="category">
+          <div class="text-holder">
+            <div style="max-width: 100%; word-break: break-word">
+              <b>{{ capitalizeString(name) }}</b>
+            </div>
+            <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
+          </div>
+          <!-- TOO set param for patient -> category -> results -->
+          <button class="see-results" @click="goToExerciseResults(name)">
+            Bekijk
+          </button>
+        </div>
+      </template>
 
-      <button class="deletePatientBtn" @click="showDeleteForm">
-        <b>Verwijder patiënt</b>
-      </button>
+      <footer>
+        <button class="addCategory" @click="goToCategory()">
+          <b>Categorie toevoegen</b>
+        </button>
+        <button class="editButton" @click="showEditForm">
+          <b>Gegevens aanpassen</b>
+        </button>
 
-      <BackButton></BackButton>
-    </footer>
-  </div>
-  <DeleteForm
-    v-if="showFormDelete && !showFormEdit"
-    @delete="deletePatientWithFireStore"
-    @close="closeForm"
-  ></DeleteForm>
-  <EditForm
-    v-if="showFormEdit && !showFormDelete"
-    @edit="editPatient"
-    @close="closeForm"
-  ></EditForm>
+        <button class="deletePatientBtn" @click="showDeleteForm">
+          <b>Verwijder patiënt</b>
+        </button>
+
+        <BackButton></BackButton>
+      </footer>
+    </div>
+    <DeleteForm
+      v-if="showFormDelete && !showFormEdit"
+      @delete="deletePatientWithFireStore"
+      @close="closeForm"
+    ></DeleteForm>
+    <EditForm
+      v-if="showFormEdit && !showFormDelete"
+      @edit="editPatient"
+      @close="closeForm"
+    ></EditForm>
+  </main>
 </template>
 
 <script>
@@ -204,18 +205,18 @@ export default {
 </script>
 
 <style scoped>
+main {
+  padding-bottom: 50px;
+}
 .title {
   color: white;
-  margin-bottom: 3%;
-  margin-top: 3%;
+  margin-bottom: 2%;
+  margin-top: 2%;
   margin-right: 10%;
   margin-left: 10%;
   font-size: 3em;
   width: 80%;
   text-align: center;
-}
-p {
-  margin: 0;
 }
 
 .info_container {
@@ -333,6 +334,5 @@ footer {
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #1b2235;
 }
 </style>
