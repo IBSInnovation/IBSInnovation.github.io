@@ -3,36 +3,94 @@ Register.vue - base vue
   <nav-bar-top></nav-bar-top>
   <h1>XsensDotSensor Development</h1>
 
-  <p><button @click="getData()">connect</button></p>
-  <p><button @click="sync()">synchronize</button></p>
-  <input
+  <p><button @click="getData()">Connect</button></p>
+  <p><button @click="sync()">Synchronize</button></p>
+
+  <div class="info_container">
+    <table>
+      <tr>
+        <td class="header_name"><b>Device name</b></td>
+        <td>
+          <div class="table_data">{{ device_name }}</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="header_name"><b>Battery level</b></td>
+        <td>
+          <div class="table_data">{{ batterylevel }}</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="header_name"><b>Sensor status</b></td>
+        <td>
+          <div class="table_data">{{ sensorstatus }}</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="header_name"><b>x-axis</b></td>
+        <td>
+          <div class="table_data">{{ x }}</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="header_name"><b>y-axis</b></td>
+        <td>
+          <div class="table_data">{{ x }}</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="header_name"><b>z-axis</b></td>
+        <td>
+          <div class="table_data">{{ z }}</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="header_name"><b>Biggest angle</b></td>
+        <td>
+          <div class="table_data">{{ angle }}</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- <input
     type="text"
     name="device name"
-    placeholder="enter new device name"
+    placeholder=" Enter new device name"
     :value="device_name"
     @change="updateDeviceName"
-  />
-  <p><button @click="identify()">identify device</button></p>
-  <h2>Device name: {{ device_name }}</h2>
-  <h2>Battery level: {{ batterylevel }}</h2>
-  <h2>Sensor status: {{ sensorstatus }}</h2>
+  /> -->
+
+  <!-- <p><button @click="identify()">Identify device</button></p> -->
+
+  <!-- <div class="device-name">Device name: {{ device_name }}</div>
+  <div class="battery">Battery level: {{ batterylevel }}</div>
+  <div class="sensor-status">Sensor status: {{ sensorstatus }}</div> -->
+
   <p><button @click="startDataExport()">Export data</button></p>
-  <p><button @click="streamData()">Start real time streaming</button></p>
-  <p><button @click="stopDataStream()">stop real time streaming</button></p>
-  <h2>X: {{ x }}</h2>
-  <h2>Y: {{ y }}</h2>
-  <h2>Z: {{ z }}</h2>
-  <h2>Biggest angle: {{ angle }}</h2>
+  <p><button @click="streamData()">Start streaming</button></p>
+  <p><button @click="stopDataStream()">Stop streaming</button></p>
+
+  <!-- <div class="x-axis">X: {{ x }}</div>
+  <div class="y-axis">Y: {{ y }}</div>
+  <div class="z-axis">Z: {{ z }}</div>
+  <div class="biggest-angle">Biggest angle: {{ angle }}</div> -->
+
+  <footer>
+    <BackButton></BackButton>
+  </footer>
 </template>
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { XsensDotSensor } from "/src/service/bluetooth.js";
+import BackButton from "../components/buttons/BackButton.vue";
 
 export default {
   name: "DevelopmentSensors",
   components: {
     NavBarTop,
+    BackButton,
   },
   data() {
     return {
@@ -120,13 +178,49 @@ export default {
 </script>
 <style scoped>
 button {
+  border: 1px solid #e43a23;
+  border-radius: 18px;
+  background-color: #e43a23;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5em;
+  color: white;
   border: none;
-  padding: 5px 5px;
-  font-size: 18px;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: bold;
-  border-radius: 3px;
+  width: 130px;
+}
+
+.info_container {
+  margin-top: 1%;
+  height: 50%;
+  margin-right: 5%;
+  margin-left: 5%;
+  background: white;
+  border-radius: 15px;
+  width: 300px;
+  align-items: center;
+}
+
+/* patient data */
+
+tr td {
+  border: 2px solid #1b2235;
+  padding-left: 1%;
+  margin-right: 100px;
+}
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.header_name {
+  padding-left: 1%;
+  width: 130px;
+}
+
+.table_data {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 h1,
@@ -134,11 +228,41 @@ h2 {
   color: white;
 }
 
+.device-name,
+.battery,
+.sensor-status,
+.x-axis,
+.y-axis,
+.z-axis,
+.biggest-angle {
+  color: white;
+  margin: 1em 0 0 1em;
+}
+
+h1 {
+  text-align: center;
+}
+
 p,
 h1,
-h2,
 button,
 input {
   margin: 1em 0 0 1em;
+}
+
+p {
+  display: flex;
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-left: 5%;
+  position: fixed;
+  bottom: 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  width: 100%;
 }
 </style>
