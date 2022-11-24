@@ -439,26 +439,5 @@ class XsensDot {
 
 }
 
-export function deserialize(data) {
-    let sensor = new XsensDot();
-    sensor.device = data.device;
-    sensor.device_name = data.device_name;
-    sensor.sensor_status = data.sensor_status;
-    sensor.onDisconnected = sensor.onDisconnected.bind(this);
-    sensor.verbose = data.verbose;
-    sensor.battery_level = data.battery_level;
-    sensor.rotation = data.rotation;
-    sensor.quaternion = data.quaternion;
-    sensor.data = data.data;
-    sensor.timeArr = data.timeArr;
-    sensor.rawTime = data.rawTime;
-    sensor.min = data.min;
-    sensor.max = data.max;
-    sensor.max_angle = data.max_angle
-    sensor.ackEnum = data.ackEnum;
-    sensor.NotificationHandler = data.NotificationHandler;
-    return sensor;
-}
-
 let XsensDotSensor = new XsensDot()
 export { XsensDotSensor };

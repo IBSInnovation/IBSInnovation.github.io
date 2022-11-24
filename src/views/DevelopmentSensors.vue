@@ -31,13 +31,13 @@ Register.vue - base vue
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import sensorService from "../service/sensorHandler";
 
 export default {
   name: "DevelopmentSensors",
   components: {
     NavBarTop,
   },
+  inject: ["sensorHandler"],
   data() {
     return {
       x: 0,
@@ -88,7 +88,7 @@ export default {
   },
   created() {
     window.addEventListener("beforeunload", this.handler);
-    let XsensDotSensor = sensorService.getSensor();
+    let XsensDotSensor = this.sensorHandler.getSensor();
 
     if (XsensDotSensor != null) {
       this.batterylevel = XsensDotSensor.battery_level;
@@ -104,28 +104,28 @@ export default {
       this.$router.push({ name: "selectSensor" });
     },
     disconnect() {
-      sensorService.disconnectSensor();
+      this.sensorHandler.disconnectSensor();
     },
     sync() {
-      sensorService.getSyncStatusSensor();
+      this.sensorHandler.getSyncStatusSensor();
     },
     identify() {
-      sensorService.blinkDeviceLED();
+      this.sensorHandler.blinkDeviceLED();
     },
     startDataExport() {
-      sensorService.downloadDataToCSV();
+      this.sensorHandler.downloadDataToCSV();
     },
     streamData() {
-      sensorService.startRTStream();
+      this.sensorHandler.startRTStream();
     },
     stopDataStream() {
-      sensorService.stopRTStream();
+      this.sensorHandler.stopRTStream();
     },
     updateDeviceName(e) {
-      sensorService.writeDeviceName(e.target.value.trim());
+      this.sensorHandler.writeDeviceName(e.target.value.trim());
     },
     clearList() {
-      sensorService.clearList();
+      this.sensorHandler.clearList();
     },
   },
 };

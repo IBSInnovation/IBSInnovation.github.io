@@ -22,9 +22,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import "mdb-ui-kit";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import sensorHandler from "./service/sensorHandler";
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
 getFirestore();
-createApp(App).use(router).use(store).use(VueChartkick).mount("#app");
+createApp(App).use(router).use(store).use(VueChartkick).provide("sensorHandler", sensorHandler).mount("#app");

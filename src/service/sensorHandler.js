@@ -1,46 +1,29 @@
-import { deserialize, XsensDotSensor } from "./bluetooth";
+import { XsensDotSensor } from "./bluetooth";
 
 class SensorHandler {
-  constructor() {
-    // this.getSensorListIfExist();
-  }
+  constructor() {}
 
   sensorMap = new Map();
 
-  // getSensorListIfExist() {
-  //   let optionalSensorList = localStorage.getItem("sensorList");
-  //   if (optionalSensorList != null) {
-  //     let jsonSensorList = JSON.parse(optionalSensorList);
-  //
-  //     for (let i = 0; i < jsonSensorList.length; i++) {
-  //       let sensor = deserialize(jsonSensorList[i]);
-  //       this.sensorMap.set(sensor.device_name, sensor);
-  //     }
-  //   }
-  // }
-
   clearList() {
     this.sensorMap.clear();
-    // localStorage.setItem("sensorList", JSON.stringify(this.sensorMap));
   }
 
   //returned voor nu 1 enkele sensor
   getSensor() {
-    console.log(this.sensorMap.get(Array.from(this.sensorMap.keys())[0]));
+    console.log(this.sensorMap);
     return this.sensorMap.get(Array.from(this.sensorMap.keys())[0]);
   }
 
   addToSensorList(sensor) {
     this.sensorMap.set(sensor.device_name, sensor);
-    // localStorage.setItem("sensorList", JSON.stringify(this.sensorMap));
   }
 
   removeFromSensorList(sensor) {
     this.sensorMap.delete(sensor.device_name);
-    // localStorage.setItem("sensorList", JSON.stringify(this.sensorMap));
   }
 
-  connectSensor() {
+  connectToSensor() {
     const sensor = XsensDotSensor;
     return sensor
       .findAndConnect()

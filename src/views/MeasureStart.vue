@@ -54,7 +54,6 @@
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import sensorService from "../service/sensorHandler";
 import { addResultToCategory, getSinglePatient } from "../db/fdb";
 import { useRoute } from "vue-router";
 import jsonMovementData from "/src/service/movement_data.json";
@@ -70,7 +69,7 @@ export default {
     NavBarTop,
     BackButton,
   },
-
+  inject: ["sensorHandler"],
   data() {
     return {
       miliseconds: 0,
@@ -116,7 +115,7 @@ export default {
 
     async measure() {
       if (measureState == "idle") {
-        sensorService.startRTStream();
+        this.sensorHandler.startRTStream();
 
         document
           .getElementById("button1")
@@ -145,7 +144,7 @@ export default {
         clearInterval(timer);
         measureState = "results";
 
-        await sensorService.stopRTStream();
+        await this.sensorHandler.stopRTStream();
 
         const docKey = this.route.params.name;
         let patient = await getSinglePatient(docKey);
@@ -213,7 +212,7 @@ export default {
           TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
         }
 
-        this.maxAngle = sensorService.getMaxAngle();
+        this.maxAngle = this.sensorHandler.getMaxAngle();
         this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
       } else if (measureState == "results") {
         document.getElementById("button2").style =

@@ -22,7 +22,6 @@
 <script>
 import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import sensorService from "../service/sensorHandler";
 
 let loading = false;
 
@@ -32,6 +31,7 @@ export default {
     NavBarTop,
     BackButton,
   },
+  inject: ["sensorHandler"],
   data() {
     return {
       loadingText: "",
@@ -61,7 +61,7 @@ export default {
       this.loadingText = "loading...";
       loading = true;
       this.loadAnimation();
-      sensorService.connectSensor().then(() => {
+      this.sensorHandler.connectToSensor().then(() => {
         return new Promise((resolve) => {
           document.getElementById("screen").style = "";
           this.loadingText = "";

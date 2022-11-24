@@ -41,7 +41,6 @@
 import { useRoute } from "vue-router";
 import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import sensorService from "../service/sensorHandler";
 
 var textIndex = 1;
 
@@ -51,7 +50,7 @@ export default {
     NavBarTop,
     BackButton,
   },
-
+  inject: ["sensorHandler"],
   data() {
     return {
       titleText: "",
@@ -233,7 +232,7 @@ export default {
       const patientId = this.route.params.name;
       const category = this.route.params.category;
 
-      if (sensorService.isConnected()) {
+      if (this.senserHandler.isConnected()) {
         this.$router.push({
           name: "measure",
           params: { name: patientId, category: category },
