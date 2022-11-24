@@ -3,8 +3,8 @@ Register.vue - base vue
   <nav-bar-top></nav-bar-top>
   <h1>XsensDotSensor Development</h1>
 
-  <p><button @click="getData()">Connect</button></p>
-  <p><button @click="sync()">Synchronize</button></p>
+  <button @click="getData()">Connect</button>
+  <button @click="sync()">Synchronize</button>
 
   <div class="info_container">
     <table>
@@ -61,15 +61,15 @@ Register.vue - base vue
     @change="updateDeviceName"
   /> -->
 
-   <p><button @click="identify()">Identify device</button></p>
+  <button @click="identify()">Identify device</button>
 
   <!-- <div class="device-name">Device name: {{ device_name }}</div>
   <div class="battery">Battery level: {{ batterylevel }}</div>
   <div class="sensor-status">Sensor status: {{ sensorstatus }}</div> -->
 
-  <p><button @click="startDataExport()">Export data</button></p>
-  <p><button @click="streamData()">Start streaming</button></p>
-  <p><button @click="stopDataStream()">Stop streaming</button></p>
+  <button @click="startDataExport()">Export data</button>
+  <button @click="streamData()">Start streaming</button>
+  <button @click="stopDataStream()">Stop streaming</button>
 
   <!-- <div class="x-axis">X: {{ x }}</div>
   <div class="y-axis">Y: {{ y }}</div>
@@ -189,17 +189,14 @@ button {
 }
 
 .info_container {
-  margin-top: 1%;
   height: 50%;
-  margin-right: 5%;
-  margin-left: 5%;
+  margin: 1em 0 0 2em;
   background: white;
   border-radius: 15px;
   width: 300px;
   align-items: center;
+  display: flex;
 }
-
-/* patient data */
 
 tr td {
   border: 2px solid #1b2235;
@@ -226,17 +223,6 @@ table {
 h1,
 h2 {
   color: white;
-}
-
-.device-name,
-.battery,
-.sensor-status,
-.x-axis,
-.y-axis,
-.z-axis,
-.biggest-angle {
-  color: white;
-  margin: 1em 0 0 1em;
 }
 
 h1 {
