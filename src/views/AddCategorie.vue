@@ -3,7 +3,6 @@
   <h1 v-if="showCategory" class="title">Categorie toevoegen</h1>
   <h1 v-else class="title">Oefening toevoegen</h1>
 
-  <!-- MOET DYNAMISC -->
   <div class="categoryWrapper">
     <div v-show="showCategory" class="category">
       <img src="../assets/categoryImages/shouldersCategory.jpg" />
@@ -28,7 +27,7 @@
     </div>
 
     <div v-show="showCategory" class="category">
-      <img src="@/assets/categoryImages/hipCategory.jpg" @click="showHip" />
+      <img src="@/assets/categoryImages/hipCategory.jpg" />
       <div class="text">
         <h3>Heup</h3>
         <p></p>
@@ -59,7 +58,9 @@
         </button>
       </div>
     </div>
+  </div>
 
+  <div class="exerciseWrapper">
     <div v-show="showElbowExercices" class="categoryBox">
       <div class="textBox">
         <div><b class="categoryTitle">Elleboog flexie & extensie links</b></div>
@@ -68,6 +69,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('elleboog-flexie-extensie-links')"
       />
     </div>
@@ -82,6 +84,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('elleboog-flexie-extensie-rechts')"
       />
     </div>
@@ -94,6 +97,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('heup-extensie-links')"
       />
     </div>
@@ -106,6 +110,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('heup-extensie-rechts')"
       />
     </div>
@@ -118,6 +123,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('heup-flexie-links')"
       />
     </div>
@@ -130,6 +136,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('heup-flexie-rechts')"
       />
     </div>
@@ -142,6 +149,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('knie-extensie-flexie-links')"
       />
     </div>
@@ -154,6 +162,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('knie-extensie-flexie-rechts')"
       />
     </div>
@@ -166,6 +175,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('enkel-dorsaalflexie-links')"
       />
     </div>
@@ -178,6 +188,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('enkel-dorsaalflexie-rechts')"
       />
     </div>
@@ -190,6 +201,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('enkel-plantairflexie-links')"
       />
     </div>
@@ -202,6 +214,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('enkel-plantairflexie-rechts')"
       />
     </div>
@@ -214,6 +227,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('shouder-flexie-links')"
       />
     </div>
@@ -226,6 +240,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('shouder-flexie-rechts')"
       />
     </div>
@@ -238,6 +253,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('elleboog-pronatie-links')"
       />
     </div>
@@ -250,6 +266,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('elleboog-pronatie-rechts')"
       />
     </div>
@@ -262,6 +279,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('elleboog-supinatie-links')"
       />
     </div>
@@ -274,6 +292,7 @@
       <img
         class="addImage"
         src="@/assets/add.png"
+        tabindex="0"
         @click="addSelected('elleboog-supinatie-rechts')"
       />
     </div>
@@ -355,15 +374,23 @@ export default {
 
 .category img {
   max-width: 100%;
-
 }
 
 .text {
   padding: 20px;
 }
 
+.exerciseWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 330px));
+  gap: 1em;
+  align-items: stretch;
+  margin-right: 5%;
+  margin-left: 5%;
+  padding-bottom: 30px;
+}
+
 .categoryBox {
-  cursor: pointer;
   background: white;
   border: 1px solid white;
   color: white;
@@ -384,13 +411,11 @@ export default {
 }
 
 .addImage {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  cursor: pointer;
   max-width: auto;
-  height: 80px;
+  height: 70px;
   display: block;
-  margin-left: auto;
-  margin-right: 5px;
+  margin: 1.75em 1em 1em auto;
 }
 
 .textBox {
