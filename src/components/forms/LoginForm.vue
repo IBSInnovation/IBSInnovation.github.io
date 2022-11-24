@@ -14,9 +14,7 @@
       </div>
       <div v-if="errorMessage !== ''" id="errorText">{{ errorMessage }}</div>
       <div id="submit_btn_cover">
-        <button class="logInButton" type="submit">
-          Login
-        </button>
+        <button class="logInButton" type="submit">Login</button>
         <button class="returnButton" @click="goBackToRegister()">Terug</button>
       </div>
     </Form>
@@ -29,37 +27,41 @@ import * as yup from "yup";
 
 export default {
   name: "LoginForm",
-  props: {
-    errorMessage: String,
-  },
   components: {
     Form,
     Field,
     ErrorMessage,
   },
+  props: {
+    errorMessage: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ["send", "close"],
   data() {
     const schema = yup.object().shape({
       email: yup
-          .string()
-          .required("Dit veld is verplicht")
-          .email("Email is ongeldig"),
+        .string()
+        .required("Dit veld is verplicht")
+        .email("Email is ongeldig"),
       password: yup
-          .string()
-          .required("Dit veld is verplicht")
-          .min(6, "Wachtwoord moet minimaal 6 karakters zijn")
-          .max(40, "Karakter limiet bereikt")
-    })
+        .string()
+        .required("Dit veld is verplicht")
+        .min(6, "Wachtwoord moet minimaal 6 karakters zijn")
+        .max(40, "Karakter limiet bereikt"),
+    });
     return {
       successful: false,
       loading: false,
       message: "",
-      schema
+      schema,
     };
   },
   methods: {
     handleLogin(user) {
       this.message = "";
-      this.successful = false;
+      this.successful = false; 
       this.loading = true;
       this.$emit("send", user);
       this.successful = true;

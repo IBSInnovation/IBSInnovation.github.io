@@ -1,93 +1,93 @@
 <template>
-  <div :style="blurrStyle()">
-    <NavBarTop></NavBarTop>
+  <main>
+    <div :style="blurrStyle()">
+      <NavBarTop></NavBarTop>
 
-    <h1 class="title">{{ name }}</h1>
+      <h1 class="title">{{ name }}</h1>
 
-    <div class="info_container">
-      <b>Patiënt gegevens</b>
-      <table>
-        <tr>
-          <td class="header_name"><b class="table_content">Naam </b></td>
-          <td>
-            <div class="table_data">{{ name }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>E-mail</b></td>
-          <td>
-            <div class="table_data">{{ email }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Gewicht</b></td>
-          <td>
-            <div class="table_data">{{ weight }} kg</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Lengte</b></td>
-          <td>
-            <div class="table_data">{{ heightInM }} m</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Geslacht</b></td>
-          <td>
-            <div class="table_data">{{ gender }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Leeftijd</b></td>
-          <td>
-            <div class="table_data">{{ age }} jaar</div>
-          </td>
-        </tr>
-      </table>
-      <button class="editButton" @click="showEditForm">
-        <b>Gegevens aanpassen</b>
-      </button>
-    </div>
-
-    <template v-for="[name] in categories" :key="name.id">
-      <div class="category">
-        <div class="text-holder">
-          <div style="max-width: 100%; word-break: break-word">
-            <b>{{ name }}</b>
-          </div>
-          <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
-        </div>
-        <!-- TOO set param for patient -> category -> results -->
-        <button class="see-results" @click="goToExerciseResults(name)">
-          Bekijk
-        </button>
+      <div class="info_container">
+        <b>Patiënt gegevens</b>
+        <table>
+          <tr>
+            <td class="header_name"><b class="table_content">Naam </b></td>
+            <td>
+              <div class="table_data">{{ name }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>E-mail</b></td>
+            <td>
+              <div class="table_data">{{ email }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Gewicht</b></td>
+            <td>
+              <div class="table_data">{{ weight }} kg</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Lengte</b></td>
+            <td>
+              <div class="table_data">{{ heightInM }} m</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Geslacht</b></td>
+            <td>
+              <div class="table_data">{{ gender }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Leeftijd</b></td>
+            <td>
+              <div class="table_data">{{ age }} jaar</div>
+            </td>
+          </tr>
+        </table>
       </div>
-    </template>
 
-    <button class="deletePatientBtn" @click="showDeleteForm">
-      <b>Verwijder patiënt</b>
-    </button>
+      <template v-for="[name] in categories" :key="name.id">
+        <div class="category">
+          <div class="text-holder">
+            <div style="max-width: 100%; word-break: break-word">
+              <b>{{ capitalizeString(name) }}</b>
+            </div>
+            <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
+          </div>
+          <!-- TOO set param for patient -> category -> results -->
+          <button class="see-results" @click="goToExerciseResults(name)">
+            Bekijk
+          </button>
+        </div>
+      </template>
 
-    <div style="margin-top: 80px"></div>
-    <footer>
-      <button class="backBtn" @click="goBackToPatientList()">
-        <b>Terug</b>
-      </button>
-      <button class="addCategory" @click="goToCategory()">
-        <b>Categorie toevoegen</b>
-      </button>
-    </footer>
-  </div>
-  <DeleteForm
-    v-if="showFormDelete && !showFormEdit"
-    @delete="deletePatientWithFireStore"
-    @close="closeForm"
-  ></DeleteForm>
-  <EditForm
-    v-if="showFormEdit && !showFormDelete"
-    @edit="editPatient"
-    @close="closeForm"
-  ></EditForm>
+      <footer>
+        <button class="addCategory" @click="goToCategory()">
+          <b>Categorie toevoegen</b>
+        </button>
+        <button class="editButton" @click="showEditForm">
+          <b>Gegevens aanpassen</b>
+        </button>
+
+        <button class="deletePatientBtn" @click="showDeleteForm">
+          <b>Verwijder patiënt</b>
+        </button>
+
+        <BackButton></BackButton>
+      </footer>
+    </div>
+    <DeleteForm
+      v-if="showFormDelete && !showFormEdit"
+      @delete="deletePatientWithFireStore"
+      @close="closeForm"
+    ></DeleteForm>
+    <EditForm
+      v-if="showFormEdit && !showFormDelete"
+      @edit="editPatient"
+      @close="closeForm"
+    ></EditForm>
+  </main>
 </template>
 
 <script>
@@ -97,6 +97,8 @@ import { getSinglePatient, deletePatient, getCategories } from "@/db/fdb";
 import { useRoute } from "vue-router";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import EditForm from "../components/forms/EditPatientForm.vue";
+import { capitalizeString } from "../service/CapitalizeString";
+import BackButton from "../components/buttons/BackButton.vue";
 
 export default {
   name: "PatientInfo",
@@ -104,6 +106,7 @@ export default {
     NavBarTop,
     DeleteForm,
     EditForm,
+    BackButton,
   },
   data() {
     return {
@@ -155,9 +158,6 @@ export default {
       deletePatient(docKey);
       this.$router.push({ name: "patients" });
     },
-    goBackToPatientList() {
-      this.$router.push({ name: "patients" });
-    },
     goToExerciseResults(category) {
       let docKey = this.route.params.name;
       this.$router.push({
@@ -165,7 +165,7 @@ export default {
         params: { name: docKey, category: category },
       });
     },
-
+    capitalizeString,
     goToCategory() {
       const name = this.route.params.name;
       this.$router.push({
@@ -205,18 +205,18 @@ export default {
 </script>
 
 <style scoped>
+main {
+  padding-bottom: 50px;
+}
 .title {
   color: white;
-  margin-bottom: 3%;
-  margin-top: 3%;
+  margin-bottom: 2%;
+  margin-top: 2%;
   margin-right: 10%;
   margin-left: 10%;
   font-size: 3em;
   width: 80%;
   text-align: center;
-}
-p {
-  margin: 0;
 }
 
 .info_container {
@@ -291,67 +291,33 @@ table {
   border: none;
 }
 
-.deletePatientBtn {
-  margin-left: 5%;
-  width: 90%;
-  margin-right: 5%;
-  padding: 0.5rem;
-  background-color: #e6302b;
-  margin-top: 1rem;
-  margin-bottom: 3rem;
-  color: white;
-  border: none;
-}
-
 .deletePatientBtn:hover {
   background: #d3322c;
   border: none;
 }
 
-.addCategory {
-  width: 70%;
-  background-color: #0275d8;
-  border-radius: 10px;
-  color: #f8f9fa;
+.backBtn,
+.addCategory,
+.editButton,
+.deletePatientBtn {
+  border: 1px solid #e43a23;
+  border-radius: 18px;
+  background-color: #e43a23;
   padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.5em;
+  color: white;
   border: none;
 }
 
+.addCategory,
+.editButton,
+.deletePatientBtn {
+  width: 200px;
+}
+
+.editButton:hover,
+.deletePatientBtn:hover,
 .addCategory:hover {
-  background: #0161b6;
-  border: none;
-}
-
-.editButton {
-  background-color: #0275d8;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-  margin-top: 1rem;
-  margin-left: 0%;
-  width: 98%;
-  margin-right: 2%;
-}
-
-.editButton:hover {
-  background: #0161b6;
-  border: none;
-}
-
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
   background: #d3322c;
   border: none;
 }
@@ -360,13 +326,13 @@ table {
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-left: 5%;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
 }
 </style>

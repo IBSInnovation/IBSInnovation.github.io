@@ -12,30 +12,17 @@
         />
       </button>
       <div class="item-left-side">
-        <p class="userName">
-          {{ getDisplayName() }}
-        </p>
         <div class="dropdown">
           <a
-            id="navbarDropdownMenuAvatar"
+            id="dropdownMenuButton"
             class="dropdown-toggle d-flex align-items-center hidden-arrow"
-            href="#"
-            role="button"
             data-mdb-toggle="dropdown"
+            aria-haspopup="true"
             aria-expanded="false"
           >
-            <img
-              src="@/assets/blackImage.jpg"
-              class="rounded-circle"
-              height="30"
-              alt="profile picture"
-              loading="lazy"
-            />
+            {{ getDisplayName() }}
           </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuAvatar"
-          >
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li>
               <a class="dropdown-item" @click="logOut()">Log uit</a>
             </li>
@@ -93,7 +80,7 @@ export default {
 
 <style scoped>
 .navbar1 {
-  background-color: #f8f9fa;
+  background-color: #1b2235;
   position: sticky;
   top: 0;
   display: flex;
@@ -102,6 +89,7 @@ export default {
   justify-content: space-between;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  border-bottom: 2px solid white;
 }
 .container-fluid1 {
   width: 100%;
@@ -116,36 +104,27 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-.item-left-side {
-  align-items: center !important;
-  display: flex !important;
-}
-
-/* dropdown for the logout en user settings */
-.dropdown-menu.show {
-  right: 20px;
-}
-/* notification button */
-.badge {
-  font-size: 1em;
-}
 
 /* pages dropdown */
+.dropdown {
+  border: 1px solid #e43a23;
+  border-radius: 18px;
+  background-color: #e43a23;
+  margin-right: 1em;
+}
 
-.userName {
-  margin-right: 10px;
-  margin-top: 10px;
-  color: red;
+#dropdownMenuButton {
+  text-decoration: none;
+  padding: 5px 10px 5px 10px;
+  color: #f8f9fa;
+}
+
+#dropdownMenuButton:hover {
+  cursor: pointer;
 }
 
 button {
   border: none;
-  background-color: #f8f9fa;
-  color: red;
-}
-
-.navbar {
-  position: sticky;
-  top: 0;
+  background-color: #1b2235;
 }
 </style>

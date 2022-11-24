@@ -27,30 +27,30 @@ export async function registerWithEmail(value) {
 export async function login(value) {
   const auth = getAuth();
   return signInWithEmailAndPassword(auth, value.email, value.password)
-      .then((userCredential) => {
-          const user = userCredential.user;
-          store.commit("setUser", user);
-          createFysio("", user.email, user.uid);
-          return {succes: true, errorMessage: ""};
-      })
-      .catch((error) => {
-          switch (error.code) {
-              case "auth/invalid-email":
-                  return {succes: false, error: "Invalid email"};
-              case "auth/user-not-found":
-                  return {
-                      succes: false,
-                      error: "No account with that email was found",
-                  };
-              case "auth/wrong-password":
-                  return {succes: false, error: "Incorrect password"};
-              default:
-                  return {
-                      succes: false,
-                      error: "Email or password was incorrect",
-                  };
-          }
-      });
+    .then((userCredential) => {
+      const user = userCredential.user;
+      store.commit("setUser", user);
+      createFysio("", user.email, user.uid);
+      return { succes: true, errorMessage: "" };
+    })
+    .catch((error) => {
+      switch (error.code) {
+        case "auth/invalid-email":
+          throw { succes: false, error: "Invalid email" };
+        case "auth/user-not-found":
+          throw {
+            succes: false,
+            error: "No account with that email was found",
+          };
+        case "auth/wrong-password":
+          throw { succes: false, error: "Incorrect password" };
+        default:
+          throw {
+            succes: false,
+            error: "Email or password was incorrect",
+          };
+      }
+    });
 }
 
 export async function RegisterWithGoogle() {

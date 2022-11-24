@@ -129,6 +129,11 @@ button {
   border-radius: 3px;
 }
 
+h1,
+h2 {
+  color: white;
+}
+
 p,
 h1,
 h2,
