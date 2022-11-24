@@ -1,9 +1,19 @@
-import { XsensDotSensor } from "./bluetooth";
+import XsensDot from "./xSensDot";
+import FakeXSensDot from "./fakeXSensDot";
 
 class SensorHandler {
   constructor() {}
 
   sensorMap = new Map();
+
+  giveFakeOrRealSensor() {
+    if (localStorage.getItem("development")) {
+      console.log("fake");
+      return new FakeXSensDot();
+    } else {
+      return new XsensDot();
+    }
+  }
 
   clearList() {
     this.sensorMap.clear();
@@ -24,7 +34,7 @@ class SensorHandler {
   }
 
   connectToSensor() {
-    const sensor = XsensDotSensor;
+    const sensor = this.giveFakeOrRealSensor();
     return sensor
       .findAndConnect()
       .then(() => {

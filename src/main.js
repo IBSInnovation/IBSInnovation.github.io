@@ -27,5 +27,13 @@ import sensorHandler from "./service/sensorHandler";
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
+let development = true;
+localStorage.setItem("development", development);
+
 getFirestore();
-createApp(App).use(router).use(store).use(VueChartkick).provide("sensorHandler", sensorHandler).mount("#app");
+createApp(App)
+  .use(router)
+  .use(store)
+  .use(VueChartkick)
+  .provide("sensorHandler", sensorHandler)
+  .mount("#app");
