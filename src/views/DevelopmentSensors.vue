@@ -3,54 +3,65 @@ Register.vue - base vue
   <nav-bar-top></nav-bar-top>
   <h1>XsensDotSensor Development</h1>
 
-  <button @click="getData()">Connect</button>
-  <button @click="sync()">Synchronize</button>
+  <div class="flexWrapper">
+    <div class="sensorButtons1">
+      <button @click="getData">Connect</button>
+      <button @click="sync">Synchronize</button>
+      <button @click="identify">Identify device</button>
+    </div>
 
-  <div class="info_container">
-    <table>
-      <tr>
-        <td class="header_name"><b>Device name</b></td>
-        <td>
-          <div class="table_data">{{ device_name }}</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>Battery level</b></td>
-        <td>
-          <div class="table_data">{{ batterylevel }}</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>Sensor status</b></td>
-        <td>
-          <div class="table_data">{{ sensorstatus }}</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>x-axis</b></td>
-        <td>
-          <div class="table_data">{{ x }}</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>y-axis</b></td>
-        <td>
-          <div class="table_data">{{ x }}</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>z-axis</b></td>
-        <td>
-          <div class="table_data">{{ z }}</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>Biggest angle</b></td>
-        <td>
-          <div class="table_data">{{ angle }}</div>
-        </td>
-      </tr>
-    </table>
+    <div class="info_container">
+      <table>
+        <tr>
+          <td class="header_name"><b>Device name</b></td>
+          <td>
+            <div class="table_data">{{ device_name }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>Battery level</b></td>
+          <td>
+            <div class="table_data">{{ batterylevel }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>Sensor status</b></td>
+          <td>
+            <div class="table_data">{{ sensorstatus }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>x-axis</b></td>
+          <td>
+            <div class="table_data">{{ x }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>y-axis</b></td>
+          <td>
+            <div class="table_data">{{ x }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>z-axis</b></td>
+          <td>
+            <div class="table_data">{{ z }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>Biggest angle</b></td>
+          <td>
+            <div class="table_data">{{ angle }}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="sensorButtons2">
+      <button @click="startDataExport">Export data</button>
+      <button @click="streamData">Start streaming</button>
+      <button @click="stopDataStream">Stop streaming</button>
+    </div>
   </div>
 
   <!-- <input
@@ -60,16 +71,6 @@ Register.vue - base vue
     :value="device_name"
     @change="updateDeviceName"
   /> -->
-
-  <button @click="identify()">Identify device</button>
-
-  <!-- <div class="device-name">Device name: {{ device_name }}</div>
-  <div class="battery">Battery level: {{ batterylevel }}</div>
-  <div class="sensor-status">Sensor status: {{ sensorstatus }}</div> -->
-
-  <button @click="startDataExport()">Export data</button>
-  <button @click="streamData()">Start streaming</button>
-  <button @click="stopDataStream()">Stop streaming</button>
 
   <!-- <div class="x-axis">X: {{ x }}</div>
   <div class="y-axis">Y: {{ y }}</div>
@@ -176,7 +177,35 @@ export default {
   },
 };
 </script>
+
 <style scoped>
+h1 {
+  color: white;
+  text-align: center;
+  margin: 1em;
+}
+
+.flexWrapper {
+  display: flex;
+  gap: 4em;
+  flex-wrap: wrap-reverse;
+  margin-left: 5%;
+}
+
+.sensorButtons1,
+.sensorButtons2 {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  flex-wrap: wrap;
+}
+
+.sensorButtons2 {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 1em;
+}
+
 button {
   border: 1px solid #e43a23;
   border-radius: 18px;
@@ -185,12 +214,12 @@ button {
   padding-bottom: 0.5em;
   color: white;
   border: none;
+  font-weight: bolder;
   width: 130px;
 }
 
 .info_container {
   height: 50%;
-  margin: 1em 0 0 2em;
   background: white;
   border-radius: 15px;
   width: 300px;
@@ -218,26 +247,6 @@ table {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-h1,
-h2 {
-  color: white;
-}
-
-h1 {
-  text-align: center;
-}
-
-p,
-h1,
-button,
-input {
-  margin: 1em 0 0 1em;
-}
-
-p {
-  display: flex;
 }
 
 footer {
