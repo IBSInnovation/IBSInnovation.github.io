@@ -61,7 +61,7 @@ Register.vue - base vue
     @change="updateDeviceName"
   /> -->
 
-  <!-- <p><button @click="identify()">Identify device</button></p> -->
+   <p><button @click="identify()">Identify device</button></p>
 
   <!-- <div class="device-name">Device name: {{ device_name }}</div>
   <div class="battery">Battery level: {{ batterylevel }}</div>
