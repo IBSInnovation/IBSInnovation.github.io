@@ -6,43 +6,58 @@
   <!-- MOET DYNAMISC -->
   <div class="categoryWrapper">
     <div v-show="showCategory" class="category">
-      <div class="textBox">
-        <div><b class="categoryTitle">Schouder</b></div>
-        <div class="categorySubText"></div>
+      <img src="../assets/categoryImages/shouldersCategory.jpg" />
+      <div class="text">
+        <h3>Schouder</h3>
+        <p></p>
+        <button class="btn btn-primary" @click="showShoulder">
+          Ga naar categorie
+        </button>
       </div>
-      <img class="addImage" src="@/assets/add.png" @click="showShoulder" />
     </div>
 
     <div v-show="showCategory" class="category">
-      <div class="textBox">
-        <div><b class="categoryTitle">Elleboog</b></div>
-        <div class="categorySubText"></div>
+      <img src="@/assets/categoryImages/elbowCategory.jpg" />
+      <div class="text">
+        <h3>Elleboog</h3>
+        <p></p>
+        <button class="btn btn-primary" @click="showElbow">
+          Ga naar categorie
+        </button>
       </div>
-      <img class="addImage" src="@/assets/add.png" @click="showElbow" />
     </div>
 
     <div v-show="showCategory" class="category">
-      <div class="textBox">
-        <div><b class="categoryTitle">Heup</b></div>
-        <div class="categorySubText"></div>
+      <img src="@/assets/categoryImages/hipCategory.jpg" @click="showHip" />
+      <div class="text">
+        <h3>Heup</h3>
+        <p></p>
+        <button class="btn btn-primary" @click="showHip">
+          Ga naar categorie
+        </button>
       </div>
-      <img class="addImage" src="@/assets/add.png" @click="showHip" />
     </div>
 
     <div v-show="showCategory" class="category">
-      <div class="textBox">
-        <div><b class="categoryTitle">Knie</b></div>
-        <div class="categorySubText"></div>
+      <img src="@/assets/categoryImages/kneeCategory.jpg" />
+      <div class="text">
+        <h3>Knie</h3>
+        <p></p>
+        <button class="btn btn-primary" @click="showKnee">
+          Ga naar categorie
+        </button>
       </div>
-      <img class="addImage" src="@/assets/add.png" @click="showKnee" />
     </div>
 
     <div v-show="showCategory" class="category">
-      <div class="textBox">
-        <div><b class="categoryTitle">Enkel</b></div>
-        <div class="categorySubText"></div>
+      <img src="@/assets/categoryImages/ankleCategory.jpg" />
+      <div class="text">
+        <h3>Enkel</h3>
+        <p></p>
+        <button class="btn btn-primary" @click="showAnkle">
+          Ga naar categorie
+        </button>
       </div>
-      <img class="addImage" src="@/assets/add.png" @click="showAnkle" />
     </div>
 
     <div v-show="showElbowExercices" class="categoryBox">
@@ -326,15 +341,28 @@ export default {
 <style scoped>
 .categoryWrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1em;
+  align-items: stretch;
   margin-right: 5%;
   margin-left: 5%;
   padding-bottom: 30px;
 }
 
-.categoryBox,
 .category {
+  background-color: #fff;
+}
+
+.category img {
+  max-width: 100%;
+
+}
+
+.text {
+  padding: 20px;
+}
+
+.categoryBox {
   cursor: pointer;
   background: white;
   border: 1px solid white;
