@@ -1,5 +1,5 @@
 import XsensDot from "./xSensDot";
-import FakeXSensDot from "./fakeXSensDot";
+import FakeXSensDot from "../../test/fakeXSensDot";
 
 class SensorHandler {
   constructor() {}
@@ -8,7 +8,7 @@ class SensorHandler {
 
   giveFakeOrRealSensor() {
     if (localStorage.getItem("development")) {
-      console.log("fake");
+      console.log("Using a fake sensor");
       return new FakeXSensDot();
     } else {
       return new XsensDot();

@@ -32,27 +32,27 @@ export default class XsensDot {
     /**
      * requestDevice allows you to select a bluetooth device to connect to
      */
-    async #request() {
-        this.device = await navigator.bluetooth.requestDevice({
-        filters: [{ manufacturerData: [{ companyIdentifier: 0x0886 }] }], //Xsens Technologies B.V. bluetooth identifier (decimal: 2182, hex: 0x0886)
-        optionalServices: [(prefix + serviceEnum.battery_service       + suffix),
-                           (prefix + serviceEnum.measurement_service   + suffix),
-                           (prefix + serviceEnum.configuration_service + suffix),
-                           (prefix + serviceEnum.message_service       + suffix)]
-        })
-        this.device.addEventListener('gattserverdisconnected', this.#onDisconnected);
-    }
+    // async #request() {
+    //     this.device = await navigator.bluetooth.requestDevice({
+    //     filters: [{ manufacturerData: [{ companyIdentifier: 0x0886 }] }], //Xsens Technologies B.V. bluetooth identifier (decimal: 2182, hex: 0x0886)
+    //     optionalServices: [(prefix + serviceEnum.battery_service       + suffix),
+    //                        (prefix + serviceEnum.measurement_service   + suffix),
+    //                        (prefix + serviceEnum.configuration_service + suffix),
+    //                        (prefix + serviceEnum.message_service       + suffix)]
+    //     })
+    //     this.device.addEventListener('gattserverdisconnected', this.#onDisconnected);
+    // }
 
     /**
      * connect allows you to connect to the selected device
      */
-    connect() {
-        if (!this.device) {
-            this.sensor_status = "disconnected";
-            return Promise.reject('Device is not connected.');
-        }
-        return this.device.gatt.connect()
-    }
+    // #connect() {
+    //     if (!this.device) {
+    //         this.sensor_status = "disconnected";
+    //         return Promise.reject('Device is not connected.');
+    //     }
+    //     return this.device.gatt.connect()
+    // }
 
     /**
      * disconnect allows you to disconnect from the currently connected device
@@ -68,10 +68,10 @@ export default class XsensDot {
     /**
      * onDisonnected is executed when the connected device disconnects
      */
-    #onDisconnected() {
-        this.sensor_status = "disconnected";
-        console.log('Device is disconnected.');
-    }
+    // #onDisconnected() {
+    //     this.sensor_status = "disconnected";
+    //     console.log('Device is disconnected.');
+    // }
 
     /**
      * findAndConnect shows all nearby xsens sensors and connects to the chosen device
@@ -80,7 +80,7 @@ export default class XsensDot {
         try {
             await this.#request()
             this.sensor_status = "connecting...";
-            await this.connect()
+            await this.#connect()
 
             await this.#readDeviceName()
             await this.#getInitialBatteryLevel()
@@ -102,38 +102,38 @@ export default class XsensDot {
     /**
      * getCharacteristicData allows you to read a dataView object from the given characteristic
      */
-    async #getCharacteristicData(serviceEnum, characteristicEnum) {
-        let service = await this.device.gatt.getPrimaryService((prefix + serviceEnum + suffix))
-        let characteristic = await service.getCharacteristic((prefix + characteristicEnum + suffix))
-        return characteristic.readValue();
-    }
+    // async #getCharacteristicData(serviceEnum, characteristicEnum) {
+    //     let service = await this.device.gatt.getPrimaryService((prefix + serviceEnum + suffix))
+    //     let characteristic = await service.getCharacteristic((prefix + characteristicEnum + suffix))
+    //     return characteristic.readValue();
+    // }
 
     /**
      * readMessageAck reads the acknowledge of a given dataViewObject
      */
-    async #readMessageAck(dataViewObject) {
-        let value = await this.#getCharacteristicData(serviceEnum.message_service, serviceEnum.message_acknowledge)
-
-        if(this.verbose){
-            let cmd = getKeyByValue(recMsgEnum, dataViewObject.getUint8(2, true))
-            if (cmd == undefined ) {
-                cmd = getKeyByValue(syncMsgEnum, dataViewObject.getUint8(2, true))
-            }
-            let str = `${cmd} ack: ${getKeyByValue(msgAckEnum, value.getUint8(3, true))}`
-            console.log(str)
-        }
-        return value
-    }
+    // async #readMessageAck(dataViewObject) {
+    //     let value = await this.#getCharacteristicData(serviceEnum.message_service, serviceEnum.message_acknowledge)
+    //
+    //     if(this.verbose){
+    //         let cmd = getKeyByValue(recMsgEnum, dataViewObject.getUint8(2, true))
+    //         if (cmd == undefined ) {
+    //             cmd = getKeyByValue(syncMsgEnum, dataViewObject.getUint8(2, true))
+    //         }
+    //         let str = `${cmd} ack: ${getKeyByValue(msgAckEnum, value.getUint8(3, true))}`
+    //         console.log(str)
+    //     }
+    //     return value
+    // }
 
     /**
      * writeCharacteristicData allows you to write a dataViewObject to the given characteristic
      */
-    async #writeCharacteristicData(serviceEnum, characteristicEnum, dataViewObject) {
-        let service = await this.device.gatt.getPrimaryService((prefix + serviceEnum + suffix))
-        let characteristic = await service.getCharacteristic((prefix + characteristicEnum + suffix))
-        await characteristic.writeValue(dataViewObject);
-        return this.#readMessageAck(dataViewObject)
-    }
+    // async #writeCharacteristicData(serviceEnum, characteristicEnum, dataViewObject) {
+    //     let service = await this.device.gatt.getPrimaryService((prefix + serviceEnum + suffix))
+    //     let characteristic = await service.getCharacteristic((prefix + characteristicEnum + suffix))
+    //     await characteristic.writeValue(dataViewObject);
+    //     return this.#readMessageAck(dataViewObject)
+    // }
 
     /**
      * writeDeviceName allows you to change the name of the device in the device control characteristic
@@ -188,17 +188,17 @@ export default class XsensDot {
     /**
      * readDeviceName reads the device name from the device_control information, returns it and prints it to the console
      */
-    async #readDeviceName() {
-        let value = await this.#getCharacteristicData(serviceEnum.configuration_service, serviceEnum.device_control)
-
-        let startOffset = 8;
-        let res = '';
-        for (let index = startOffset; index < (value.getUint8(7, true) + startOffset); index++) {
-            res += String.fromCharCode(value.getUint8(index, true));
-        }
-        this.device_name = res
-        return this.device_name
-        }
+    // async #readDeviceName() {
+    //     let value = await this.#getCharacteristicData(serviceEnum.configuration_service, serviceEnum.device_control)
+    //
+    //     let startOffset = 8;
+    //     let res = '';
+    //     for (let index = startOffset; index < (value.getUint8(7, true) + startOffset); index++) {
+    //         res += String.fromCharCode(value.getUint8(index, true));
+    //     }
+    //     this.device_name = res
+    //     return this.device_name
+    //     }
 
     /**
      * blinkDeviceLED sends a command to the connected sensor to make its LED blink rapidly for a few seconds
@@ -223,64 +223,64 @@ export default class XsensDot {
     /**
      * getBatteryLevel function returns the current battery level and prints it to the console
      */
-    async #getInitialBatteryLevel() {
-        let value = await this.#getCharacteristicData(serviceEnum.battery_service, serviceEnum.battery_level)
-        let batteryLevel = value.getUint8(0, true)
-        this.battery_level = batteryLevel
-        return batteryLevel
-    }
+    // async #getInitialBatteryLevel() {
+    //     let value = await this.#getCharacteristicData(serviceEnum.battery_service, serviceEnum.battery_level)
+    //     let batteryLevel = value.getUint8(0, true)
+    //     this.battery_level = batteryLevel
+    //     return batteryLevel
+    // }
 
     /**
      * subCharChanged function allows you to add a listener function
      * to a specific bluetooth characteristic which is called when this characteristic changes.
      */
-    async #subCharChanged(listenerFunction, serviceEnum, characteristicEnum) {
-        let service = await this.device.gatt.getPrimaryService((prefix + serviceEnum + suffix))
-        let characteristic = await service.getCharacteristic((prefix + characteristicEnum + suffix))
-        characteristic.startNotifications()
-        characteristic.addEventListener('characteristicvaluechanged', (event) => {listenerFunction(event, this)})
-    }
+    // async #subCharChanged(listenerFunction, serviceEnum, characteristicEnum) {
+    //     let service = await this.device.gatt.getPrimaryService((prefix + serviceEnum + suffix))
+    //     let characteristic = await service.getCharacteristic((prefix + characteristicEnum + suffix))
+    //     characteristic.startNotifications()
+    //     characteristic.addEventListener('characteristicvaluechanged', (event) => {listenerFunction(event, this)})
+    // }
 
     /**
      * createMessageObject function creates a dataView object which can be written to
      * to a bluetooth charactaristic.
      */
-    #createMessageObject(MID, LEN, ReID, ReDATA) {
-        let realLEN = LEN + 1
-        let buffer = new ArrayBuffer(160)
-        let dataViewObject = new DataView(buffer)
-
-        dataViewObject.setUint8(0, MID)      // set MID
-        dataViewObject.setUint8(1, realLEN)  // set length
-        dataViewObject.setUint8(2, ReID)     // Set ReID
-        for(let i = 0; i < LEN; i++) {
-            dataViewObject.setUint8((i+3), ReDATA[i]) // set ReDATA
-        }
-        dataViewObject.setUint8(realLEN+2, this.#computeChecksum(dataViewObject)) // set checksum
-
-        // Append message with all zeroes
-        for(let i = (LEN + 4); i < (160 - (LEN + 4)); i++) {
-            dataViewObject.setUint8(i, 0)
-        }
-
-        return dataViewObject
-    }
+    // #createMessageObject(MID, LEN, ReID, ReDATA) {
+    //     let realLEN = LEN + 1
+    //     let buffer = new ArrayBuffer(160)
+    //     let dataViewObject = new DataView(buffer)
+    //
+    //     dataViewObject.setUint8(0, MID)      // set MID
+    //     dataViewObject.setUint8(1, realLEN)  // set length
+    //     dataViewObject.setUint8(2, ReID)     // Set ReID
+    //     for(let i = 0; i < LEN; i++) {
+    //         dataViewObject.setUint8((i+3), ReDATA[i]) // set ReDATA
+    //     }
+    //     dataViewObject.setUint8(realLEN+2, this.#computeChecksum(dataViewObject)) // set checksum
+    //
+    //     // Append message with all zeroes
+    //     for(let i = (LEN + 4); i < (160 - (LEN + 4)); i++) {
+    //         dataViewObject.setUint8(i, 0)
+    //     }
+    //
+    //     return dataViewObject
+    // }
 
     /**
     * computeChecksum function returns a single byte checksum of the given dataViewObject
     * Function from: https://github.com/xsens/xsens_dot_server/blob/master/bleHandler.js#L473
     */
-    #computeChecksum(dataViewObject) {
-        let sum = 0;
-        let len = dataViewObject.getUint8(1, true) + 2;
-
-        // Sum all the bytes
-        for(let i = 0; i < len; i++) {
-            sum += dataViewObject.getUint8(i, true);
-        }
-        // Invert sum and get lower byte
-        return (0x00FF & (-sum))
-    }
+    // #computeChecksum(dataViewObject) {
+    //     let sum = 0;
+    //     let len = dataViewObject.getUint8(1, true) + 2;
+    //
+    //     // Sum all the bytes
+    //     for(let i = 0; i < len; i++) {
+    //         sum += dataViewObject.getUint8(i, true);
+    //     }
+    //     // Invert sum and get lower byte
+    //     return (0x00FF & (-sum))
+    // }
 
     /**
      * downloadDataToCSV writes the internal data array to a csv file and downloads it to the filesystem
@@ -323,46 +323,46 @@ export default class XsensDot {
     /**
     * handleBatteryChanged is executed when the battery characteristic changes
     */
-    #handleBatteryChanged(event, sensor) {
-        const value = event.target.value
-        sensor.battery_level = value.getUint8(0, true)
-    }
+    // #handleBatteryChanged(event, sensor) {
+    //     const value = event.target.value
+    //     sensor.battery_level = value.getUint8(0, true)
+    // }
 
     /**
      * syncSensor tries to synchronize the internal clock with other xsens sensors in the vicinity
      */
-    async #syncSensor() {
-        console.log("Synchronization started")
-
-        this.NotificationHandler.setCallback(notificationEnum.syncStatus, (event) => {
-            let value = event.target.value
-            let status = getKeyByValue(msgAckEnum, value.getUint8(3, false))
-            console.log(`Device is: ${status}`)
-        })
-
-        await this.#subCharChanged(this.NotificationHandler.handleNotification, serviceEnum.message_service, serviceEnum.message_notification)
-
-        // WARNING!!! There is a mac address hardcoded here! This is due to the WebBluetooth not exposing mac address,
-        // a feature is needed to save the mac address to the device object so it can be passed dynamically
-        let dataViewObject = this.#createMessageObject(recMsgTypeEnum.sync_message, 6, syncMsgEnum.startSync, [0x4E,0x02,0x00,0xCD,0x22,0xD4])
-        await this.#writeCharacteristicData(serviceEnum.message_service, serviceEnum.message_control, dataViewObject)
-
-        await this.device.gatt.disconnect()
-        this.sensor_status = "synchronizing";
-
-        setTimeout(async () => {
-            console.log("Attempting to connect to device")
-            await this.device.gatt.connect()
-
-            console.log("Connection re-established")
-            this.sensor_status = "online";
-            await this.#subCharChanged(this.NotificationHandler.handleNotification, serviceEnum.message_service, serviceEnum.message_notification)
-
-            let dataViewObject = this.#createMessageObject(recMsgTypeEnum.sync_message, 0, syncMsgEnum.getSyncStatus, []);
-            await this.#writeCharacteristicData(serviceEnum.message_service, serviceEnum.message_control, dataViewObject)
-
-        }, 14000) // End of setTimeout
-    }
+    // async #syncSensor() {
+    //     console.log("Synchronization started")
+    //
+    //     this.NotificationHandler.setCallback(notificationEnum.syncStatus, (event) => {
+    //         let value = event.target.value
+    //         let status = getKeyByValue(msgAckEnum, value.getUint8(3, false))
+    //         console.log(`Device is: ${status}`)
+    //     })
+    //
+    //     await this.#subCharChanged(this.NotificationHandler.handleNotification, serviceEnum.message_service, serviceEnum.message_notification)
+    //
+    //     // WARNING!!! There is a mac address hardcoded here! This is due to the WebBluetooth not exposing mac address,
+    //     // a feature is needed to save the mac address to the device object so it can be passed dynamically
+    //     let dataViewObject = this.#createMessageObject(recMsgTypeEnum.sync_message, 6, syncMsgEnum.startSync, [0x4E,0x02,0x00,0xCD,0x22,0xD4])
+    //     await this.#writeCharacteristicData(serviceEnum.message_service, serviceEnum.message_control, dataViewObject)
+    //
+    //     await this.device.gatt.disconnect()
+    //     this.sensor_status = "synchronizing";
+    //
+    //     setTimeout(async () => {
+    //         console.log("Attempting to connect to device")
+    //         await this.device.gatt.connect()
+    //
+    //         console.log("Connection re-established")
+    //         this.sensor_status = "online";
+    //         await this.#subCharChanged(this.NotificationHandler.handleNotification, serviceEnum.message_service, serviceEnum.message_notification)
+    //
+    //         let dataViewObject = this.#createMessageObject(recMsgTypeEnum.sync_message, 0, syncMsgEnum.getSyncStatus, []);
+    //         await this.#writeCharacteristicData(serviceEnum.message_service, serviceEnum.message_control, dataViewObject)
+    //
+    //     }, 14000) // End of setTimeout
+    // }
 
     /**
      * getSyncStatusSensor get the sensor its sync status and if it is not synced calls the sync function
