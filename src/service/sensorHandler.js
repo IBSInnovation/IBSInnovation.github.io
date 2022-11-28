@@ -7,11 +7,12 @@ class SensorHandler {
   sensorMap = new Map();
 
   giveFakeOrRealSensor() {
-    if (localStorage.getItem("development")) {
-      console.log("Using a fake sensor");
-      return new FakeXSensDot();
-    } else {
-      return new XsensDot();
+    switch(localStorage.getItem("development")) {
+      case "true":
+        console.log("Using a fake sensor");
+        return new FakeXSensDot();
+      case "false":
+        return new XsensDot();
     }
   }
 
@@ -21,7 +22,6 @@ class SensorHandler {
 
   //returned voor nu 1 enkele sensor
   getSensor() {
-    console.log(this.sensorMap);
     return this.sensorMap.get(Array.from(this.sensorMap.keys())[0]);
   }
 
@@ -35,6 +35,7 @@ class SensorHandler {
 
   connectToSensor() {
     const sensor = this.giveFakeOrRealSensor();
+    console.log(sensor);
     return sensor
       .findAndConnect()
       .then(() => {

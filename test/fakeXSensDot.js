@@ -1,9 +1,13 @@
+import * as THREE from "three";
+
 export default class FakeXSensDot {
   constructor() {
     this.device = this.#createFakeDevice();
     this.device_name = "fakeSensor";
     this.sensor_status = "disconnected";
     this.battery_level = 100;
+    this.max_angle = 15.57;
+    this.rotation = new THREE.Euler(0, 0, 0, "XYZ");
   }
 
   #createFakeDevice() {

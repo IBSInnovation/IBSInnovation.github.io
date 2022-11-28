@@ -165,51 +165,43 @@ export default {
           age = "45+";
         }
 
-        if (
-          category === "elleboog-flexie-extensie-rechts" ||
-          category === "elleboog-flexie-extensie-links"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
-        } else if (
-          category === "heup-extensie-links" ||
-          category === "heup-extensie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["heup-extensie"][gender][age];
-        } else if (
-          category === "heup-flexie-links" ||
-          category === "heup-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["heup-flexie"][gender][age];
-        } else if (
-          category === "knie-extensie-flexie-links" ||
-          category === "knie-extensie-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
-        } else if (
-          category === "enkel-dorsaalflexie-links" ||
-          category === "enkel-dorsaalflexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
-        } else if (
-          category === "enkel-plantairflexie-links" ||
-          category === "enkel-plantairflexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
-        } else if (
-          category === "shouder-flexie-links" ||
-          category === "shouder-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
-        } else if (
-          category === "elleboog-pronatie-links" ||
-          category === "elleboog-pronatie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
-        } else if (
-          category === "elleboog-supinatie-links" ||
-          category === "elleboog-supinatie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
+        switch (category) {
+          case "elleboog-flexie-extensie-rechts":
+          case "elleboog-flexie-extensie-links":
+            TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
+            break;
+          case "heup-extensie-links":
+          case "heup-extensie-rechts":
+            TMPnorm = jsonMovementData["heup-extensie"][gender][age];
+            break;
+          case "heup-flexie-links":
+          case "heup-flexie-rechts":
+            TMPnorm = jsonMovementData["heup-flexie"][gender][age];
+            break;
+          case "knie-extensie-flexie-links":
+          case "knie-extensie-flexie-rechts":
+            TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
+            break;
+          case "enkel-dorsaalflexie-links":
+          case "enkel-dorsaalflexie-rechts":
+            TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
+            break;
+          case "enkel-plantairflexie-links":
+          case "enkel-plantairflexie-rechts":
+            TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
+            break;
+          case "shouder-flexie-links":
+          case "shouder-flexie-rechts":
+            TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
+            break;
+          case "elleboog-pronatie-links":
+          case "elleboog-pronatie-rechts":
+            TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
+            break;
+          case "elleboog-supinatie-links":
+          case "elleboog-supinatie-rechts":
+            TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
+            break;
         }
 
         this.maxAngle = this.sensorHandler.getMaxAngle();
