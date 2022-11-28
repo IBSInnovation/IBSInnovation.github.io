@@ -15,6 +15,7 @@ export default class FakeXSensDot {
   }
 
   disconnect() {
+    this.sensor_status = "disconnected";
     return Promise.resolve();
   }
 
