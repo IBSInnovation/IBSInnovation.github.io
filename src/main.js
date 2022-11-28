@@ -27,7 +27,7 @@ import sensorHandler from "./service/sensorHandler";
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
-let development = true;
+let development = "true";
 localStorage.setItem("development", development);
 
 getFirestore();
