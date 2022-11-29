@@ -13,7 +13,6 @@ export default new Vuex.Store({
     length: null,
     gender: null,
     birthdate: null,
-    sensors: [],
   },
   getters: {
     getUser() {
@@ -21,9 +20,6 @@ export default new Vuex.Store({
     },
     isLogedIn() {
       return localStorage.getItem("user") !== null;
-    },
-    getSensors(state) {
-      return state.sensors;
     },
     getPatientName(state) {
       return state.name;
@@ -75,12 +71,6 @@ export default new Vuex.Store({
     },
     setPatientList(state, patients) {
       state.patients = patients;
-    },
-    setSensorList(state, sensors) {
-      state.sensors = sensors;
-    },
-    clearList(state) {
-      state.sensors.length = 0;
     },
   },
   actions: {
