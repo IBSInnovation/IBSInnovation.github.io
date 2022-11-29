@@ -54,7 +54,6 @@
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { XsensDotSensor } from "/src/service/bluetooth.js";
 import { addResultToCategory, getSinglePatient } from "../db/fdb";
 import { useRoute } from "vue-router";
 import jsonMovementData from "/src/service/movement_data.json";
@@ -70,7 +69,7 @@ export default {
     NavBarTop,
     BackButton,
   },
-
+  inject: ["sensorHandler"],
   data() {
     return {
       miliseconds: 0,
@@ -85,7 +84,7 @@ export default {
   },
   methods: {
     async saveMeasurement() {
-      if (!this.maxAngle == 0) {
+      if (!this.maxAngle === 0) {
         // console.log("Unix: " + getUnixOfToday())
         let docIdPatient = this.route.params.name;
         let docIdCategory = this.route.params.category;
@@ -115,11 +114,8 @@ export default {
     },
 
     async measure() {
-      if (XsensDotSensor.device == null) {
-        console.log("No device connected");
-      }
       if (measureState == "idle") {
-        XsensDotSensor.startRTStream();
+        this.sensorHandler.startRTStream();
 
         document
           .getElementById("button1")
@@ -148,7 +144,7 @@ export default {
         clearInterval(timer);
         measureState = "results";
 
-        await XsensDotSensor.stopRTStream();
+        await this.sensorHandler.stopRTStream();
 
         const docKey = this.route.params.name;
         let patient = await getSinglePatient(docKey);
@@ -169,54 +165,46 @@ export default {
           age = "45+";
         }
 
-        if (
-          category === "elleboog-flexie-extensie-rechts" ||
-          category === "elleboog-flexie-extensie-links"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
-        } else if (
-          category === "heup-extensie-links" ||
-          category === "heup-extensie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["heup-extensie"][gender][age];
-        } else if (
-          category === "heup-flexie-links" ||
-          category === "heup-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["heup-flexie"][gender][age];
-        } else if (
-          category === "knie-extensie-flexie-links" ||
-          category === "knie-extensie-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
-        } else if (
-          category === "enkel-dorsaalflexie-links" ||
-          category === "enkel-dorsaalflexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
-        } else if (
-          category === "enkel-plantairflexie-links" ||
-          category === "enkel-plantairflexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
-        } else if (
-          category === "shouder-flexie-links" ||
-          category === "shouder-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
-        } else if (
-          category === "elleboog-pronatie-links" ||
-          category === "elleboog-pronatie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
-        } else if (
-          category === "elleboog-supinatie-links" ||
-          category === "elleboog-supinatie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
+        switch (category) {
+          case "elleboog-flexie-extensie-rechts":
+          case "elleboog-flexie-extensie-links":
+            TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
+            break;
+          case "heup-extensie-links":
+          case "heup-extensie-rechts":
+            TMPnorm = jsonMovementData["heup-extensie"][gender][age];
+            break;
+          case "heup-flexie-links":
+          case "heup-flexie-rechts":
+            TMPnorm = jsonMovementData["heup-flexie"][gender][age];
+            break;
+          case "knie-extensie-flexie-links":
+          case "knie-extensie-flexie-rechts":
+            TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
+            break;
+          case "enkel-dorsaalflexie-links":
+          case "enkel-dorsaalflexie-rechts":
+            TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
+            break;
+          case "enkel-plantairflexie-links":
+          case "enkel-plantairflexie-rechts":
+            TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
+            break;
+          case "shouder-flexie-links":
+          case "shouder-flexie-rechts":
+            TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
+            break;
+          case "elleboog-pronatie-links":
+          case "elleboog-pronatie-rechts":
+            TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
+            break;
+          case "elleboog-supinatie-links":
+          case "elleboog-supinatie-rechts":
+            TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
+            break;
         }
 
-        this.maxAngle = XsensDotSensor.max_angle;
+        this.maxAngle = this.sensorHandler.getMaxAngle();
         this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
       } else if (measureState == "results") {
         document.getElementById("button2").style =

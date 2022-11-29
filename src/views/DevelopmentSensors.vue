@@ -84,7 +84,6 @@ Register.vue - base vue
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { XsensDotSensor } from "/src/service/bluetooth.js";
 import BackButton from "../components/buttons/BackButton.vue";
 
 export default {
@@ -93,6 +92,7 @@ export default {
     NavBarTop,
     BackButton,
   },
+  inject: ["sensorHandler"],
   data() {
     return {
       x: 0,
@@ -101,7 +101,6 @@ export default {
       batterylevel: 0,
       device_name: "",
       sensorstatus: "",
-      XsensDotSensor: null,
       angle: null,
     };
   },
@@ -144,35 +143,44 @@ export default {
   },
   created() {
     window.addEventListener("beforeunload", this.handler);
-    this.XsensDotSensor = XsensDotSensor;
-    this.batterylevel = this.XsensDotSensor.battery_level;
-    this.x = this.XsensDotSensor.rotation.x;
-    this.y = this.XsensDotSensor.rotation.y;
-    this.z = this.XsensDotSensor.rotation.z;
-    this.device_name = this.XsensDotSensor.device_name;
-    this.sensorstatus = this.XsensDotSensor.sensor_status;
+    let XsensDotSensor = this.sensorHandler.getSensor();
+
+    if (XsensDotSensor != null) {
+      this.batterylevel = XsensDotSensor.battery_level;
+      this.x = XsensDotSensor.rotation.x;
+      this.y = XsensDotSensor.rotation.y;
+      this.z = XsensDotSensor.rotation.z;
+      this.device_name = XsensDotSensor.device_name;
+      this.sensorstatus = XsensDotSensor.sensor_status;
+    }
   },
   methods: {
-    getData() {
-      this.XsensDotSensor.findAndConnect();
+    goToSelectSensor() {
+      this.$router.push({ name: "selectSensor" });
+    },
+    disconnect() {
+      this.sensorHandler.disconnectSensor();
     },
     sync() {
-      this.XsensDotSensor.getSyncStatusSensor();
+      this.sensorHandler.getSyncStatusSensor();
     },
     identify() {
-      this.XsensDotSensor.blinkDeviceLED();
+      this.sensorHandler.blinkDeviceLED();
     },
     startDataExport() {
-      this.XsensDotSensor.downloadDataToCSV();
+      this.sensorHandler.downloadDataToCSV();
     },
     streamData() {
-      this.XsensDotSensor.startRTStream();
+      this.sensorHandler.startRTStream();
     },
     stopDataStream() {
-      this.XsensDotSensor.stopRTStream();
+      this.sensorHandler.stopRTStream();
     },
     updateDeviceName(e) {
-      this.XsensDotSensor.writeDeviceName(e.target.value.trim());
+      this.sensorHandler.writeDeviceName(e.target.value.trim());
+    },
+    clearList() {
+      this.sensorHandler.clearList();
     },
   },
 };

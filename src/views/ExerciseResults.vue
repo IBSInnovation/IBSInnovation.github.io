@@ -38,7 +38,7 @@
     <div style="margin-top: 80px"></div>
     <footer>
       <button class="addMeasurement" @click="addMeasurement()">
-        <b>Niewe meting</b>
+        <b>Nieuwe meting</b>
       </button>
 
       <button class="delete_categoryBtn" @click="showDeleteForm">
@@ -217,6 +217,7 @@ th {
   color: white;
   border: none;
 }
+
 
 .addMeasurement,
 .delete_categoryBtn {

@@ -50,7 +50,7 @@ export default {
     NavBarTop,
     BackButton,
   },
-
+  inject: ["sensorHandler"],
   data() {
     return {
       titleText: "",
@@ -231,10 +231,15 @@ export default {
     checkConnectedSensor() {
       const patientId = this.route.params.name;
       const category = this.route.params.category;
-      this.$router.push({
-        name: "selectSensor",
-        params: { name: patientId, category: category },
-      });
+
+      if (this.sensorHandler.isConnected()) {
+        this.$router.push({
+          name: "measure",
+          params: { name: patientId, category: category },
+        });
+      } else {
+        this.$router.push({ name: "selectSensor" });
+      }
     },
     nextPanel() {
       if (textIndex != 3) {

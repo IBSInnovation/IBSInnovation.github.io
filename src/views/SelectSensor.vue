@@ -22,10 +22,8 @@
 <script>
 import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { XsensDotSensor } from "/src/service/bluetooth.js";
-// import store from "../store/userStore.js";
 
-var loading = false;
+let loading = false;
 
 export default {
   name: "SelectSensor",
@@ -33,14 +31,11 @@ export default {
     NavBarTop,
     BackButton,
   },
+  inject: ["sensorHandler"],
   data() {
     return {
       loadingText: "",
-      XsensDotSensor: null,
     };
-  },
-  created() {
-    this.XsensDotSensor = XsensDotSensor;
   },
   mounted() {
     window.onclick = function () {
@@ -66,9 +61,8 @@ export default {
       this.loadingText = "loading...";
       loading = true;
       this.loadAnimation();
-      this.XsensDotSensor.findAndConnect().then(() => {
+      this.sensorHandler.connectToSensor().then(() => {
         return new Promise((resolve) => {
-          this.$router.push({ name: "measure" });
           document.getElementById("screen").style = "";
           this.loadingText = "";
           loading = false;
