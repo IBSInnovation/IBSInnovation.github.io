@@ -5,7 +5,7 @@ Register.vue - base vue
 
   <div class="flexWrapper">
     <div class="sensorButtons1">
-      <button @click="getData">Connect</button>
+      <button @click="goToSelectSensor">Connect</button>
       <button @click="sync">Synchronize</button>
       <button @click="identify">Identify device</button>
     </div>

@@ -7,7 +7,7 @@ class SensorHandler {
   sensorMap = new Map();
 
   giveFakeOrRealSensor() {
-    switch(localStorage.getItem("development")) {
+    switch (localStorage.getItem("development")) {
       case "true":
         console.log("Using a fake sensor");
         return new FakeXSensDot();
