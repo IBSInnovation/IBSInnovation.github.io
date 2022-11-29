@@ -8,6 +8,7 @@ Register.vue - base vue
       <button @click="goToSelectSensor">Connect</button>
       <button @click="sync">Synchronize</button>
       <button @click="identify">Identify device</button>
+      <button @click="disconnect">Disconnect</button>
     </div>
 
     <div class="info_container">
