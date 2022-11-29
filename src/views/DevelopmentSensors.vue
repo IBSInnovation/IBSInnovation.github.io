@@ -148,6 +148,7 @@ export default {
     if (XsensDotSensor != null) {
       this.batterylevel = XsensDotSensor.battery_level;
       this.x = XsensDotSensor.rotation.x;
+      console.log(this.x);
       this.y = XsensDotSensor.rotation.y;
       this.z = XsensDotSensor.rotation.z;
       this.device_name = XsensDotSensor.device_name;
@@ -210,7 +211,7 @@ h1 {
 
 .sensorButtons2 {
   position: absolute;
-  bottom: 0;
+  bottom: 4em;
   margin-bottom: 1em;
 }
 
