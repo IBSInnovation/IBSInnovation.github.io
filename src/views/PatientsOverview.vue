@@ -182,8 +182,6 @@ footer {
   display: flex;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;

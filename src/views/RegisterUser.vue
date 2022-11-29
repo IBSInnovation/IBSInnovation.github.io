@@ -1,30 +1,35 @@
 // Register.vue - base vue
 <template>
-  <div class="container" :style="blurrStyle()" @click="closeForm()">
-    <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
+  <div class="fullPage">
+    <div class="background">
+      <img class="background-image" alt="hogeschool utrecht achtergrond" src="@/assets/stockImages/huImage.jpg">
+    </div>
+    <div class="registerButtons">
+      <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
 
-    <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
+      <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
 
-    <GoogleLoginButton @click="RegisterWithGoogle()"></GoogleLoginButton>
+      <GoogleLoginButton @click="RegisterWithGoogle()"></GoogleLoginButton>
 
-    <EmailLoginButton @click="showLogForm"></EmailLoginButton>
-    <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
-    <p>
-      <button class="registerBtn" @click="showRegisterForm">Registreer</button>
-    </p>
+      <EmailLoginButton @click="showLogForm"></EmailLoginButton>
+      <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
+      <p>
+        <button class="registerBtn" @click="showRegisterForm">Registreer</button>
+      </p>
+      <RegisterForm
+          v-if="showForm && !showLoginForm"
+          :firebaseError="authenticationErrorFromRegister"
+          @send="registerWithEmail"
+          @close="closeForm"
+      ></RegisterForm>
+      <LoginForm
+          v-if="showLoginForm"
+          :error-message="errorMessage"
+          @send="login"
+          @close="closeForm"
+      ></LoginForm>
+    </div>
   </div>
-  <RegisterForm
-    v-if="showForm && !showLoginForm"
-    :firebaseError="authenticationErrorFromRegister"
-    @send="registerWithEmail"
-    @close="closeForm"
-  ></RegisterForm>
-  <LoginForm
-    v-if="showLoginForm"
-    :error-message="errorMessage"
-    @send="login"
-    @close="closeForm"
-  ></LoginForm>
 </template>
 
 <script>
@@ -67,14 +72,6 @@ export default {
       event.stopPropagation();
       this.showForm = true;
     },
-    blurrStyle() {
-      if (this.showForm || this.showLoginForm) {
-        let style = "filter: blur(24px); opacity: 0.6;";
-        return style;
-      } else {
-        return "";
-      }
-    },
     closeForm() {
       this.showForm = false;
       this.showLoginForm = false;
@@ -104,19 +101,46 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  text-align: center;
+.fullPage {
+  width: 100vw;
+  height: 100vh;
+  background-color: inherit;
 }
-.title {
-  margin-top: 1em;
-}
+
 .main-text {
   color: white;
-  /* font-weight: bold; */
   margin-top: 1em;
   margin-bottom: 1em;
   font-size: 2em;
   padding: 5px;
+}
+
+.background {
+  grid-area: background;
+  height: 100%;
+  width: 100%;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.background-image {
+  height: 100vh;
+  width: 100vw;
+  background-size: contain;
+  object-fit: cover;
+}
+
+.registerButtons {
+  position: relative;
+  width: 800px;
+  height: 100vh;
+  overflow: auto;
+  margin-left: -800px;
+  margin-right: 0px;
+  background: #1b2236;
+  float: left;
+  padding: 90px 150px 50px 100px;
 }
 
 .logo {
@@ -124,6 +148,7 @@ export default {
   height: auto;
   margin-top: 3em;
 }
+
 .registerBtn {
   margin: 10px;
   display: inline-block;

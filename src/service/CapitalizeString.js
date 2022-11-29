@@ -6,7 +6,5 @@ export function capitalizeString(category) {
     words[i] = words[i][0].toUpperCase() + words[i].substr(1);
   }
 
-  console.log(words);
-
   return words.join(" ");
 }

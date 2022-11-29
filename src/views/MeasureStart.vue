@@ -312,13 +312,13 @@ table {
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 1em;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #1b2235;
 }
 </style>

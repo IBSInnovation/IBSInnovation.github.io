@@ -151,7 +151,7 @@ export default {
   margin-bottom: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  width: 90%;
+  width: 200px;
   background-color: #0275d8;
   color: #f8f9fa;
   border-radius: 15px;
@@ -166,13 +166,14 @@ export default {
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-left: 5%;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #1b2235;
 }
 </style>
