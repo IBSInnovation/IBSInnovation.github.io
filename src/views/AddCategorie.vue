@@ -327,6 +327,26 @@ export default {
   },
 
   methods: {
+    showShoulder() {
+      this.showCategory = false;
+      this.showShoulderExercices = true;
+    },
+    showElbow() {
+      this.showCategory = false;
+      this.showElbowExercices = true;
+    },
+    showHip() {
+      this.showCategory = false;
+      this.showHipExercices = true;
+    },
+    showKnee() {
+      this.showCategory = false;
+      this.showKneeExercices = true;
+    },
+    showAnkle() {
+      this.showCategory = false;
+      this.showAnkleExercices = true;
+    },
     addSelected(type) {
       let docIdPatient = this.route.params.name;
       console.log(type);
