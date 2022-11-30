@@ -13,9 +13,17 @@
 
       <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
 
-      <GoogleLoginButton @click="RegisterWithGoogle()"></GoogleLoginButton>
+      <GoogleLoginButton
+        tabindex="0"
+        @keyup.enter="RegisterWithGoogle()"
+        @click="RegisterWithGoogle()"
+      ></GoogleLoginButton>
 
-      <EmailLoginButton @click="showLogForm"></EmailLoginButton>
+      <EmailLoginButton
+        tabindex="0"
+        @keyup.enter="showLogForm"
+        @click="showLogForm"
+      ></EmailLoginButton>
       <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
       <p>
         <button class="registerBtn" @click="showRegisterForm">

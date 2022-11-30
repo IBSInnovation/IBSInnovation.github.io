@@ -16,6 +16,8 @@
           id="leftArrow"
           class="arrowImageLeft"
           src="@/assets/empty.png"
+          tabindex="0"
+          @keyup.enter="previousPanel()"
           @click="previousPanel()"
         />
         <div class="indexText">{{ indexBox }}</div>
@@ -23,6 +25,8 @@
           id="rightArrow"
           class="arrowImageRight"
           src="@/assets/arrowRight.png"
+          tabindex="0"
+          @keyup.enter="nextPanel()"
           @click="nextPanel()"
         />
       </div>
