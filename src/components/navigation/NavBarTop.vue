@@ -1,42 +1,50 @@
 <template>
-  <!-- Navbar -->
-  <nav class="navbar1">
-    <!-- Container wrapper -->
-    <div class="container-fluid1">
-      <button @click="goBackToHome()">
-        <img
-          src="@/assets/beeldmerk.png"
-          height="40"
-          alt="hu logo"
-          loading="lazy"
-        />
-      </button>
-      <div class="item-left-side">
-        <div class="dropdown">
+  <nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <button @click="goBackToHome()">
+          <img
+            src="@/assets/beeldmerk.png"
+            height="40"
+            alt="hu logo"
+            loading="lazy"
+          />
+        </button>
+      </a>
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item dropdown">
           <a
-            id="dropdownMenuButton"
-            class="dropdown-toggle d-flex align-items-center hidden-arrow"
-            data-mdb-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
+            href="#"
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
           >
             {{ getDisplayName() }}
           </a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-menu dropdown-menu-end">
             <li>
-              <a class="dropdown-item" @click="logOut()">Log uit</a>
+              <a
+                href="#"
+                class="dropdown-item"
+                role="menuitem"
+                @click="goToDevelop()"
+                >Development</a
+              >
             </li>
+            <div class="dropdown-divider"></div>
             <li>
-              <a class="dropdown-item" @click="goToDevelop()">Development</a>
+              <a
+                href="#"
+                class="dropdown-item"
+                role="menuitem"
+                @click="logOut()"
+                >Log uit</a
+              >
             </li>
-          </ul>
-        </div>
-      </div>
-      <!-- Right elements -->
+          </div>
+        </li>
+      </ul>
     </div>
-    <!-- Container wrapper -->
   </nav>
-  <!-- Navbar -->
 </template>
 
 <script>
@@ -79,48 +87,21 @@ export default {
 </script>
 
 <style scoped>
-.navbar1 {
-  background-color: #1b2235;
-  position: sticky;
-  top: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+.navbar {
   border-bottom: 2px solid white;
-}
-.container-fluid1 {
-  width: 100%;
-  padding-right: var(--bs-gutter-x, 0.75rem);
-  padding-left: var(--bs-gutter-x, 0.75rem);
-  margin-right: auto;
-  margin-left: auto;
-}
-.navbar1 > .container-fluid1 {
-  display: flex;
-  flex-wrap: inherit;
-  align-items: center;
-  justify-content: space-between;
+  background: #1b2235;
 }
 
-/* pages dropdown */
-.dropdown {
+.nav-item {
+  cursor: pointer;
+}
+
+.nav-link {
+  padding: 6px;
+  color: #f8f9fa;
   border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
-  margin-right: 1em;
-}
-
-#dropdownMenuButton {
-  text-decoration: none;
-  padding: 5px 10px 5px 10px;
-  color: #f8f9fa;
-}
-
-#dropdownMenuButton:hover {
-  cursor: pointer;
 }
 
 button {

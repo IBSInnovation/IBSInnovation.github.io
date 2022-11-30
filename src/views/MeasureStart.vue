@@ -84,8 +84,7 @@ export default {
   },
   methods: {
     async saveMeasurement() {
-      if (!this.maxAngle === 0) {
-        // console.log("Unix: " + getUnixOfToday())
+      if (this.maxAngle > 0) {
         let docIdPatient = this.route.params.name;
         let docIdCategory = this.route.params.category;
         await addResultToCategory(
