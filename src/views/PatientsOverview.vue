@@ -105,8 +105,8 @@ export default {
 main {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 440px));
-  margin: 0 2rem 2rem 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 400px));
+  margin: 0 5% 2rem;
 }
 .title {
   color: white;
