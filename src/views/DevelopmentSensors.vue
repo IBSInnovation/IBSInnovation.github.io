@@ -153,6 +153,7 @@ export default {
   created() {
     window.addEventListener("beforeunload", this.handler);
     const allSensors = this.sensorHandler.getAllSensors();
+    console.log(allSensors);
 
     for (let i = 0; i < allSensors.length; i++) {
       const sensor = {};
