@@ -264,7 +264,7 @@ table {
 .categoryContainer {
   display: grid;
   gap: 1em;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 420px));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 416px));
   margin-right: 5%;
   margin-left: 5%;
 }
