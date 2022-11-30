@@ -16,8 +16,6 @@
           id="leftArrow"
           class="arrowImageLeft"
           src="@/assets/empty.png"
-          tabindex="0"
-          @keyup.enter="previousPanel()"
           @click="previousPanel()"
         />
         <div class="indexText">{{ indexBox }}</div>
@@ -25,8 +23,6 @@
           id="rightArrow"
           class="arrowImageRight"
           src="@/assets/arrowRight.png"
-          tabindex="0"
-          @keyup.enter="nextPanel()"
           @click="nextPanel()"
         />
       </div>
@@ -310,13 +306,14 @@ export default {
 </script>
 
 <style scoped>
-main {
-  padding-bottom: 30px;
+.page_container {
+  position: relative;
+  overflow: none;
 }
 .title {
   color: white;
-  margin-bottom: 2%;
-  margin-top: 2%;
+  margin-bottom: 3%;
+  margin-top: 3%;
   margin-right: 10%;
   margin-left: 10%;
   font-size: 3em;
@@ -339,7 +336,7 @@ main {
 
 .infoImage {
   max-width: 100%;
-  max-height: 400px;
+  height: auto;
   padding-right: 2em;
   padding-left: 2em;
   display: block;

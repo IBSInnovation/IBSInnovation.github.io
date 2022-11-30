@@ -25,10 +25,6 @@ class SensorHandler {
     return this.sensorMap.get(Array.from(this.sensorMap.keys())[0]);
   }
 
-  getAllSensors() {
-    return Array.from(this.sensorMap);
-  }
-
   addToSensorList(sensor) {
     this.sensorMap.set(sensor.device_name, sensor);
   }

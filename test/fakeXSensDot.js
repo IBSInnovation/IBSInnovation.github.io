@@ -3,10 +3,7 @@ import * as THREE from "three";
 export default class FakeXSensDot {
   constructor() {
     this.device = this.#createFakeDevice();
-    // Added random number generator, to test dev page
-    // device_name = "fakeSensor" will only allow for 1 sensor
-    // because of addToSensorList()
-    this.device_name = Math.floor(Math.random() * 100);
+    this.device_name = "fakeSensor";
     this.sensor_status = "disconnected";
     this.battery_level = 100;
     this.max_angle = 15.57;

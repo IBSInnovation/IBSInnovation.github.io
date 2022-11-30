@@ -97,15 +97,12 @@ export default {
       const results = getCategoryResultsConst.results;
       this.routeName = getCategoryResultsConst.name;
 
-      if (typeof results !== "undefined") {
-        this.graphResults = results.reduce((res, val) => {
-          res[val.date] = val.beweging;
-          return res;
-        }, {});
+      this.graphResults = results.reduce((res, val) => {
+        res[val.date] = val.beweging;
+        return res;
+      }, {});
 
-        this.results = results;
-      }
-
+      this.results = results;
       // this.graphResults = this.results;
     },
     addMeasurement() {
@@ -153,8 +150,8 @@ export default {
 }
 .title {
   color: white;
-  margin-bottom: 2%;
-  margin-top: 2%;
+  margin-bottom: 3%;
+  margin-top: 3%;
   margin-right: 10%;
   margin-left: 10%;
   font-size: 3em;
@@ -220,6 +217,7 @@ th {
   color: white;
   border: none;
 }
+
 
 .addMeasurement,
 .delete_categoryBtn {

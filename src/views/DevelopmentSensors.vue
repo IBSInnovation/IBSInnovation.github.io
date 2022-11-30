@@ -5,76 +5,62 @@ Register.vue - base vue
 
   <div class="flexWrapper">
     <div class="sensorButtons1">
-      <button class="red-btn" @click="goToSelectSensor">Connect</button>
-      <button class="red-btn" @click="sync">Synchronize</button>
-      <button class="red-btn" @click="identify">Identify device</button>
-      <button class="red-btn" @click="disconnect">Disconnect</button>
+      <button @click="goToSelectSensor">Connect</button>
+      <button @click="sync">Synchronize</button>
+      <button @click="identify">Identify device</button>
     </div>
 
-    <template v-for="sensor in sensors" :key="sensor.device_name">
-      <div class="info_container">
-        <table>
-          <tr>
-            <td class="header_name"><b>Device name</b></td>
-            <td>
-              <div class="table_data">{{ sensor.device_name }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>Battery level</b></td>
-            <td>
-              <div class="table_data">{{ sensor.battery_level }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>Sensor status</b></td>
-            <td>
-              <div class="table_data">{{ sensor.sensorstatus }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>x-axis</b></td>
-            <td>
-              <div class="table_data">{{ sensor.x }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>y-axis</b></td>
-            <td>
-              <div class="table_data">{{ sensor.y }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>z-axis</b></td>
-            <td>
-              <div class="table_data">{{ sensor.z }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>Biggest angle</b></td>
-            <td>
-              <div class="table_data">{{ sensor.angle }}</div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </template>
-  </div>
+    <div class="info_container">
+      <table>
+        <tr>
+          <td class="header_name"><b>Device name</b></td>
+          <td>
+            <div class="table_data">{{ device_name }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>Battery level</b></td>
+          <td>
+            <div class="table_data">{{ batterylevel }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>Sensor status</b></td>
+          <td>
+            <div class="table_data">{{ sensorstatus }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>x-axis</b></td>
+          <td>
+            <div class="table_data">{{ x }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>y-axis</b></td>
+          <td>
+            <div class="table_data">{{ x }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>z-axis</b></td>
+          <td>
+            <div class="table_data">{{ z }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="header_name"><b>Biggest angle</b></td>
+          <td>
+            <div class="table_data">{{ angle }}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
 
-  <div class="buttonWrapper">
-    <button
-      id="show-btn"
-      class="red-btn"
-      type="button"
-      aria-label="Toggle navigation"
-      @click="showButtons"
-    >
-      Show buttons
-    </button>
-    <div id="buttonGroup" ref="buttonGroup">
-      <button class="red-btn" @click="startDataExport">Export data</button>
-      <button class="red-btn" @click="streamData">Start streaming</button>
-      <button class="red-btn" @click="stopDataStream">Stop streaming</button>
+    <div class="sensorButtons2">
+      <button @click="startDataExport">Export data</button>
+      <button @click="streamData">Start streaming</button>
+      <button @click="stopDataStream">Stop streaming</button>
     </div>
   </div>
 
@@ -109,8 +95,13 @@ export default {
   inject: ["sensorHandler"],
   data() {
     return {
-      showButtonsBoolean: false,
-      sensors: [],
+      x: 0,
+      y: 0,
+      z: 0,
+      batterylevel: 0,
+      device_name: "",
+      sensorstatus: "",
+      angle: null,
     };
   },
   watch: {
@@ -152,20 +143,15 @@ export default {
   },
   created() {
     window.addEventListener("beforeunload", this.handler);
-    const allSensors = this.sensorHandler.getAllSensors();
-    console.log(allSensors);
+    let XsensDotSensor = this.sensorHandler.getSensor();
 
-    for (let i = 0; i < allSensors.length; i++) {
-      const sensor = {};
-      sensor.device_name = allSensors[i][1].device_name;
-      sensor.battery_level = allSensors[i][1].battery_level;
-      sensor.x = allSensors[i][1].rotation._x;
-      sensor.y = allSensors[i][1].rotation._y;
-      sensor.z = allSensors[i][1].rotation._z;
-      sensor.sensorstatus = allSensors[i][1].sensor_status;
-      sensor.angle = allSensors[i][1].max_angle;
-
-      this.sensors.push(sensor);
+    if (XsensDotSensor != null) {
+      this.batterylevel = XsensDotSensor.battery_level;
+      this.x = XsensDotSensor.rotation.x;
+      this.y = XsensDotSensor.rotation.y;
+      this.z = XsensDotSensor.rotation.z;
+      this.device_name = XsensDotSensor.device_name;
+      this.sensorstatus = XsensDotSensor.sensor_status;
     }
   },
   methods: {
@@ -196,16 +182,6 @@ export default {
     clearList() {
       this.sensorHandler.clearList();
     },
-    showButtons() {
-      if (this.showButtonsBoolean != true) {
-        this.$refs.buttonGroup.style =
-          "display: flex; position: absolute; bottom: 0; margin-bottom: 4em; z-index: 1; ";
-        this.showButtonsBoolean = true;
-      } else {
-        this.$refs.buttonGroup.style = "display: none";
-        this.showButtonsBoolean = false;
-      }
-    },
   },
 };
 </script>
@@ -224,36 +200,21 @@ h1 {
   margin-left: 5%;
 }
 
-.sensorButtons1 {
+.sensorButtons1,
+.sensorButtons2 {
   display: flex;
   flex-direction: column;
   gap: 2em;
   flex-wrap: wrap;
 }
 
-.buttonWrapper {
-  display: flex;
-  gap: 4em;
-  margin-left: 5%;
-}
-
-#show-btn {
+.sensorButtons2 {
   position: absolute;
   bottom: 0;
   margin-bottom: 1em;
-  z-index: 1;
-  display: none;
 }
 
-#buttonGroup {
-  display: flex;
-  margin-top: 14em;
-  flex-direction: column;
-  gap: 2em;
-  flex-wrap: wrap;
-}
-
-.red-btn {
+button {
   border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
@@ -306,24 +267,5 @@ footer {
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-}
-
-@media screen and (max-height: 900px), screen and (max-width: 600px) {
-  .flexWrapper {
-    gap: 2em;
-  }
-
-  .sensorButtons1 {
-    gap: 1em;
-  }
-
-  #show-btn {
-    display: block;
-  }
-
-  #buttonGroup {
-    display: none;
-    gap: 0.5em;
-  }
 }
 </style>
