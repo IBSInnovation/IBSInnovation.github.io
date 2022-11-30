@@ -5,10 +5,10 @@ Register.vue - base vue
 
   <div class="flexWrapper">
     <div class="sensorButtons1">
-      <button @click="goToSelectSensor">Connect</button>
-      <button @click="sync">Synchronize</button>
-      <button @click="identify">Identify device</button>
-      <button @click="disconnect">Disconnect</button>
+      <button class="red-btn" @click="goToSelectSensor">Connect</button>
+      <button class="red-btn" @click="sync">Synchronize</button>
+      <button class="red-btn" @click="identify">Identify device</button>
+      <button class="red-btn" @click="disconnect">Disconnect</button>
     </div>
 
     <div class="info_container">
@@ -57,11 +57,22 @@ Register.vue - base vue
         </tr>
       </table>
     </div>
+  </div>
 
-    <div class="sensorButtons2">
-      <button @click="startDataExport">Export data</button>
-      <button @click="streamData">Start streaming</button>
-      <button @click="stopDataStream">Stop streaming</button>
+  <div class="buttonWrapper">
+    <button
+      id="show-btn"
+      class="red-btn"
+      type="button"
+      aria-label="Toggle navigation"
+      @click="showButtons"
+    >
+      Show buttons
+    </button>
+    <div id="buttonGroup" ref="buttonGroup">
+      <button class="red-btn" @click="startDataExport">Export data</button>
+      <button class="red-btn" @click="streamData">Start streaming</button>
+      <button class="red-btn" @click="stopDataStream">Stop streaming</button>
     </div>
   </div>
 
@@ -96,6 +107,7 @@ export default {
   inject: ["sensorHandler"],
   data() {
     return {
+      showButtonsBoolean: false,
       x: 0,
       y: 0,
       z: 0,
@@ -184,6 +196,16 @@ export default {
     clearList() {
       this.sensorHandler.clearList();
     },
+    showButtons() {
+      if (this.showButtonsBoolean != true) {
+        this.$refs.buttonGroup.style =
+          "display: flex; position: absolute; bottom: 0; margin-bottom: 4em; z-index: 1; ";
+        this.showButtonsBoolean = true;
+      } else {
+        this.$refs.buttonGroup.style = "display: none";
+        this.showButtonsBoolean = false;
+      }
+    },
   },
 };
 </script>
@@ -202,22 +224,36 @@ h1 {
   margin-left: 5%;
 }
 
-.sensorButtons1,
-.sensorButtons2 {
+.sensorButtons1 {
   display: flex;
   flex-direction: column;
   gap: 2em;
   flex-wrap: wrap;
 }
 
-.sensorButtons2 {
+.buttonWrapper {
+  display: flex;
+  gap: 4em;
+  margin-left: 5%;
+}
+
+#show-btn {
   position: absolute;
   bottom: 0;
   margin-bottom: 1em;
   z-index: 1;
+  display: none;
 }
 
-button {
+#buttonGroup {
+  display: flex;
+  margin-top: 14em;
+  flex-direction: column;
+  gap: 2em;
+  flex-wrap: wrap;
+}
+
+.red-btn {
   border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
@@ -272,9 +308,22 @@ footer {
   width: 100%;
 }
 
-@media screen and (max-height: 900px), screen and (max-width: 500px) {
+@media screen and (max-height: 900px), screen and (max-width: 600px) {
   .flexWrapper {
     gap: 2em;
+  }
+
+  .sensorButtons1 {
+    gap: 1em;
+  }
+
+  #show-btn {
+    display: block;
+  }
+
+  #buttonGroup {
+    display: none;
+    gap: 0.5em;
   }
 }
 </style>
