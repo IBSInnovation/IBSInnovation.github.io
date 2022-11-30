@@ -47,20 +47,22 @@
         </table>
       </div>
 
-      <template v-for="[name] in categories" :key="name.id">
-        <div class="category">
-          <div class="text-holder">
-            <div style="max-width: 100%; word-break: break-word">
-              <b>{{ capitalizeString(name) }}</b>
+      <div class="categoryContainer">
+        <template v-for="[name] in categories" :key="name.id">
+          <div class="category">
+            <div class="text-holder">
+              <div style="max-width: 100%; word-break: break-word">
+                <b>{{ capitalizeString(name) }}</b>
+              </div>
+              <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
             </div>
-            <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
+            <!-- TOO set param for patient -> category -> results -->
+            <button class="see-results" @click="goToExerciseResults(name)">
+              Bekijk
+            </button>
           </div>
-          <!-- TOO set param for patient -> category -> results -->
-          <button class="see-results" @click="goToExerciseResults(name)">
-            Bekijk
-          </button>
-        </div>
-      </template>
+        </template>
+      </div>
 
       <footer>
         <button class="addCategory" @click="goToCategory()">
@@ -259,20 +261,25 @@ table {
   text-overflow: ellipsis;
 }
 
-/* list of categories */
-.category {
-  cursor: pointer;
-  background: white;
-  margin-right: 1%;
+.categoryContainer {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 420px));
+  margin-right: 5%;
   margin-left: 5%;
-  margin-bottom: 1%;
-  width: 90%;
+}
+
+.category {
+  background: white;
   padding: 1em;
-  border: 1px solid white;
   border-radius: 1em;
+  max-width: 500px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+  align-content: center;
+  align-items: stretch;
+  gap: 1em;
 }
 .text-holder {
   display: block;
