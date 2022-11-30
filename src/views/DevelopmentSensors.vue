@@ -11,52 +11,54 @@ Register.vue - base vue
       <button class="red-btn" @click="disconnect">Disconnect</button>
     </div>
 
-    <div class="info_container">
-      <table>
-        <tr>
-          <td class="header_name"><b>Device name</b></td>
-          <td>
-            <div class="table_data">{{ device_name }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Battery level</b></td>
-          <td>
-            <div class="table_data">{{ batterylevel }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Sensor status</b></td>
-          <td>
-            <div class="table_data">{{ sensorstatus }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>x-axis</b></td>
-          <td>
-            <div class="table_data">{{ x }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>y-axis</b></td>
-          <td>
-            <div class="table_data">{{ x }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>z-axis</b></td>
-          <td>
-            <div class="table_data">{{ z }}</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="header_name"><b>Biggest angle</b></td>
-          <td>
-            <div class="table_data">{{ angle }}</div>
-          </td>
-        </tr>
-      </table>
-    </div>
+    <template v-for="sensor in sensors" :key="sensor.device_name">
+      <div class="info_container">
+        <table>
+          <tr>
+            <td class="header_name"><b>Device name</b></td>
+            <td>
+              <div class="table_data">{{ sensor.device_name }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Battery level</b></td>
+            <td>
+              <div class="table_data">{{ sensor.battery_level }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Sensor status</b></td>
+            <td>
+              <div class="table_data">{{ sensor.sensorstatus }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>x-axis</b></td>
+            <td>
+              <div class="table_data">{{ sensor.x }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>y-axis</b></td>
+            <td>
+              <div class="table_data">{{ sensor.y }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>z-axis</b></td>
+            <td>
+              <div class="table_data">{{ sensor.z }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Biggest angle</b></td>
+            <td>
+              <div class="table_data">{{ sensor.angle }}</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </template>
   </div>
 
   <div class="buttonWrapper">
@@ -107,14 +109,7 @@ export default {
   inject: ["sensorHandler"],
   data() {
     return {
-      showButtonsBoolean: false,
-      x: 0,
-      y: 0,
-      z: 0,
-      batterylevel: 0,
-      device_name: "",
-      sensorstatus: "",
-      angle: null,
+      sensors: [],
     };
   },
   watch: {
@@ -156,16 +151,21 @@ export default {
   },
   created() {
     window.addEventListener("beforeunload", this.handler);
-    let XsensDotSensor = this.sensorHandler.getSensor();
+    const allSensors = this.sensorHandler.getAllSensors();
 
-    if (XsensDotSensor != null) {
-      this.batterylevel = XsensDotSensor.battery_level;
-      this.x = XsensDotSensor.rotation.x;
-      this.y = XsensDotSensor.rotation.y;
-      this.z = XsensDotSensor.rotation.z;
-      this.device_name = XsensDotSensor.device_name;
-      this.sensorstatus = XsensDotSensor.sensor_status;
-      this.angle = XsensDotSensor.max_angle;
+    for (let i = 0; i < allSensors.length; i++) {
+      const sensor = {};
+      sensor.device_name = allSensors[i][1].device_name;
+      sensor.battery_level = allSensors[i][1].battery_level;
+      sensor.x = allSensors[i][1].rotation._x;
+      sensor.y = allSensors[i][1].rotation._y;
+      sensor.z = allSensors[i][1].rotation._z;
+      sensor.sensorstatus = allSensors[i][1].sensor_status;
+      sensor.angle = allSensors[i][1].max_angle;
+
+      // showbuttons???
+      sensor.showButtonsBoolean = false;
+      this.sensors.push(sensor);
     }
   },
   methods: {
