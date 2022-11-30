@@ -153,8 +153,8 @@ export default {
 }
 .title {
   color: white;
-  margin-bottom: 3%;
-  margin-top: 3%;
+  margin-bottom: 2%;
+  margin-top: 2%;
   margin-right: 10%;
   margin-left: 10%;
   font-size: 3em;
