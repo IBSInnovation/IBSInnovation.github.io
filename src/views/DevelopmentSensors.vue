@@ -109,6 +109,7 @@ export default {
   inject: ["sensorHandler"],
   data() {
     return {
+      showButtonsBoolean: false,
       sensors: [],
     };
   },
@@ -163,8 +164,6 @@ export default {
       sensor.sensorstatus = allSensors[i][1].sensor_status;
       sensor.angle = allSensors[i][1].max_angle;
 
-      // showbuttons???
-      sensor.showButtonsBoolean = false;
       this.sensors.push(sensor);
     }
   },
