@@ -2,31 +2,45 @@
 <template>
   <div class="fullPage">
     <div class="background">
-      <img class="background-image" alt="hogeschool utrecht achtergrond" src="@/assets/stockImages/huImage.jpg">
+      <img
+        class="background-image"
+        alt="hogeschool utrecht achtergrond"
+        src="@/assets/stockImages/huImage.jpg"
+      />
     </div>
     <div class="registerButtons">
       <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
 
       <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
 
-      <GoogleLoginButton @click="RegisterWithGoogle()"></GoogleLoginButton>
+      <GoogleLoginButton
+        tabindex="0"
+        @keyup.enter="RegisterWithGoogle()"
+        @click="RegisterWithGoogle()"
+      ></GoogleLoginButton>
 
-      <EmailLoginButton @click="showLogForm"></EmailLoginButton>
+      <EmailLoginButton
+        tabindex="0"
+        @keyup.enter="showLogForm"
+        @click="showLogForm"
+      ></EmailLoginButton>
       <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
       <p>
-        <button class="registerBtn" @click="showRegisterForm">Registreer</button>
+        <button class="registerBtn" @click="showRegisterForm">
+          Registreer
+        </button>
       </p>
       <RegisterForm
-          v-if="showForm && !showLoginForm"
-          :firebaseError="authenticationErrorFromRegister"
-          @send="registerWithEmail"
-          @close="closeForm"
+        v-if="showForm && !showLoginForm"
+        :firebaseError="authenticationErrorFromRegister"
+        @send="registerWithEmail"
+        @close="closeForm"
       ></RegisterForm>
       <LoginForm
-          v-if="showLoginForm"
-          :error-message="errorMessage"
-          @send="login"
-          @close="closeForm"
+        v-if="showLoginForm"
+        :error-message="errorMessage"
+        @send="login"
+        @close="closeForm"
       ></LoginForm>
     </div>
   </div>
@@ -173,5 +187,20 @@ export default {
 .acountText {
   color: white;
   margin: 1em 0em 0;
+}
+
+@media screen and (max-height: 900px), screen and (max-width: 800px) {
+  .background {
+    display: none;
+  }
+
+  .registerButtons {
+    all: revert;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10%;
+    gap: 1em;
+  }
 }
 </style>
