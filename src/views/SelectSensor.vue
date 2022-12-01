@@ -14,7 +14,8 @@
       <b>Koppel sensor</b>
     </button>
 
-    <div ref="loadingAnimation">
+    <div v-show="loading">
+      <p class="loadingTitle">Connecting...</p>
       <scale-loader
         :loading="loading"
         :color="color"
@@ -142,7 +143,13 @@ export default {
   background: #0161b6;
   border: none;
 }
-/* footer */
+
+.loadingTitle {
+  text-align: center;
+  color: #f8f9fa;
+  font-weight: bold;
+  font-size: 1.5em;
+}
 
 footer {
   display: flex;
