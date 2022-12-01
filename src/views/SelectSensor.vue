@@ -1,5 +1,4 @@
 <template>
-  <div id="loadText" class="loadText">{{ loadingText }}</div>
   <div id="screen">
     <nav-bar-top></nav-bar-top>
     <h1 class="title">Koppel sensor</h1>
@@ -14,8 +13,6 @@
     <button class="connectSensorButton" @click="connectSensor()">
       <b>Koppel sensor</b>
     </button>
-
-    <button @click="loadButton()">Loading</button>
 
     <div ref="loadingAnimation">
       <scale-loader
@@ -35,8 +32,6 @@ import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import ScaleLoader from "vue-spinner/src/ScaleLoader.vue";
 
-// let loading = false;
-
 export default {
   name: "SelectSensor",
   components: {
@@ -51,7 +46,6 @@ export default {
       color: "#0275d8",
       height: "50px",
       width: "6px",
-      loadingText: "",
     };
   },
   mounted() {
@@ -78,13 +72,6 @@ export default {
           resolve();
         });
       });
-    },
-    loadButton() {
-      if (this.loading) {
-        this.loading = false;
-      } else {
-        this.loading = true;
-      }
     },
   },
 };
