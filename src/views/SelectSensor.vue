@@ -15,6 +15,17 @@
       <b>Koppel sensor</b>
     </button>
 
+    <button @click="loadButton()">Loading</button>
+
+    <div ref="loadingAnimation">
+      <scale-loader
+        :loading="loading"
+        :color="color"
+        :height="height"
+        :width="width"
+      ></scale-loader>
+    </div>
+
     <footer><BackButton></BackButton></footer>
   </div>
 </template>
@@ -22,27 +33,31 @@
 <script>
 import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
+import ScaleLoader from "vue-spinner/src/ScaleLoader.vue";
 
-let loading = false;
+// let loading = false;
 
 export default {
   name: "SelectSensor",
   components: {
     NavBarTop,
     BackButton,
+    ScaleLoader,
   },
   inject: ["sensorHandler"],
   data() {
     return {
+      loading: false,
+      color: "#0275d8",
+      height: "50px",
+      width: "6px",
       loadingText: "",
     };
   },
   mounted() {
     window.onclick = function () {
-      if (loading) {
-        document.getElementById("screen").style = "";
-        this.loadingText = "";
-        loading = false;
+      if (this.loading) {
+        this.loading = false;
       }
     };
   },
@@ -53,45 +68,23 @@ export default {
       return new Promise((resolve) => setTimeout(resolve, time));
     },
     connectSensor() {
-      this.delay(100).then(() => this.connect());
+      this.loading = true;
+      this.delay(2500).then(() => this.connect());
     },
     connect() {
-      document.getElementById("screen").style =
-        "filter: blur(24px); opacity: 0.6;";
-      this.loadingText = "loading...";
-      loading = true;
-      this.loadAnimation();
       this.sensorHandler.connectToSensor().then(() => {
         return new Promise((resolve) => {
-          document.getElementById("screen").style = "";
-          this.loadingText = "";
-          loading = false;
+          this.loading = false;
           resolve();
         });
       });
     },
-    loadAnimation() {
-      setTimeout(() => {
-        if (loading) {
-          this.loadingText = "loading...";
-        }
-      }, 500);
-      setTimeout(() => {
-        if (loading) {
-          this.loadingText = "loading..";
-        }
-      }, 1000);
-      setTimeout(() => {
-        if (loading) {
-          this.loadingText = "loading.";
-        }
-      }, 1500);
-      setTimeout(() => {
-        if (loading) {
-          this.loadingText = "loading";
-          this.loadAnimation();
-        }
-      }, 2000);
+    loadButton() {
+      if (this.loading) {
+        this.loading = false;
+      } else {
+        this.loading = true;
+      }
     },
   },
 };
