@@ -15,7 +15,7 @@ export default {
   border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
-  margin-right: 5%;
+  margin-right: 5.3%;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   color: white;

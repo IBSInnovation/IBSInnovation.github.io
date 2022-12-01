@@ -110,11 +110,11 @@ main {
 }
 .title {
   color: white;
-  margin-bottom: 3%;
-  margin-top: 3%;
+  margin-bottom: 2%;
+  margin-top: 2%;
   margin-right: 25%;
   margin-left: 25%;
-  font-size: 3em;
+  font-size: 2.5em;
   width: 50%;
   text-align: center;
 }
