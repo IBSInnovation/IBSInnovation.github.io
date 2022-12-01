@@ -23,20 +23,22 @@
           <div class="dropdown-menu dropdown-menu-end">
             <li>
               <a
-                href="#"
                 class="dropdown-item"
                 role="menuitem"
+                tabindex="0"
                 @click="goToDevelop()"
+                @keyup.enter="goToDevelop()"
                 >Development</a
               >
             </li>
             <div class="dropdown-divider"></div>
             <li>
               <a
-                href="#"
                 class="dropdown-item"
                 role="menuitem"
+                tabindex="0"
                 @click="logOut()"
+                @keyup.enter="logOut()"
                 >Log uit</a
               >
             </li>

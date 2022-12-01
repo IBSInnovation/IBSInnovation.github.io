@@ -298,7 +298,6 @@
     </div>
   </div>
 
-  <!-- EINDE MOET DYNAMISC -->
   <footer><BackButton></BackButton></footer>
 </template>
 

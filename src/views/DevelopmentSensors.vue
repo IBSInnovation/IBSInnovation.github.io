@@ -220,7 +220,7 @@ h1 {
 .flexWrapper {
   display: flex;
   gap: 4em;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
   margin-left: 5%;
 }
 
