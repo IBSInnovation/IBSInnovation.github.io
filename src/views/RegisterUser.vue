@@ -189,7 +189,7 @@ export default {
   margin: 1em 0em 0;
 }
 
-@media screen and (max-height: 900px), screen and (max-width: 800px) {
+@media screen and (max-height: 800px), screen and (max-width: 800px) {
   .background {
     display: none;
   }
