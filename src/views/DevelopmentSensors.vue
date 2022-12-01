@@ -308,7 +308,7 @@ footer {
   width: 100%;
 }
 
-@media screen and (max-height: 900px), screen and (max-width: 600px) {
+@media screen and (max-height: 800px), screen and (max-width: 600px) {
   .flexWrapper {
     gap: 2em;
   }

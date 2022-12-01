@@ -216,7 +216,7 @@ main {
   margin-top: 2%;
   margin-right: 10%;
   margin-left: 10%;
-  font-size: 3em;
+  font-size: 2.5em;
   width: 80%;
   text-align: center;
 }
@@ -267,6 +267,7 @@ table {
   grid-template-columns: repeat(auto-fit, minmax(280px, 416px));
   margin-right: 5%;
   margin-left: 5%;
+  margin-bottom: 3em;
 }
 
 .category {
@@ -310,7 +311,7 @@ table {
   border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
-  padding-top: 0.5rem;
+  padding-top: 0.5em;
   padding-bottom: 0.5em;
   color: white;
   border: none;
@@ -329,7 +330,11 @@ table {
   border: none;
 }
 
-/* footer */
+@media screen and (max-height: 800px), screen and (max-width: 800px) {
+  .categoryContainer {
+    margin-bottom: 10em;
+  }
+}
 
 footer {
   display: flex;
@@ -338,8 +343,9 @@ footer {
   padding-left: 5%;
   position: fixed;
   bottom: 0;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 1.5em;
+  padding-bottom: 1em;
   width: 100%;
+  background: #1b2235;
 }
 </style>
