@@ -201,7 +201,6 @@ export default {
     },
     editPatient() {
       this.closeForm();
-      // TODO Edit de patient's gegevens
     },
   },
 };
