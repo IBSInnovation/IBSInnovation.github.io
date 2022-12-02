@@ -35,7 +35,6 @@
       </div>
     </main>
 
-    <div style="margin-top: 80px"></div>
     <footer>
       <button class="addMeasurement" @click="addMeasurement()">
         <b>Nieuwe meting</b>
@@ -147,6 +146,16 @@ export default {
 </script>
 
 <style scoped>
+main {
+  padding-bottom: 5em;
+}
+
+@media screen and (max-width: 800px), screen and (max-height: 800px) {
+  main {
+    padding-bottom: 8em;
+  }
+}
+
 .page_container {
   position: relative;
   overflow: none;
@@ -185,10 +194,10 @@ export default {
   background: white;
   width: 90%;
   border-radius: 15px;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  margin-bottom: 1rem;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-bottom: 1em;
 }
 
 tr td {

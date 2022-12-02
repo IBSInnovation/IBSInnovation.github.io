@@ -189,6 +189,7 @@ export default {
     },
     showEditForm(event) {
       event.stopPropagation();
+      window.scrollTo(0, 0);
       this.showFormEdit = true;
     },
     closeForm() {

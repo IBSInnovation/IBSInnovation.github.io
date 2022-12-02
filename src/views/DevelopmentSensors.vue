@@ -222,6 +222,7 @@ h1 {
   gap: 4em;
   flex-wrap: wrap;
   margin-left: 5%;
+  padding-bottom: 80px;
 }
 
 .sensorButtons1 {
@@ -238,7 +239,7 @@ h1 {
 }
 
 #show-btn {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   margin-bottom: 1em;
   z-index: 1;
@@ -251,6 +252,7 @@ h1 {
   flex-direction: column;
   gap: 2em;
   flex-wrap: wrap;
+  position: fixed !important;
 }
 
 .red-btn {

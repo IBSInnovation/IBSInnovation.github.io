@@ -23,7 +23,6 @@
       </template>
     </main>
 
-    <div style="margin-top: 80px"></div>
     <footer>
       <button class="addPatientButton" @click="showPatientForm">
         <b>Patiënt toevoegen</b>
@@ -76,6 +75,7 @@ export default {
     },
     showPatientForm(event) {
       event.stopPropagation();
+      window.scrollTo(0, 0);
       this.showForm = true;
     },
     blurrStyle() {
@@ -107,6 +107,7 @@ main {
   gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(280px, 400px));
   margin: 0 5% 2rem;
+  padding-bottom: 70px;
 }
 .title {
   color: white;
@@ -161,19 +162,19 @@ p {
 
 .seeResultsButton:focus,
 .seeResultsButton:focus-within,
-.seeResultsButton:hover {
-  background: #0161b6;
+.seeResultsButton:hover,
+.addPatientButton:focus,
+.addPatientButton:hover {
+  background: #04359e;
   border: none;
 }
 
 .addPatientButton {
-  flex-basis: 25%;
   border: none;
   background: #0275d8;
   color: white;
   border: none;
-  padding: 0.5em;
-  margin-left: 36%;
+  padding: 0.5em 2em;
   transition: all 0.2s ease-in-out;
   border-radius: 10px;
 }
@@ -181,6 +182,7 @@ p {
 footer {
   display: flex;
   position: fixed;
+  justify-content: center;
   bottom: 0;
   padding-top: 1rem;
   padding-bottom: 1rem;
