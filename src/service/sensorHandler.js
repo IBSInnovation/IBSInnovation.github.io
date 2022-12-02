@@ -21,8 +21,9 @@ class SensorHandler {
   }
 
   //returned voor nu 1 enkele sensor
-  getSensor() {
-    return this.sensorMap.get(Array.from(this.sensorMap.keys())[0]);
+  getSensor(device_name) {
+    // return this.sensorMap.get(Array.from(this.sensorMap.keys())[0]);
+    return this.sensorMap.get(device_name);
   }
 
   getAllSensors() {
@@ -51,8 +52,8 @@ class SensorHandler {
       });
   }
 
-  disconnectSensor() {
-    const sensor = this.getSensor();
+  disconnectSensor(device_name) {
+    const sensor = this.getSensor(device_name);
     sensor.disconnect();
     this.removeFromSensorList(sensor);
   }
@@ -65,28 +66,28 @@ class SensorHandler {
     return true;
   }
 
-  startRTStream() {
-    this.getSensor().startRTStream();
+  startRTStream(device_name) {
+    this.getSensor(device_name).startRTStream();
   }
 
-  stopRTStream() {
-    this.getSensor().stopRTStream();
+  stopRTStream(device_name) {
+    this.getSensor(device_name).stopRTStream();
   }
 
-  getMaxAngle() {
-    return this.getSensor().max_angle;
+  getMaxAngle(device_name) {
+    return this.getSensor(device_name).max_angle;
   }
 
-  getSyncStatusSensor() {
-    this.getSensor().getSyncStatusSensor();
+  getSyncStatusSensor(device_name) {
+    this.getSensor(device_name).getSyncStatusSensor();
   }
 
-  blinkDeviceLED() {
-    this.getSensor().blinkDeviceLED();
+  blinkDeviceLED(device_name) {
+    this.getSensor(device_name).blinkDeviceLED();
   }
 
-  downloadDataToCSV() {
-    this.getSensor().downloadDataToCSV();
+  downloadDataToCSV(device_name) {
+    this.getSensor(device_name).downloadDataToCSV();
   }
 
   writeDeviceName(name) {
