@@ -379,6 +379,13 @@ export default {
   padding: 20px;
 }
 
+/* IMPORTANT!! dont delete, fixes a bug where after clicking the button, button becomes HUUUGE */
+.ripple-surface {
+  max-width: 9.7em;
+  max-height: 2.4em;
+  overflow: hidden;
+}
+
 .exerciseWrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 330px));

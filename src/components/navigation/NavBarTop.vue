@@ -110,4 +110,10 @@ button {
   border: none;
   background-color: #1b2235;
 }
+
+@media (max-width: 576px) {
+  .navbar-expand-sm .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
+}
 </style>
