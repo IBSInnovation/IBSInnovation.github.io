@@ -112,6 +112,8 @@ export default {
       }
     },
 
+    // startRTStream breekt nu, omdat er een device_name meegegeven moet worden
+    // dit moet nog dynamisch gemaakt worden
     async measure() {
       if (measureState == "idle") {
         this.sensorHandler.startRTStream();
@@ -303,7 +305,8 @@ table {
   border: none;
 }
 
-.measureButtonRed:hover {
+.measureButtonRed:hover,
+.measureButtonRed:focus {
   background: #d3322c;
   border: none;
 }

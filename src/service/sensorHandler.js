@@ -21,9 +21,14 @@ class SensorHandler {
   }
 
   //returned voor nu 1 enkele sensor
+  // startRTStream breekt nu, omdat er een device_name meegegeven moet worden
+  // dit moet nog dynamisch gemaakt worden, nu ff de methode gecheesed zodat ie t met 1 sensor wel nog doet.
   getSensor(device_name) {
-    // return this.sensorMap.get(Array.from(this.sensorMap.keys())[0]);
-    return this.sensorMap.get(device_name);
+    if (this.sensorMap.size == 1) {
+      return this.sensorMap.get(Array.from(this.sensorMap.keys())[0]);
+    } else {
+      return this.sensorMap.get(device_name);
+    }
   }
 
   getAllSensors() {
