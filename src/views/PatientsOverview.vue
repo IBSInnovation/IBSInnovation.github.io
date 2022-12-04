@@ -1,39 +1,45 @@
 <template>
-  <div :style="blurrStyle()">
-    <NavBarTop></NavBarTop>
+  <div class="vh" @click="checkClickOutside">
+    <div :style="blurrStyle()">
+      <NavBarTop></NavBarTop>
 
-    <h1 class="title">Patiënten</h1>
+      <h1 class="title">Patiënten</h1>
 
-    <main>
-      <template v-for="[docKey, patient] in patients" :key="patient">
-        <div class="patient" @click="goToPatient(docKey)">
-          <i class="bi bi-person-square userIcon"></i>
-          <div class="patient-text-holder">
-            <p>
-              <b>{{ patient.name }} </b>
-            </p>
-            <p class="text">
-              {{ patient.email }}
-            </p>
+      <main>
+        <template v-for="[docKey, patient] in patients" :key="patient">
+          <div class="patient" @click="goToPatient(docKey)">
+            <i class="bi bi-person-square userIcon"></i>
+            <div class="patient-text-holder">
+              <p>
+                <b>{{ patient.name }} </b>
+              </p>
+              <p class="text">
+                {{ patient.email }}
+              </p>
+            </div>
+            <button
+              :disabled="showForm"
+              class="seeResultsButton"
+              @click="goToPatient(docKey)"
+            >
+              <b> Ga naar patiënt</b>
+            </button>
           </div>
-          <button class="seeResultsButton" @click="goToPatient(docKey)">
-            <b> Ga naar patiënt</b>
-          </button>
-        </div>
-      </template>
-    </main>
+        </template>
+      </main>
 
-    <footer>
-      <button class="addPatientButton" @click="showPatientForm">
-        <b>Patiënt toevoegen</b>
-      </button>
-    </footer>
+      <footer>
+        <button
+          :disabled="showForm"
+          class="addPatientButton"
+          @click="showPatientForm"
+        >
+          <b>Patiënt toevoegen</b>
+        </button>
+      </footer>
+    </div>
+    <PatientForm v-if="showForm" @close="closeForm"></PatientForm>
   </div>
-  <PatientForm
-    v-if="showForm && !showLoginForm"
-    @send="registerWithEmail"
-    @close="closeForm"
-  ></PatientForm>
 </template>
 
 <script>
@@ -51,9 +57,7 @@ export default {
     return {
       showForm: false,
       user: null,
-      showLoginForm: false,
       patients: null,
-      newPatientForm: false,
     };
   },
   mounted() {
@@ -93,7 +97,12 @@ export default {
       this.getPatientsFromFireStore(); // Show newly added patients
       return;
     },
-
+    checkClickOutside(event) {
+      console.log(event.target);
+      if (!event.target.closest(".form")) {
+        this.closeForm();
+      }
+    },
     addNewPatient() {
       this.$router.push({ name: "registerPatient" });
     },
@@ -109,6 +118,11 @@ main {
   margin: 0 5% 2rem;
   padding-bottom: 70px;
 }
+
+.vh {
+  min-height: 100vh;
+}
+
 .title {
   color: white;
   margin-bottom: 2%;

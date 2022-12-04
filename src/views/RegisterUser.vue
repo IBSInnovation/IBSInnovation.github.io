@@ -1,6 +1,6 @@
 // Register.vue - base vue
 <template>
-  <div class="fullPage">
+  <div class="fullPage" @click="checkClickOutside">
     <div class="background">
       <img
         class="background-image"
@@ -26,7 +26,11 @@
       ></EmailLoginButton>
       <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
       <p>
-        <button class="registerBtn" @click="showRegisterForm">
+        <button
+          :disabled="showForm || showLoginForm"
+          class="registerBtn"
+          @click="showRegisterForm"
+        >
           Registreer
         </button>
       </p>
@@ -51,7 +55,6 @@ import GoogleLoginButton from "../components/buttons/GoogleLoginButton.vue";
 import EmailLoginButton from "../components/buttons/EmailLoginButton.vue";
 import RegisterForm from "../components/forms/RegisterForm.vue";
 import LoginForm from "../components/forms/LoginForm.vue";
-
 import {
   registerWithEmail,
   login,
@@ -70,8 +73,9 @@ export default {
   data() {
     return {
       showForm: false,
-      user: null,
       showLoginForm: false,
+      showGoogleForm: false,
+      user: null,
       errorMessage: "",
       registerMessage: "",
       authenticationErrorFromRegister: "",
@@ -79,28 +83,39 @@ export default {
   },
   methods: {
     showLogForm(event) {
-      event.stopPropagation();
-      this.showLoginForm = true;
+      if (!this.showForm && !this.showGoogleForm) {
+        event.stopPropagation();
+        this.showLoginForm = true;
+      }
     },
     showRegisterForm(event) {
-      event.stopPropagation();
-      this.showForm = true;
+      if (!this.showLoginForm && !this.showGoogleForm) {
+        event.stopPropagation();
+        this.showForm = true;
+      }
     },
     closeForm() {
       this.showForm = false;
       this.showLoginForm = false;
       this.errorMessage = "";
     },
-    RegisterWithGoogle() {
-      RegisterWithGoogle();
+    checkClickOutside(event) {
+      console.log(event.target);
+      if (!event.target.closest(".form")) {
+        this.closeForm();
+      }
     },
-
+    RegisterWithGoogle() {
+      if (!this.showLoginForm && !this.showForm) {
+        this.showGoogleForm = true;
+        RegisterWithGoogle();
+      }
+    },
     registerWithEmail(value) {
       registerWithEmail(value).then(() => {
         router.push({ path: "/patients" });
       });
     },
-
     login(value) {
       login(value)
         .then(() => {

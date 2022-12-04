@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main @click="checkClickOutside">
     <div :style="blurrStyle()">
       <NavBarTop></NavBarTop>
 
@@ -57,7 +57,11 @@
               <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
             </div>
             <!-- TOO set param for patient -> category -> results -->
-            <button class="see-results" @click="goToExerciseResults(name)">
+            <button
+              :disabled="showFormDelete || showFormEdit"
+              class="see-results"
+              @click="goToExerciseResults(name)"
+            >
               Bekijk
             </button>
           </div>
@@ -65,18 +69,30 @@
       </div>
 
       <footer>
-        <button class="addCategory" @click="goToCategory()">
+        <button
+          :disabled="showFormDelete || showFormEdit"
+          class="addCategory"
+          @click="goToCategory()"
+        >
           <b>Categorie toevoegen</b>
         </button>
-        <button class="editButton" @click="showEditForm">
+        <button
+          :disabled="showFormDelete || showFormEdit"
+          class="editButton"
+          @click="showEditForm"
+        >
           <b>Gegevens aanpassen</b>
         </button>
 
-        <button class="deletePatientBtn" @click="showDeleteForm">
+        <button
+          :disabled="showFormDelete || showFormEdit"
+          class="deletePatientBtn"
+          @click="showDeleteForm"
+        >
           <b>Verwijder patiënt</b>
         </button>
 
-        <BackButton></BackButton>
+        <BackButton :disabled="showFormDelete || showFormEdit"></BackButton>
       </footer>
     </div>
     <DeleteForm
@@ -198,6 +214,12 @@ export default {
       this.errorMessage = "";
       this.getPatientData();
       return;
+    },
+    checkClickOutside(event) {
+      console.log(event.target);
+      if (!event.target.closest(".form")) {
+        this.closeForm();
+      }
     },
     editPatient() {
       this.closeForm();
