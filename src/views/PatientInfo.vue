@@ -231,6 +231,7 @@ export default {
 <style scoped>
 main {
   padding-bottom: 50px;
+  min-height: 100vh;
 }
 .title {
   color: white;
