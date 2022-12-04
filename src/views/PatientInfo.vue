@@ -317,13 +317,9 @@ table {
   border: none;
   padding: 1rem;
 }
-.see-results:hover {
-  background: #0161b6;
-  border: none;
-}
-
-.deletePatientBtn:hover {
-  background: #d3322c;
+.see-results:hover,
+.see-results:focus {
+  background: #04359e;
   border: none;
 }
 
@@ -347,8 +343,11 @@ table {
 }
 
 .editButton:hover,
+.editButton:focus,
 .deletePatientBtn:hover,
-.addCategory:hover {
+.deletePatientBtn:focus,
+.addCategory:hover,
+.addCategory:focus {
   background: #d3322c;
   border: none;
 }

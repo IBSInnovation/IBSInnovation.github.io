@@ -286,9 +286,9 @@ table {
   border: none;
 }
 
-.measureButtonBlue:hover {
-  background: #0161b6;
-  border: none;
+.measureButtonBlue:hover,
+.measureButtonBlue:focus {
+  background: #04359e;
 }
 
 .measureButtonRed {

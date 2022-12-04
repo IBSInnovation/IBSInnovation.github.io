@@ -106,6 +106,11 @@ export default {
   background-color: #e43a23;
 }
 
+.nav-link:hover,
+.nav-link:focus {
+  background: #d3322c;
+}
+
 button {
   border: none;
   background-color: #1b2235;

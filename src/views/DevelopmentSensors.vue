@@ -285,7 +285,6 @@ h1 {
 }
 
 .red-btn {
-  border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
   padding-top: 0.5em;
@@ -296,8 +295,11 @@ h1 {
   width: 130px;
 }
 
+.red-btn:hover {
+  background: #d3322c;
+}
+
 .blue-btn {
-  border: 1px solid #0275d8;
   border-radius: 18px;
   background-color: #0275d8;
   padding-top: 0.5em;
@@ -306,6 +308,10 @@ h1 {
   border: none;
   font-weight: bolder;
   width: 130px;
+}
+
+.blue-btn:hover {
+  background: #0161b6;
 }
 
 .info_container {

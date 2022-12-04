@@ -386,7 +386,6 @@ main {
 
 /* buttons */
 .connectSensorButton {
-  border: 1px solid #0275d8;
   border-radius: 18px;
   background-color: #0275d8;
   padding-top: 0.5rem;
@@ -396,9 +395,9 @@ main {
   width: 200px;
 }
 
-.connectSensorButton:hover {
-  background: #0161b6;
-  border: none;
+.connectSensorButton:hover,
+.connectSensorButton:focus {
+  background: #04359e;
 }
 /* footer */
 
