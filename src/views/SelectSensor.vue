@@ -130,10 +130,7 @@ export default {
 
 .title {
   color: white;
-  margin-bottom: 2%;
-  margin-top: 2%;
-  margin-right: 10%;
-  margin-left: 10%;
+  margin: 2% 10%;
   font-size: 2.5em;
   width: 80%;
   text-align: center;
