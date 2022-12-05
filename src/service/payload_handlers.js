@@ -35,7 +35,6 @@ function angleQuaternion(start, end) {
     // console.log([(angleDifference.x * 57.2957795).toFixed(0), (angleDifference.y * 57.2957795).toFixed(0), (angleDifference.z * 57.2957795).toFixed(0)])
 
     let angle = 2 * Math.acos(start.dot(end) / (start.length() * end.length())) * 57.2957795
-    console.log(angle)
     return angle
 }
 

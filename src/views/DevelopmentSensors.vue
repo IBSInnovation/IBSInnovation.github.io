@@ -3,79 +3,64 @@ Register.vue - base vue
   <nav-bar-top></nav-bar-top>
   <h1>XsensDotSensor Development</h1>
 
-  <div class="flexWrapper">
-    <div class="sensorButtons1">
-      <button class="red-btn" @click="goToSelectSensor">Connect</button>
-      <button class="red-btn" @click="sync">Synchronize</button>
-      <button class="red-btn" @click="identify">Identify device</button>
-      <button class="red-btn" @click="disconnect">Disconnect</button>
-    </div>
-
-    <template v-for="sensor in sensors" :key="sensor.device_name">
-      <div class="info_container">
-        <table>
-          <tr>
-            <td class="header_name"><b>Device name</b></td>
-            <td>
-              <div class="table_data">{{ sensor.device_name }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>Battery level</b></td>
-            <td>
-              <div class="table_data">{{ sensor.battery_level }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>Sensor status</b></td>
-            <td>
-              <div class="table_data">{{ sensor.sensorstatus }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>x-axis</b></td>
-            <td>
-              <div class="table_data">{{ sensor.x }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>y-axis</b></td>
-            <td>
-              <div class="table_data">{{ sensor.y }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>z-axis</b></td>
-            <td>
-              <div class="table_data">{{ sensor.z }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>Biggest angle</b></td>
-            <td>
-              <div class="table_data">{{ sensor.angle }}</div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </template>
+  <div class="sensorButtons1">
+    <button class="red-btn" @click="goToSelectSensor">Connect</button>
+    <button class="red-btn" @click="sync">Synchronize</button>
   </div>
 
-  <div class="buttonWrapper">
-    <button
-      id="show-btn"
-      class="red-btn"
-      type="button"
-      aria-label="Toggle navigation"
-      @click="showButtons"
-    >
-      Show buttons
-    </button>
-    <div id="buttonGroup" ref="buttonGroup">
-      <button class="red-btn" @click="startDataExport">Export data</button>
-      <button class="red-btn" @click="streamData">Start streaming</button>
-      <button class="red-btn" @click="stopDataStream">Stop streaming</button>
-    </div>
+  <div class="flexWrapper">
+    <template v-for="sensor in sensors" :key="sensor.device_name">
+      <div class="sensorCard">
+        <div class="info_container">
+          <table>
+            <tr>
+              <td class="header_name"><b>Device name</b></td>
+              <td>
+                <div class="table_data">{{ sensor.device_name }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header_name"><b>Battery level</b></td>
+              <td>
+                <div class="table_data">{{ sensor.battery_level }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header_name"><b>Sensor status</b></td>
+              <td>
+                <div class="table_data">{{ sensor.sensorstatus }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header_name"><b>x-axis</b></td>
+              <td>
+                <div class="table_data">{{ sensor.x }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header_name"><b>y-axis</b></td>
+              <td>
+                <div class="table_data">{{ sensor.y }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header_name"><b>z-axis</b></td>
+              <td>
+                <div class="table_data">{{ sensor.z }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header_name"><b>Biggest angle</b></td>
+              <td>
+                <div class="table_data">{{ sensor.angle }}</div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <button class="blue-btn" @click="identify">Identify device</button>
+        <button class="red-btn" @click="disconnect">Disconnect</button>
+      </div>
+    </template>
   </div>
 
   <!-- <input
@@ -86,12 +71,21 @@ Register.vue - base vue
     @change="updateDeviceName"
   /> -->
 
-  <!-- <div class="x-axis">X: {{ x }}</div>
-  <div class="y-axis">Y: {{ y }}</div>
-  <div class="z-axis">Z: {{ z }}</div>
-  <div class="biggest-angle">Biggest angle: {{ angle }}</div> -->
-
   <footer>
+    <button
+      id="show-btn"
+      class="red-btn"
+      type="button"
+      aria-label="Toggle navigation"
+      @click="showButtons"
+    >
+      Show buttons
+    </button>
+    <div id="buttonGroup" ref="buttonGroup">
+      <button class="red-btn" @click="streamData">Start streaming</button>
+      <button class="red-btn" @click="stopDataStream">Stop streaming</button>
+      <button class="red-btn" @click="startDataExport">Export data</button>
+    </div>
     <BackButton></BackButton>
   </footer>
 </template>
@@ -153,7 +147,6 @@ export default {
   created() {
     window.addEventListener("beforeunload", this.handler);
     const allSensors = this.sensorHandler.getAllSensors();
-    console.log(allSensors);
 
     for (let i = 0; i < allSensors.length; i++) {
       const sensor = {};
@@ -172,14 +165,15 @@ export default {
     goToSelectSensor() {
       this.$router.push({ name: "selectSensor" });
     },
-    disconnect() {
-      this.sensorHandler.disconnectSensor();
+    disconnect(event) {
+      this.sensorHandler.disconnectSensor(this.getSensorName(event));
+      this.removeSensorFromArray(this.getSensorName(event));
     },
     sync() {
       this.sensorHandler.getSyncStatusSensor();
     },
-    identify() {
-      this.sensorHandler.blinkDeviceLED();
+    identify(event) {
+      this.sensorHandler.blinkDeviceLED(this.getSensorName(event));
     },
     startDataExport() {
       this.sensorHandler.downloadDataToCSV();
@@ -206,6 +200,29 @@ export default {
         this.showButtonsBoolean = false;
       }
     },
+    /* 
+    Deze functie is nu zo, om de device_name uit het element te halen
+    Moet veranderd worden als er echte sensor gebruikt wordt,
+    werkt wss alleen met fake sensor
+    */
+    getSensorName(event) {
+      // return event.target.parentElement.firstChild.firstChild.firstChild.lastChild
+      //     .textContent;
+      return parseInt(
+        event.target.parentElement.firstChild.firstChild.firstChild.lastChild
+          .textContent
+      );
+    },
+    /* 
+    Deze functie haalt de sensor uit de array, zodat vue automatisch het component herlaadt, 
+    het kan niet door de pagina te reloaden, want dan zijn alle sensoren weg.
+    */
+    removeSensorFromArray(device_name) {
+      const indexOfObject = this.sensors.findIndex((object) => {
+        return object.device_name === device_name;
+      });
+      this.sensors.splice(indexOfObject, 1);
+    },
   },
 };
 </script>
@@ -218,27 +235,38 @@ h1 {
 }
 
 .flexWrapper {
-  display: flex;
-  gap: 4em;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+  gap: 2em;
+  margin-right: 5%;
   margin-left: 5%;
+  padding-bottom: 80px;
+}
+
+.sensorCard {
+  display: flex;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  row-gap: 2em;
+  column-gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .sensorButtons1 {
+  position: absolute;
+  top: 5.25em;
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 1em;
   flex-wrap: wrap;
-}
-
-.buttonWrapper {
-  display: flex;
-  gap: 4em;
   margin-left: 5%;
+  margin-bottom: 2em;
 }
 
 #show-btn {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   margin-bottom: 1em;
   z-index: 1;
@@ -247,17 +275,16 @@ h1 {
 
 #buttonGroup {
   display: flex;
-  margin-top: 14em;
-  flex-direction: column;
-  gap: 2em;
+  flex-direction: row;
+  gap: 1em;
   flex-wrap: wrap;
+  position: absolute !important;
 }
 
 .red-btn {
-  border: 1px solid #e43a23;
   border-radius: 18px;
   background-color: #e43a23;
-  padding-top: 0.5rem;
+  padding-top: 0.5em;
   padding-bottom: 0.5em;
   color: white;
   border: none;
@@ -265,11 +292,28 @@ h1 {
   width: 130px;
 }
 
+.red-btn:hover {
+  background: #d3322c;
+}
+
+.blue-btn {
+  border-radius: 18px;
+  background-color: #0275d8;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  color: white;
+  border: none;
+  font-weight: bolder;
+  width: 130px;
+}
+
+.blue-btn:hover {
+  background: #0161b6;
+}
+
 .info_container {
-  height: 50%;
   background: white;
   border-radius: 15px;
-  width: 300px;
   align-items: center;
   display: flex;
 }
@@ -306,9 +350,13 @@ footer {
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
+  background-color: #1b2235;
 }
 
 @media screen and (max-height: 800px), screen and (max-width: 600px) {
+  h1 {
+    margin: 0.5em;
+  }
   .flexWrapper {
     gap: 2em;
   }
@@ -324,6 +372,16 @@ footer {
   #buttonGroup {
     display: none;
     gap: 0.5em;
+    max-width: 200px;
+  }
+
+  .sensorButtons1 {
+    position: static;
+    top: 12em;
+    flex-direction: row;
+    margin-bottom: 1em;
+    justify-content: center;
+    margin-left: 0;
   }
 }
 </style>

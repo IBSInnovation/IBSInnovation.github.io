@@ -82,7 +82,6 @@ export default {
   },
   mounted() {
     this.getCategoryResults();
-    console.log(this.route.params.category);
   },
 
   methods: {
@@ -236,7 +235,9 @@ th {
 }
 
 .addMeasurement:hover,
-.delete_categoryBtn:hover {
+.addMeasurement:focus,
+.delete_categoryBtn:hover,
+.delete_categoryBtn:focus {
   background: #d3322c;
   border: none;
 }

@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main @click="checkClickOutside">
     <div :style="blurrStyle()">
       <NavBarTop></NavBarTop>
 
@@ -57,7 +57,11 @@
               <!-- <p>Laatste meting: {{ category.lastMeasure }}</p> -->
             </div>
             <!-- TOO set param for patient -> category -> results -->
-            <button class="see-results" @click="goToExerciseResults(name)">
+            <button
+              :disabled="showFormDelete || showFormEdit"
+              class="see-results"
+              @click="goToExerciseResults(name)"
+            >
               Bekijk
             </button>
           </div>
@@ -65,18 +69,30 @@
       </div>
 
       <footer>
-        <button class="addCategory" @click="goToCategory()">
+        <button
+          :disabled="showFormDelete || showFormEdit"
+          class="addCategory"
+          @click="goToCategory()"
+        >
           <b>Categorie toevoegen</b>
         </button>
-        <button class="editButton" @click="showEditForm">
+        <button
+          :disabled="showFormDelete || showFormEdit"
+          class="editButton"
+          @click="showEditForm"
+        >
           <b>Gegevens aanpassen</b>
         </button>
 
-        <button class="deletePatientBtn" @click="showDeleteForm">
+        <button
+          :disabled="showFormDelete || showFormEdit"
+          class="deletePatientBtn"
+          @click="showDeleteForm"
+        >
           <b>Verwijder patiënt</b>
         </button>
 
-        <BackButton></BackButton>
+        <BackButton :disabled="showFormDelete || showFormEdit"></BackButton>
       </footer>
     </div>
     <DeleteForm
@@ -189,6 +205,7 @@ export default {
     },
     showEditForm(event) {
       event.stopPropagation();
+      window.scrollTo(0, 0);
       this.showFormEdit = true;
     },
     closeForm() {
@@ -198,9 +215,13 @@ export default {
       this.getPatientData();
       return;
     },
+    checkClickOutside(event) {
+      if (!event.target.closest(".form")) {
+        this.closeForm();
+      }
+    },
     editPatient() {
       this.closeForm();
-      // TODO Edit de patient's gegevens
     },
   },
 };
@@ -209,6 +230,7 @@ export default {
 <style scoped>
 main {
   padding-bottom: 50px;
+  min-height: 100vh;
 }
 .title {
   color: white;
@@ -294,13 +316,9 @@ table {
   border: none;
   padding: 1rem;
 }
-.see-results:hover {
-  background: #0161b6;
-  border: none;
-}
-
-.deletePatientBtn:hover {
-  background: #d3322c;
+.see-results:hover,
+.see-results:focus {
+  background: #04359e;
   border: none;
 }
 
@@ -324,8 +342,11 @@ table {
 }
 
 .editButton:hover,
+.editButton:focus,
 .deletePatientBtn:hover,
-.addCategory:hover {
+.deletePatientBtn:focus,
+.addCategory:hover,
+.addCategory:focus {
   background: #d3322c;
   border: none;
 }
