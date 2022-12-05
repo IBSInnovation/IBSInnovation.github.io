@@ -25,7 +25,7 @@
     </div>
 
     <button
-      v-show="visible"
+      v-if="visible"
       class="connectSensorButton"
       @click="doornaarmeting()"
     >
@@ -73,22 +73,29 @@ export default {
     },
     connectSensor() {
       this.loading = true;
-      this.delay(2500).then(async () => await this.connect());
-      this.enoughSensorsCheck();
+      this.delay(2500).then(() => this.connect());
     },
     connect() {
       this.sensorHandler.connectToSensor().then(() => {
         return new Promise((resolve) => {
           this.loading = false;
+          this.enoughSensorsCheck();
           resolve();
         });
       });
     },
     enoughSensorsCheck() {
+      console.log("needed: " + this.$route.params.sensorsNeeded);
+      console.log("connected: " + this.sensorHandler.getAllSensors().length);
       if (
         this.sensorHandler.getAllSensors().length >=
         this.$route.params.sensorsNeeded
       ) {
+        console.log(
+          "in if with: " +
+            this.sensorHandler.getAllSensors().length +
+            " connected"
+        );
         this.visible = true;
       }
     },
