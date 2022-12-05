@@ -70,6 +70,7 @@ export default {
       categoryActionText1: "",
       categoryActionText2: "",
       categoryActionImage: "",
+      sensorsNeeded: null,
     };
   },
   mounted() {
@@ -95,6 +96,7 @@ export default {
           "Laat de patiënt zijn/haar arm zo ver mogelijk terug te laten bewegen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Elbow-flexion-extension2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "heup-extensie-links" ||
         category === "heup-extensie-rechts"
@@ -111,6 +113,7 @@ export default {
           "Laat de patiënt zijn/haar been zo ver mogelijk naar achter bewegen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Hip-extension2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "heup-flexie-links" ||
         category === "heup-flexie-rechts"
@@ -125,6 +128,7 @@ export default {
         this.categoryActionText2 =
           "Laat de patiënt zijn/haar knie zo hoog mogelijk in de lucht heffen";
         this.categoryActionImage = "/src/assets/measureImages/Hip-flexion2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "knie-extensie-flexie-links" ||
         category === "knie-extensie-flexie-rechts"
@@ -141,6 +145,7 @@ export default {
           "Laat de patiënt zijn/haar onderbeen zo ver naar achter bewegen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Knee-flexion-extension2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "enkel-dorsaalflexie-links" ||
         category === "enkel-dorsaalflexie-rechts"
@@ -156,6 +161,7 @@ export default {
           "Laat de patiënt zijn/haar voet zo ver mogelijk naar boven bewegen zonder het onderbeen te verplaatsen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Ankle-dorsiflexion2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "enkel-plantairflexie-links" ||
         category === "enkel-plantairflexie-rechts"
@@ -171,6 +177,7 @@ export default {
           "Laat de patiënt zijn/haar voet zo ver mogelijk naar beneden bewegen zonder het onderbeen te verplaatsen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Ankle-plantar-flexion2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "shouder-flexie-links" ||
         category === "shouder-flexie-rechts"
@@ -187,6 +194,7 @@ export default {
           "Laat de patiënt zijn/haar arm zo ver mogelijk naar voren draaien (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Shoulder-flexion2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "elleboog-pronatie-links" ||
         category === "elleboog-pronatie-rechts"
@@ -203,6 +211,7 @@ export default {
           "Laat de patiënt zijn/haar hand zo ver mogelijk naar rechts draaien (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Elbow-pronation2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "elleboog-supinatie-links" ||
         category === "elleboog-supinatie-rechts"
@@ -219,6 +228,7 @@ export default {
           "Laat de patiënt zijn/haar hand zo ver mogelijk naar links draaien (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Elbow-supination2.png";
+        this.sensorsNeeded = 1;
       }
 
       this.indexBox = "1/3";
@@ -236,10 +246,14 @@ export default {
       const patientId = this.route.params.name;
       const category = this.route.params.category;
 
-      if (this.sensorHandler.isConnected()) {
+      if (this.sensorHandler.enoughConnectedSensors(this.sensorsNeeded)) {
         this.$router.push({
-          name: "measure",
-          params: { name: patientId, category: category },
+          name: "sensorCheck",
+          params: {
+            name: patientId,
+            category: category,
+            sensorsNeeded: this.sensorsNeeded,
+          },
         });
       } else {
         this.$router.push({ name: "selectSensor" });

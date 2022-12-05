@@ -55,7 +55,7 @@ const router = createRouter({
       component: () => import("../views/AddCategorie.vue"),
     },
     {
-      path: "/sensorCheck",
+      path: "/:name/:category/:sensorsNeeded/sensorCheck",
       name: "sensorCheck",
       component: () => import("../views/SensorCheck.vue"),
     },

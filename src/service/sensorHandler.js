@@ -63,9 +63,9 @@ class SensorHandler {
     this.removeFromSensorList(sensor);
   }
 
-  isConnected() {
-    if (this.sensorMap.size < 1) {
-      console.log("There are no sensors properly connected");
+  enoughConnectedSensors(sensorsNeeded) {
+    if (this.sensorMap.size < sensorsNeeded) {
+      console.log("There are not enough sensors properly connected");
       return false;
     }
     return true;
