@@ -85,17 +85,10 @@ export default {
       });
     },
     enoughSensorsCheck() {
-      console.log("needed: " + this.$route.params.sensorsNeeded);
-      console.log("connected: " + this.sensorHandler.getAllSensors().length);
       if (
         this.sensorHandler.getAllSensors().length >=
         this.$route.params.sensorsNeeded
       ) {
-        console.log(
-          "in if with: " +
-            this.sensorHandler.getAllSensors().length +
-            " connected"
-        );
         this.visible = true;
       }
     },

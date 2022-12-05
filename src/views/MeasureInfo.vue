@@ -257,7 +257,7 @@ export default {
         });
       } else {
         this.$router.push({
-          name: "selectSensor",
+          name: "selectSensorFromInfo",
           params: {
             name: patientId,
             category: category,
