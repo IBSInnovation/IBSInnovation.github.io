@@ -1,6 +1,6 @@
 <template>
   <nav-bar-top></nav-bar-top>
-  <h1 class="title">Info meting</h1>
+  <h1 class="title">Meting info</h1>
   <main>
     <div class="info_container">
       <p class="boxTitle">{{ titleText }}</p>
