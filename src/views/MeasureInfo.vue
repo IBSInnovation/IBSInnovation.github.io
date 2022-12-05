@@ -256,7 +256,14 @@ export default {
           },
         });
       } else {
-        this.$router.push({ name: "selectSensor" });
+        this.$router.push({
+          name: "selectSensor",
+          params: {
+            name: patientId,
+            category: category,
+            sensorsNeeded: this.sensorsNeeded,
+          },
+        });
       }
     },
     nextPanel() {

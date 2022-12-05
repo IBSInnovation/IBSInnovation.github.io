@@ -40,6 +40,11 @@ const router = createRouter({
       component: () => import("../views/SelectSensor.vue"),
     },
     {
+      path: "/:name/:category/:sensorsNeeded/selectSensor",
+      name: "selectSensor",
+      component: () => import("../views/SelectSensor.vue"),
+    },
+    {
       path: "/:name/:category/measureInfo",
       name: "measureInfo",
       component: () => import("../views/MeasureInfo.vue"),

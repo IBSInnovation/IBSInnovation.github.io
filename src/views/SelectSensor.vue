@@ -24,6 +24,14 @@
       ></scale-loader>
     </div>
 
+    <button
+      v-show="visible"
+      class="connectSensorButton"
+      @click="doornaarmeting()"
+    >
+      <b>Door naar meting</b>
+    </button>
+
     <footer><BackButton></BackButton></footer>
   </div>
 </template>
@@ -47,6 +55,7 @@ export default {
       color: "#0275d8",
       height: "50px",
       width: "6px",
+      visible: false,
     };
   },
   mounted() {
@@ -64,7 +73,8 @@ export default {
     },
     connectSensor() {
       this.loading = true;
-      this.delay(2500).then(() => this.connect());
+      this.delay(2500).then(async () => await this.connect());
+      this.enoughSensorsCheck();
     },
     connect() {
       this.sensorHandler.connectToSensor().then(() => {
@@ -72,6 +82,24 @@ export default {
           this.loading = false;
           resolve();
         });
+      });
+    },
+    enoughSensorsCheck() {
+      if (
+        this.sensorHandler.getAllSensors().length >=
+        this.$route.params.sensorsNeeded
+      ) {
+        this.visible = true;
+      }
+    },
+    doornaarmeting() {
+      this.$router.push({
+        name: "sensorCheck",
+        params: {
+          name: this.$route.params.name,
+          category: this.$route.params.category,
+          sensorsNeeded: this.$route.params.sensorsNeeded,
+        },
       });
     },
   },
