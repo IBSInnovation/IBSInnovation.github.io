@@ -15,7 +15,6 @@ class notification_handler {
     genericNotHandler = function (event) {
         const value = event.target.value
         console.log(`New notification message: ${getKeyByValue(notificationEnum, value.getUint8(2, true))}`)
-        console.log(value)
     }
 
     /**

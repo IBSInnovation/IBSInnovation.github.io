@@ -216,7 +216,6 @@ export default {
       return;
     },
     checkClickOutside(event) {
-      console.log(event.target);
       if (!event.target.closest(".form")) {
         this.closeForm();
       }

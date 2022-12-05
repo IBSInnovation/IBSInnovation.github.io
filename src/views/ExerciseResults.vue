@@ -82,7 +82,6 @@ export default {
   },
   mounted() {
     this.getCategoryResults();
-    console.log(this.route.params.category);
   },
 
   methods: {

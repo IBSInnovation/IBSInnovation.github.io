@@ -100,7 +100,6 @@ export default {
       this.errorMessage = "";
     },
     checkClickOutside(event) {
-      console.log(event.target);
       if (!event.target.closest(".form")) {
         this.closeForm();
       }

@@ -58,7 +58,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  // console.log(import.meta.env.BASE_URL);
   if (to.name !== "register" && !store.getters.isLogedIn)
     return { name: "register" };
 });

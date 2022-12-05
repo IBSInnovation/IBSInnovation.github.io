@@ -93,8 +93,6 @@ Register.vue - base vue
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import BackButton from "../components/buttons/BackButton.vue";
-import { getCurrentInstance } from "vue";
-import { object } from "yup";
 
 export default {
   name: "DevelopmentSensors",
@@ -223,7 +221,6 @@ export default {
       const indexOfObject = this.sensors.findIndex((object) => {
         return object.device_name === device_name;
       });
-      console.log(indexOfObject);
       this.sensors.splice(indexOfObject, 1);
     },
   },

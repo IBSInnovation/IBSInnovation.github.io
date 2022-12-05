@@ -348,7 +348,6 @@ export default {
     },
     addSelected(type) {
       let docIdPatient = this.route.params.name;
-      console.log(type);
       addCategorie(docIdPatient, type);
       this.$router.push({ name: "patient" });
     },
