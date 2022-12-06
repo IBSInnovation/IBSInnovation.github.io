@@ -353,7 +353,7 @@ footer {
   background-color: #1b2235;
 }
 
-@media screen and (max-height: 800px), screen and (max-width: 600px) {
+@media screen and (max-height: 600px), screen and (max-width: 800px) {
   h1 {
     margin: 0.5em;
   }
