@@ -63,6 +63,12 @@ class SensorHandler {
     this.removeFromSensorList(sensor);
   }
 
+  diconnectAllSensors() {
+    for (let sensor of this.sensorMap.values()) {
+      sensor.disconnect();
+    }
+  }
+
   enoughConnectedSensors(sensorsNeeded) {
     if (this.sensorMap.size < sensorsNeeded) {
       console.log("There are not enough sensors properly connected");
