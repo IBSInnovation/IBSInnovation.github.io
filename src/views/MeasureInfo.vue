@@ -128,7 +128,7 @@ export default {
         this.categoryActionText2 =
           "Laat de patiënt zijn/haar knie zo hoog mogelijk in de lucht heffen";
         this.categoryActionImage = "/src/assets/measureImages/Hip-flexion2.png";
-        this.sensorsNeeded = 1;
+        this.sensorsNeeded = 3;
       } else if (
         category === "knie-extensie-flexie-links" ||
         category === "knie-extensie-flexie-rechts"

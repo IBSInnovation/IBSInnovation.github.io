@@ -5,6 +5,7 @@
     <h1 class="title">Sensor check</h1>
 
     <div class="sensorBox">
+      <p>Selecteer maximaal {{ sensorsNeeded }} sensoren</p>
       <table class="table">
         <thead>
           <tr>
@@ -14,17 +15,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(sensor, index) in sensors" :key="sensor.device_name">
+          <tr v-for="sensor in sensors" :key="sensor.device_name">
             <td>
               <input
                 id="flexCheckDefault"
                 v-model="selected"
                 class="form-check-input"
                 type="checkbox"
-                :value="sensor.device_name"
+                :value="sensor"
                 :disabled="
                   selected.length >= sensorsNeeded &&
-                  selected.indexOf(index) === -1
+                  selected.indexOf(sensor) === -1
                 "
               />
             </td>
@@ -34,13 +35,13 @@
         </tbody>
       </table>
     </div>
-
-    <button class="selectSensorButton" @click="selectSensor()">
-      <b>Koppel sensor</b>
-    </button>
   </main>
 
-  <footer><BackButton></BackButton></footer>
+  <footer>
+    <button class="selectSensorButton" @click="selectSensor()">
+      <b>Selecteer sensors</b></button
+    ><BackButton></BackButton>
+  </footer>
 </template>
 
 <script>
@@ -74,8 +75,8 @@ export default {
   },
   methods: {
     goToMeasureStart() {
-      const patientId = this.route.params.name;
-      const category = this.route.params.category;
+      const patientId = this.$route.params.name;
+      const category = this.$route.params.category;
 
       this.$router.push({
         name: "measure",
@@ -85,10 +86,23 @@ export default {
         },
       });
     },
+    /**
+     * Vue maakt van de objecten in this.selected een proxy
+     * Deze functie maakt hier objecten van --> haalt de namen hieruit en pushed deze naar de store
+     * Zodat bij MeasureStart alleen de sensoren die geselecteerd zijn, gebruikt worden bij een meting.
+     */
     selectSensor() {
-      console.log(this.selected);
-      this.$store.commit("setSelectedSensors", this.selected);
-      // ga verder naar measure
+      let proxyToArray = JSON.parse(JSON.stringify(this.selected));
+
+      const deviceNames = [];
+
+      for (let i = 0; i < proxyToArray.length; i++) {
+        console.log(proxyToArray[i].device_name);
+        deviceNames.push(proxyToArray[i].device_name);
+      }
+
+      this.$store.commit("setSelectedSensors", deviceNames);
+
       this.goToMeasureStart();
     },
   },
@@ -99,6 +113,7 @@ export default {
 #fullPage {
   margin-left: 5%;
   margin-right: 5%;
+  padding-bottom: 80px;
 }
 
 .title {
@@ -116,13 +131,7 @@ export default {
   padding: 1em;
 }
 
-.form-check-label {
-  display: flex;
-  gap: 1em;
-}
-
 .selectSensorButton {
-  margin: 2em 0 2em 0;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   width: 200px;
