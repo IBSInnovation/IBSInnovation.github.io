@@ -13,6 +13,7 @@ export default new Vuex.Store({
     length: null,
     gender: null,
     birthdate: null,
+    selected_sensors: [],
   },
   getters: {
     getUser() {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     getPatientList(state) {
       return state.patients;
+    },
+    getSelectedSensors(state) {
+      return state.selected_sensors;
     },
   },
   mutations: {
@@ -71,6 +75,9 @@ export default new Vuex.Store({
     },
     setPatientList(state, patients) {
       state.patients = patients;
+    },
+    setSelectedSensors(state, selected_sensors) {
+      state.selected_sensors = selected_sensors;
     },
   },
   actions: {

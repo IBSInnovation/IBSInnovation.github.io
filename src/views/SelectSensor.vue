@@ -144,9 +144,9 @@ export default {
   background: white;
   width: 90%;
   border-radius: 15px;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  margin-bottom: 2rem;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  margin-bottom: 2em;
 }
 
 /* buttons */
@@ -154,9 +154,9 @@ export default {
 .connectSensorButton {
   margin-left: 5%;
   margin-right: 5%;
-  margin-bottom: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   width: 200px;
   background-color: #0275d8;
   color: #f8f9fa;

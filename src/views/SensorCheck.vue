@@ -5,10 +5,39 @@
     <h1 class="title">Sensor check</h1>
 
     <div class="sensorBox">
-      <template v-for="sensor in sensors" :key="sensor.device_name">
-        <div>{{ sensor.device_name }}</div>
-      </template>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Naam</th>
+            <th>Batterij niveau</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(sensor, index) in sensors" :key="sensor.device_name">
+            <td>
+              <input
+                id="flexCheckDefault"
+                v-model="selected"
+                class="form-check-input"
+                type="checkbox"
+                :value="sensor.device_name"
+                :disabled="
+                  selected.length >= sensorsNeeded &&
+                  selected.indexOf(index) === -1
+                "
+              />
+            </td>
+            <td>{{ sensor.device_name }}</td>
+            <td>{{ sensor.battery_level }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <button class="selectSensorButton" @click="selectSensor()">
+      <b>Koppel sensor</b>
+    </button>
   </main>
 
   <footer><BackButton></BackButton></footer>
@@ -27,10 +56,14 @@ export default {
   inject: ["sensorHandler"],
   data() {
     return {
+      sensorsNeeded: null,
       sensors: [],
+      selected: [],
     };
   },
   created() {
+    this.sensorsNeeded = parseInt(this.$route.params.sensorsNeeded);
+
     const allSensors = this.sensorHandler.getAllSensors();
     for (let i = 0; i < allSensors.length; i++) {
       const sensor = {};
@@ -52,6 +85,12 @@ export default {
         },
       });
     },
+    selectSensor() {
+      console.log(this.selected);
+      this.$store.commit("setSelectedSensors", this.selected);
+      // ga verder naar measure
+      this.goToMeasureStart();
+    },
   },
 };
 </script>
@@ -72,11 +111,25 @@ export default {
 
 .sensorBox {
   height: 50%;
-  margin-right: 5%;
-  margin-left: 5%;
   background: white;
   border-radius: 15px;
   padding: 1em;
+}
+
+.form-check-label {
+  display: flex;
+  gap: 1em;
+}
+
+.selectSensorButton {
+  margin: 2em 0 2em 0;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 200px;
+  background-color: #0275d8;
+  color: #f8f9fa;
+  border-radius: 15px;
+  border: none;
 }
 
 footer {

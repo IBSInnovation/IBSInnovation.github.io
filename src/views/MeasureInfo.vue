@@ -96,7 +96,7 @@ export default {
           "Laat de patiënt zijn/haar arm zo ver mogelijk terug te laten bewegen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Elbow-flexion-extension2.png";
-        this.sensorsNeeded = 1;
+        this.sensorsNeeded = 2;
       } else if (
         category === "heup-extensie-links" ||
         category === "heup-extensie-rechts"
