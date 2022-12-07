@@ -7,6 +7,12 @@ export default {
     PWAPrompt,
     ReloadPWA,
   },
+  inject: ["sensorHandler"],
+  mounted() {
+    window.addEventListener("beforeunload", () => {
+      this.sensorHandler.diconnectAllSensors();
+    });
+  },
 };
 </script>
 

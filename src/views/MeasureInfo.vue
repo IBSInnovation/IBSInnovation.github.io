@@ -35,7 +35,7 @@
 
   <footer>
     <button class="connectSensorButton" @click="checkConnectedSensor()">
-      <b>Koppel sensor</b>
+      <b>Selecteer sensor</b>
     </button>
     <BackButton></BackButton>
   </footer>
