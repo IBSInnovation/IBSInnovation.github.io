@@ -63,14 +63,6 @@ Register.vue - base vue
     </template>
   </div>
 
-  <!-- <input
-    type="text"
-    name="device name"
-    placeholder=" Enter new device name"
-    :value="device_name"
-    @change="updateDeviceName"
-  /> -->
-
   <footer>
     <button
       id="show-btn"

@@ -79,13 +79,13 @@ class SensorHandler {
 
   streamMultipleSensors(device_names) {
     for (let i = 0; i < device_names.length; i++) {
-      this.startRTStream(device_names[i]);
+      this.startRTStream(device_names[i].device_name);
     }
   }
 
   stopStreamMultipleSensors(device_names) {
     for (let i = 0; i < device_names.length; i++) {
-      this.stopRTStream(device_names[i]);
+      this.stopRTStream(device_names[i].device_name);
     }
   }
 

@@ -6,24 +6,37 @@
   <!-- //! graph has to be installed and used -->
   <div class="info_container">
     <b>Meet resultaten</b>
-    <table>
-      <tr>
-        <td class="header_name"><b class="table_content">Tijd (m:s:ms) </b></td>
-        <td>
-          <span id="minutes">{{ minutes }}:</span>
-          <span id="seconds">{{ seconds }}:</span>
-          <span id="milliseconds">{{ miliseconds }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>Beweging (graden) </b></td>
-        <td>{{ maxAngle }}°</td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>Procent van de norm </b></td>
-        <td>{{ norm }}%</td>
-      </tr>
-    </table>
+
+    <template v-for="sensor in sensorMeasurements" :key="sensor">
+      <div class="sensorCard">
+        <table>
+          <tr>
+            <td class="header_name"><b>Device name</b></td>
+            <td>
+              <div class="table_data">{{ sensor.device_name }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name">
+              <b class="table_content">Tijd (m:s:ms) </b>
+            </td>
+            <td>
+              <span id="minutes">{{ minutes }}:</span>
+              <span id="seconds">{{ seconds }}:</span>
+              <span id="milliseconds">{{ miliseconds }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Beweging (graden) </b></td>
+            <td>{{ sensor.max_angle }}°</td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Procent van de norm </b></td>
+            <td>{{ sensor.norm }}%</td>
+          </tr>
+        </table>
+      </div>
+    </template>
 
     <button id="button1" class="measureButtonBlue" @click="measure()">
       <b>{{ button1text }}</b>
@@ -75,28 +88,63 @@ export default {
       miliseconds: 0,
       seconds: 0,
       minutes: 0,
-      maxAngle: 0.0,
       route: useRoute(),
       button1text: "Start meting",
-      norm: 0.0,
       patient: null,
-      selectedSensors: [],
+      sensorMeasurements: [],
     };
   },
   created() {
-    this.selectedSensors = this.$store.getters.getSelectedSensors;
+    let sensorNames = this.$store.getters.getSelectedSensors;
+    for (let i = 0; i < sensorNames.length; i++) {
+      const sensorData = {};
+      sensorData.device_name = sensorNames[i];
+      sensorData.max_angle = 0;
+      sensorData.norm = 0.0;
+      this.sensorMeasurements.push(sensorData);
+    }
   },
   methods: {
+    setSensorMeasurement() {
+      this.sensorMeasurements = [];
+      let sensorNames = this.$store.getters.getSelectedSensors;
+      for (let i = 0; i < sensorNames.length; i++) {
+        const sensorData = {};
+        sensorData.device_name = sensorNames[i];
+        sensorData.max_angle = 0;
+        sensorData.norm = 0.0;
+        this.sensorMeasurements.push(sensorData);
+      }
+    },
+    // resetSensorMeasurement() {
+    //   this.sensorMeasurements = [];
+    //   this.setSensorMeasurement();
+    // },
+    updateMeasuredData(TMPnorm) {
+      for (let i = 0; i < this.sensorMeasurements.length; i++) {
+        const sensor = this.sensorHandler.getSensor(
+          this.sensorMeasurements[i].device_name
+        );
+        this.sensorMeasurements[i].max_angle = sensor.max_angle;
+        this.sensorMeasurements[i].norm = (
+          (sensor.max_angle / TMPnorm) *
+          100
+        ).toFixed(2);
+      }
+    },
     async saveMeasurement() {
+      console.log("voor if")
       if (this.maxAngle > 0) {
         let docIdPatient = this.route.params.name;
         let docIdCategory = this.route.params.category;
+        console.log("voor await")
         await addResultToCategory(
           docIdPatient,
           docIdCategory,
           this.maxAngle,
           this.norm
         );
+        console.log("na await")
         this.$router.push({ name: "exerciseResults", params: {} });
       }
     },
@@ -120,7 +168,8 @@ export default {
     // dit moet nog dynamisch gemaakt worden
     async measure() {
       if (measureState == "idle") {
-        this.sensorHandler.streamMultipleSensors(this.selectedSensors);
+        this.setSensorMeasurement();
+        this.sensorHandler.streamMultipleSensors(this.sensorMeasurements);
 
         document
           .getElementById("button1")
@@ -149,7 +198,9 @@ export default {
         clearInterval(timer);
         measureState = "results";
 
-        await this.sensorHandler.stopStreamMultipleSensors(this.selectedSensors);
+        await this.sensorHandler.stopStreamMultipleSensors(
+          this.sensorMeasurements
+        );
 
         const docKey = this.route.params.name;
         let patient = await getSinglePatient(docKey);
@@ -210,8 +261,12 @@ export default {
         }
 
         //Moet nog naar gekeken worden, samen met UI!
-        this.maxAngle = this.sensorHandler.getMaxAngle();
-        this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
+
+        // this.maxAngle = this.sensorHandler.getMaxAngle();
+        // this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
+
+        this.updateMeasuredData(TMPnorm);
+
       } else if (measureState == "results") {
         document.getElementById("button2").style =
           "margin-top: 0.5rem; display: none";
@@ -247,6 +302,16 @@ export default {
   font-size: 3em;
   width: 80%;
   text-align: center;
+}
+.sensorCard {
+  display: flex;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  row-gap: 2em;
+  column-gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .info_container {
