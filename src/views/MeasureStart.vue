@@ -80,7 +80,11 @@ export default {
       button1text: "Start meting",
       norm: 0.0,
       patient: null,
+      selectedSensors: [],
     };
+  },
+  created() {
+    this.selectedSensors = this.$store.getters.getSelectedSensors;
   },
   methods: {
     async saveMeasurement() {
@@ -116,7 +120,7 @@ export default {
     // dit moet nog dynamisch gemaakt worden
     async measure() {
       if (measureState == "idle") {
-        this.sensorHandler.startRTStream();
+        this.sensorHandler.streamMultipleSensors(this.selectedSensors);
 
         document
           .getElementById("button1")
@@ -145,7 +149,7 @@ export default {
         clearInterval(timer);
         measureState = "results";
 
-        await this.sensorHandler.stopRTStream();
+        await this.sensorHandler.stopStreamMultipleSensors(this.selectedSensors);
 
         const docKey = this.route.params.name;
         let patient = await getSinglePatient(docKey);
@@ -205,6 +209,7 @@ export default {
             break;
         }
 
+        //Moet nog naar gekeken worden, samen met UI!
         this.maxAngle = this.sensorHandler.getMaxAngle();
         this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
       } else if (measureState == "results") {

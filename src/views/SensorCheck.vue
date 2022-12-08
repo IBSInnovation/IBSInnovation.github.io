@@ -97,7 +97,7 @@ export default {
       const deviceNames = [];
 
       for (let i = 0; i < proxyToArray.length; i++) {
-        console.log(proxyToArray[i].device_name);
+        // console.log(proxyToArray[i].device_name);
         deviceNames.push(proxyToArray[i].device_name);
       }
 

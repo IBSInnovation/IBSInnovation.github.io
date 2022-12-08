@@ -49,12 +49,12 @@ export default class FakeXSensDot {
   }
 
   startRTStream() {
-    console.log("You started streaming for data");
+    console.log("Sensor " + this.device_name + " started streaming for data");
     return Promise.resolve();
   }
 
   stopRTStream() {
-    console.log("You stopped streaming for data");
+    console.log("Sensor " + this.device_name + " stopped streaming for data");
     return Promise.resolve();
   }
 }
