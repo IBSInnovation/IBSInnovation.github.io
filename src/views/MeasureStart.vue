@@ -133,18 +133,19 @@ export default {
       }
     },
     async saveMeasurement() {
-      console.log("voor if")
-      if (this.maxAngle > 0) {
+      console.log("voor if");
+      if (this.sensorMeasurements[0].max_angle > 0) {
         let docIdPatient = this.route.params.name;
         let docIdCategory = this.route.params.category;
         console.log("voor await")
+        // gaat nu hier fout.
         await addResultToCategory(
           docIdPatient,
           docIdCategory,
           this.maxAngle,
           this.norm
         );
-        console.log("na await")
+        console.log("na await");
         this.$router.push({ name: "exerciseResults", params: {} });
       }
     },
