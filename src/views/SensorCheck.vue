@@ -93,17 +93,22 @@ export default {
      */
     selectSensor() {
       let proxyToArray = JSON.parse(JSON.stringify(this.selected));
-
       const deviceNames = [];
+      console.log(proxyToArray.length);
 
-      for (let i = 0; i < proxyToArray.length; i++) {
-        // console.log(proxyToArray[i].device_name);
-        deviceNames.push(proxyToArray[i].device_name);
+      // check if enough sensors selected
+      if (proxyToArray.length < this.sensorsNeeded) {
+        window.alert(`Selecteer minimaal ${this.sensorsNeeded} sensor(en)`);
+      } else {
+        for (let i = 0; i < proxyToArray.length; i++) {
+          // console.log(proxyToArray[i].device_name);
+          deviceNames.push(proxyToArray[i].device_name);
+        }
+
+        this.$store.commit("setSelectedSensors", deviceNames);
+
+        this.goToMeasureStart();
       }
-
-      this.$store.commit("setSelectedSensors", deviceNames);
-
-      this.goToMeasureStart();
     },
   },
 };
