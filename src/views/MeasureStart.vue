@@ -6,24 +6,37 @@
   <!-- //! graph has to be installed and used -->
   <div class="info_container">
     <b>Meet resultaten</b>
-    <table>
-      <tr>
-        <td class="header_name"><b class="table_content">Tijd (m:s:ms) </b></td>
-        <td>
-          <span id="minutes">{{ minutes }}:</span>
-          <span id="seconds">{{ seconds }}:</span>
-          <span id="milliseconds">{{ miliseconds }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>Beweging (graden) </b></td>
-        <td>{{ maxAngle }}°</td>
-      </tr>
-      <tr>
-        <td class="header_name"><b>Procent van de norm </b></td>
-        <td>{{ norm }}%</td>
-      </tr>
-    </table>
+
+    <template v-for="sensor in sensorMeasurements" :key="sensor">
+      <div class="sensorCard">
+        <table>
+          <tr>
+            <td class="header_name"><b>Device name</b></td>
+            <td>
+              <div class="table_data">{{ sensor.device_name }}</div>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name">
+              <b class="table_content">Tijd (m:s:ms) </b>
+            </td>
+            <td>
+              <span id="minutes">{{ minutes }}:</span>
+              <span id="seconds">{{ seconds }}:</span>
+              <span id="milliseconds">{{ miliseconds }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Beweging (graden) </b></td>
+            <td>{{ sensor.max_angle }}°</td>
+          </tr>
+          <tr>
+            <td class="header_name"><b>Procent van de norm </b></td>
+            <td>{{ sensor.norm }}%</td>
+          </tr>
+        </table>
+      </div>
+    </template>
 
     <button id="button1" class="measureButtonBlue" @click="measure()">
       <b>{{ button1text }}</b>
@@ -49,18 +62,16 @@
   </div>
 
   <div style="margin-top: 80px"></div>
-  <footer>
-    <button class="backBtn" @click="goBackToSelect()"><b>Terug</b></button>
-  </footer>
+  <footer><BackButton></BackButton></footer>
 </template>
 
 <script>
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { XsensDotSensor } from "/src/service/bluetooth.js";
 import { addResultToCategory, getSinglePatient } from "../db/fdb";
 import { useRoute } from "vue-router";
 import jsonMovementData from "/src/service/movement_data.json";
 import { formatBirthDateToAge } from "../service/calculators/AgeCalculator";
+import BackButton from "../components/buttons/BackButton.vue";
 
 var measureState = "idle";
 var timer;
@@ -69,41 +80,76 @@ export default {
   name: "MeasureStart",
   components: {
     NavBarTop,
+    BackButton,
   },
-
+  inject: ["sensorHandler"],
   data() {
     return {
       miliseconds: 0,
       seconds: 0,
       minutes: 0,
-      maxAngle: 0.0,
       route: useRoute(),
       button1text: "Start meting",
-      norm: 0.0,
       patient: null,
+      sensorMeasurements: [],
     };
   },
+  created() {
+    let sensorNames = this.$store.getters.getSelectedSensors;
+    for (let i = 0; i < sensorNames.length; i++) {
+      const sensorData = {};
+      sensorData.device_name = sensorNames[i];
+      sensorData.max_angle = 0;
+      sensorData.norm = 0.0;
+      this.sensorMeasurements.push(sensorData);
+    }
+  },
   methods: {
+    setSensorMeasurement() {
+      this.sensorMeasurements = [];
+      let sensorNames = this.$store.getters.getSelectedSensors;
+      for (let i = 0; i < sensorNames.length; i++) {
+        const sensorData = {};
+        sensorData.device_name = sensorNames[i];
+        sensorData.max_angle = 0;
+        sensorData.norm = 0.0;
+        this.sensorMeasurements.push(sensorData);
+      }
+    },
+    // resetSensorMeasurement() {
+    //   this.sensorMeasurements = [];
+    //   this.setSensorMeasurement();
+    // },
+    updateMeasuredData(TMPnorm) {
+      for (let i = 0; i < this.sensorMeasurements.length; i++) {
+        const sensor = this.sensorHandler.getSensor(
+          this.sensorMeasurements[i].device_name
+        );
+        this.sensorMeasurements[i].max_angle = sensor.max_angle;
+        this.sensorMeasurements[i].norm = (
+          (sensor.max_angle / TMPnorm) *
+          100
+        ).toFixed(2);
+      }
+    },
     async saveMeasurement() {
-      if (!this.maxAngle == 0) {
-        // console.log("Unix: " + getUnixOfToday())
+      console.log("voor if")
+      if (this.maxAngle > 0) {
         let docIdPatient = this.route.params.name;
         let docIdCategory = this.route.params.category;
+        console.log("voor await")
         await addResultToCategory(
           docIdPatient,
           docIdCategory,
           this.maxAngle,
           this.norm
         );
+        console.log("na await")
         this.$router.push({ name: "exerciseResults", params: {} });
       }
     },
     deleteMeasurement() {
       this.$router.push({ name: "exerciseResults", params: {} });
-    },
-    goBackToSelect() {
-      clearInterval(timer);
-      this.$router.push({ name: "selectSensor" });
     },
 
     //bron: https://dev.to/walternascimentobarroso/creating-a-timer-with-javascript-8b7
@@ -118,12 +164,12 @@ export default {
       }
     },
 
+    // startRTStream breekt nu, omdat er een device_name meegegeven moet worden
+    // dit moet nog dynamisch gemaakt worden
     async measure() {
-      if (XsensDotSensor.device == null) {
-        console.log("No device connected");
-      }
       if (measureState == "idle") {
-        XsensDotSensor.startRTStream();
+        this.setSensorMeasurement();
+        this.sensorHandler.streamMultipleSensors(this.sensorMeasurements);
 
         document
           .getElementById("button1")
@@ -152,7 +198,9 @@ export default {
         clearInterval(timer);
         measureState = "results";
 
-        await XsensDotSensor.stopRTStream();
+        await this.sensorHandler.stopStreamMultipleSensors(
+          this.sensorMeasurements
+        );
 
         const docKey = this.route.params.name;
         let patient = await getSinglePatient(docKey);
@@ -173,55 +221,52 @@ export default {
           age = "45+";
         }
 
-        if (
-          category === "elleboog-flexie-extensie-rechts" ||
-          category === "elleboog-flexie-extensie-links"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
-        } else if (
-          category === "heup-extensie-links" ||
-          category === "heup-extensie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["heup-extensie"][gender][age];
-        } else if (
-          category === "heup-flexie-links" ||
-          category === "heup-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["heup-flexie"][gender][age];
-        } else if (
-          category === "knie-extensie-flexie-links" ||
-          category === "knie-extensie-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
-        } else if (
-          category === "enkel-dorsaalflexie-links" ||
-          category === "enkel-dorsaalflexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
-        } else if (
-          category === "enkel-plantairflexie-links" ||
-          category === "enkel-plantairflexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
-        } else if (
-          category === "shouder-flexie-links" ||
-          category === "shouder-flexie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
-        } else if (
-          category === "elleboog-pronatie-links" ||
-          category === "elleboog-pronatie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
-        } else if (
-          category === "elleboog-supinatie-links" ||
-          category === "elleboog-supinatie-rechts"
-        ) {
-          TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
+        switch (category) {
+          case "elleboog-flexie-extensie-rechts":
+          case "elleboog-flexie-extensie-links":
+            TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
+            break;
+          case "heup-extensie-links":
+          case "heup-extensie-rechts":
+            TMPnorm = jsonMovementData["heup-extensie"][gender][age];
+            break;
+          case "heup-flexie-links":
+          case "heup-flexie-rechts":
+            TMPnorm = jsonMovementData["heup-flexie"][gender][age];
+            break;
+          case "knie-extensie-flexie-links":
+          case "knie-extensie-flexie-rechts":
+            TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
+            break;
+          case "enkel-dorsaalflexie-links":
+          case "enkel-dorsaalflexie-rechts":
+            TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
+            break;
+          case "enkel-plantairflexie-links":
+          case "enkel-plantairflexie-rechts":
+            TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
+            break;
+          case "shouder-flexie-links":
+          case "shouder-flexie-rechts":
+            TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
+            break;
+          case "elleboog-pronatie-links":
+          case "elleboog-pronatie-rechts":
+            TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
+            break;
+          case "elleboog-supinatie-links":
+          case "elleboog-supinatie-rechts":
+            TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
+            break;
         }
 
-        this.maxAngle = XsensDotSensor.max_angle;
-        this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
+        //Moet nog naar gekeken worden, samen met UI!
+
+        // this.maxAngle = this.sensorHandler.getMaxAngle();
+        // this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
+
+        this.updateMeasuredData(TMPnorm);
+
       } else if (measureState == "results") {
         document.getElementById("button2").style =
           "margin-top: 0.5rem; display: none";
@@ -258,6 +303,16 @@ export default {
   width: 80%;
   text-align: center;
 }
+.sensorCard {
+  display: flex;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  row-gap: 2em;
+  column-gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 .info_container {
   margin-top: 1%;
@@ -291,21 +346,6 @@ table {
 
 /* buttons */
 
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
-}
-
 .measureButtonBlue {
   margin-left: 1%;
   margin-top: 2rem;
@@ -318,9 +358,9 @@ table {
   border: none;
 }
 
-.measureButtonBlue:hover {
-  background: #0161b6;
-  border: none;
+.measureButtonBlue:hover,
+.measureButtonBlue:focus {
+  background: #04359e;
 }
 
 .measureButtonRed {
@@ -335,7 +375,8 @@ table {
   border: none;
 }
 
-.measureButtonRed:hover {
+.measureButtonRed:hover,
+.measureButtonRed:focus {
   background: #d3322c;
   border: none;
 }
@@ -343,13 +384,13 @@ table {
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 1em;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #1b2235;
 }
 </style>

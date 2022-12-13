@@ -1,55 +1,52 @@
 <template>
-  <!-- Navbar -->
-  <nav class="navbar1">
-    <!-- Container wrapper -->
-    <div class="container-fluid1">
-      <button @click="goBackToHome()">
-        <img
-          src="@/assets/beeldmerk.png"
-          height="40"
-          alt="hu logo"
-          loading="lazy"
-        />
-      </button>
-      <div class="item-left-side">
-        <p class="userName">
-          {{ getDisplayName() }}
-        </p>
-        <div class="dropdown">
+  <nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <button @click="goBackToHome()">
+          <img
+            src="@/assets/beeldmerk.png"
+            height="40"
+            alt="hu logo"
+            loading="lazy"
+          />
+        </button>
+      </a>
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item dropdown">
           <a
-            id="navbarDropdownMenuAvatar"
-            class="dropdown-toggle d-flex align-items-center hidden-arrow"
             href="#"
-            role="button"
-            data-mdb-toggle="dropdown"
-            aria-expanded="false"
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
           >
-            <img
-              src="@/assets/blackImage.jpg"
-              class="rounded-circle"
-              height="30"
-              alt="profile picture"
-              loading="lazy"
-            />
+            {{ getDisplayName() }}
           </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuAvatar"
-          >
+          <div class="dropdown-menu dropdown-menu-end">
             <li>
-              <a class="dropdown-item" @click="logOut()">Log uit</a>
+              <a
+                class="dropdown-item"
+                role="menuitem"
+                tabindex="0"
+                @click="goToDevelop()"
+                @keyup.enter="goToDevelop()"
+                >Development</a
+              >
             </li>
+            <div class="dropdown-divider"></div>
             <li>
-              <a class="dropdown-item" @click="goToDevelop()">Development</a>
+              <a
+                class="dropdown-item"
+                role="menuitem"
+                tabindex="0"
+                @click="logOut()"
+                @keyup.enter="logOut()"
+                >Log uit</a
+              >
             </li>
-          </ul>
-        </div>
-      </div>
-      <!-- Right elements -->
+          </div>
+        </li>
+      </ul>
     </div>
-    <!-- Container wrapper -->
   </nav>
-  <!-- Navbar -->
 </template>
 
 <script>
@@ -92,60 +89,36 @@ export default {
 </script>
 
 <style scoped>
-.navbar1 {
-  background-color: #f8f9fa;
-  position: sticky;
-  top: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-.container-fluid1 {
-  width: 100%;
-  padding-right: var(--bs-gutter-x, 0.75rem);
-  padding-left: var(--bs-gutter-x, 0.75rem);
-  margin-right: auto;
-  margin-left: auto;
-}
-.navbar1 > .container-fluid1 {
-  display: flex;
-  flex-wrap: inherit;
-  align-items: center;
-  justify-content: space-between;
-}
-.item-left-side {
-  align-items: center !important;
-  display: flex !important;
+.navbar {
+  border-bottom: 2px solid white;
+  background: #1b2235;
 }
 
-/* dropdown for the logout en user settings */
-.dropdown-menu.show {
-  right: 20px;
-}
-/* notification button */
-.badge {
-  font-size: 1em;
+.nav-item {
+  cursor: pointer;
 }
 
-/* pages dropdown */
+.nav-link {
+  padding: 6px;
+  color: #f8f9fa;
+  border: 1px solid #e43a23;
+  border-radius: 18px;
+  background-color: #e43a23;
+}
 
-.userName {
-  margin-right: 10px;
-  margin-top: 10px;
-  color: red;
+.nav-link:hover,
+.nav-link:focus {
+  background: #d3322c;
 }
 
 button {
   border: none;
-  background-color: #f8f9fa;
-  color: red;
+  background-color: #1b2235;
 }
 
-.navbar {
-  position: sticky;
-  top: 0;
+@media (max-width: 576px) {
+  .navbar-expand-sm .navbar-nav .dropdown-menu {
+    position: absolute;
+  }
 }
 </style>

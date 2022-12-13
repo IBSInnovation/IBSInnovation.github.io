@@ -19,7 +19,6 @@ export async function registerWithEmail(value) {
       createFysio("", user.email, user.uid);
     })
     .catch((error) => {
-      console.log(error.code);
       return error.code;
     });
 }

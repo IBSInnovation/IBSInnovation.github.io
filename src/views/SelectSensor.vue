@@ -1,5 +1,4 @@
 <template>
-  <div id="loadText" class="loadText">{{ loadingText }}</div>
   <div id="screen">
     <nav-bar-top></nav-bar-top>
     <h1 class="title">Koppel sensor</h1>
@@ -15,39 +14,54 @@
       <b>Koppel sensor</b>
     </button>
 
-    <footer>
-      <button class="backBtn" @click="goBackToInfo()"><b>Terug</b></button>
-    </footer>
+    <div v-show="loading">
+      <p class="loadingTitle">Connecting...</p>
+      <scale-loader
+        :loading="loading"
+        :color="color"
+        :height="height"
+        :width="width"
+      ></scale-loader>
+    </div>
+
+    <button
+      v-if="visible"
+      class="connectSensorButton"
+      @click="doornaarmeting()"
+    >
+      <b>Door naar meting</b>
+    </button>
+
+    <footer><BackButton></BackButton></footer>
   </div>
 </template>
 
 <script>
+import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
-import { XsensDotSensor } from "/src/service/bluetooth.js";
-// import store from "../store/userStore.js";
-
-var loading = false;
+import ScaleLoader from "vue-spinner/src/ScaleLoader.vue";
 
 export default {
   name: "SelectSensor",
   components: {
     NavBarTop,
+    BackButton,
+    ScaleLoader,
   },
+  inject: ["sensorHandler"],
   data() {
     return {
-      loadingText: "",
-      XsensDotSensor: null,
+      loading: false,
+      color: "#0275d8",
+      height: "50px",
+      width: "6px",
+      visible: false,
     };
-  },
-  created() {
-    this.XsensDotSensor = XsensDotSensor;
   },
   mounted() {
     window.onclick = function () {
-      if (loading) {
-        document.getElementById("screen").style = "";
-        this.loadingText = "";
-        loading = false;
+      if (this.loading) {
+        this.loading = false;
       }
     };
   },
@@ -57,50 +71,36 @@ export default {
     delay(time) {
       return new Promise((resolve) => setTimeout(resolve, time));
     },
-    goBackToInfo() {
-      this.$router.push({ name: "measureInfo" });
-    },
     connectSensor() {
-      this.delay(100).then(() => this.connect());
+      this.loading = true;
+      this.delay(2500).then(() => this.connect());
     },
     connect() {
-      document.getElementById("screen").style =
-        "filter: blur(24px); opacity: 0.6;";
-      this.loadingText = "loading...";
-      loading = true;
-      this.loadAnimation();
-      this.XsensDotSensor.findAndConnect().then(() => {
+      this.sensorHandler.connectToSensor().then(() => {
         return new Promise((resolve) => {
-          this.$router.push({ name: "measure" });
-          document.getElementById("screen").style = "";
-          this.loadingText = "";
-          loading = false;
+          this.loading = false;
+          this.enoughSensorsCheck();
           resolve();
         });
       });
     },
-    loadAnimation() {
-      setTimeout(() => {
-        if (loading) {
-          this.loadingText = "loading...";
-        }
-      }, 500);
-      setTimeout(() => {
-        if (loading) {
-          this.loadingText = "loading..";
-        }
-      }, 1000);
-      setTimeout(() => {
-        if (loading) {
-          this.loadingText = "loading.";
-        }
-      }, 1500);
-      setTimeout(() => {
-        if (loading) {
-          this.loadingText = "loading";
-          this.loadAnimation();
-        }
-      }, 2000);
+    enoughSensorsCheck() {
+      if (
+        this.sensorHandler.getAllSensors().length >=
+        this.$route.params.sensorsNeeded
+      ) {
+        this.visible = true;
+      }
+    },
+    doornaarmeting() {
+      this.$router.push({
+        name: "sensorCheck",
+        params: {
+          name: this.$route.params.name,
+          category: this.$route.params.category,
+          sensorsNeeded: this.$route.params.sensorsNeeded,
+        },
+      });
     },
   },
 };
@@ -123,11 +123,8 @@ export default {
 
 .title {
   color: white;
-  margin-bottom: 3%;
-  margin-top: 3%;
-  margin-right: 10%;
-  margin-left: 10%;
-  font-size: 3em;
+  margin: 2% 10%;
+  font-size: 2.5em;
   width: 80%;
   text-align: center;
 }
@@ -147,35 +144,20 @@ export default {
   background: white;
   width: 90%;
   border-radius: 15px;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  margin-bottom: 2rem;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  margin-bottom: 2em;
 }
 
 /* buttons */
 
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
-}
-
 .connectSensorButton {
   margin-left: 5%;
   margin-right: 5%;
-  margin-bottom: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  width: 90%;
+  margin-bottom: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 200px;
   background-color: #0275d8;
   color: #f8f9fa;
   border-radius: 15px;
@@ -186,17 +168,24 @@ export default {
   background: #0161b6;
   border: none;
 }
-/* footer */
+
+.loadingTitle {
+  text-align: center;
+  color: #f8f9fa;
+  font-weight: bold;
+  font-size: 1.5em;
+}
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-left: 5%;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #1b2235;
 }
 </style>

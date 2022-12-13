@@ -1,6 +1,6 @@
 <template>
   <nav-bar-top></nav-bar-top>
-  <h1 class="title">Info meting</h1>
+  <h1 class="title">Meting info</h1>
   <main>
     <div class="info_container">
       <p class="boxTitle">{{ titleText }}</p>
@@ -16,6 +16,8 @@
           id="leftArrow"
           class="arrowImageLeft"
           src="@/assets/empty.png"
+          tabindex="0"
+          @keyup.enter="previousPanel()"
           @click="previousPanel()"
         />
         <div class="indexText">{{ indexBox }}</div>
@@ -23,24 +25,25 @@
           id="rightArrow"
           class="arrowImageRight"
           src="@/assets/arrowRight.png"
+          tabindex="0"
+          @keyup.enter="nextPanel()"
           @click="nextPanel()"
         />
       </div>
     </div>
   </main>
 
-  <button class="connectSensorButton" @click="goToConnectSensor()">
-    <b>Koppel sensor</b>
-  </button>
-
-  <div style="margin-top: 80px"></div>
   <footer>
-    <button class="backBtn" @click="goBackToResults()"><b>Terug</b></button>
+    <button class="connectSensorButton" @click="checkConnectedSensor()">
+      <b>Selecteer sensor</b>
+    </button>
+    <BackButton></BackButton>
   </footer>
 </template>
 
 <script>
 import { useRoute } from "vue-router";
+import BackButton from "../components/buttons/BackButton.vue";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 
 var textIndex = 1;
@@ -49,8 +52,9 @@ export default {
   name: "MeasureInfo",
   components: {
     NavBarTop,
+    BackButton,
   },
-
+  inject: ["sensorHandler"],
   data() {
     return {
       titleText: "",
@@ -66,6 +70,7 @@ export default {
       categoryActionText1: "",
       categoryActionText2: "",
       categoryActionImage: "",
+      sensorsNeeded: null,
     };
   },
   mounted() {
@@ -91,6 +96,7 @@ export default {
           "Laat de patiënt zijn/haar arm zo ver mogelijk terug te laten bewegen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Elbow-flexion-extension2.png";
+        this.sensorsNeeded = 2;
       } else if (
         category === "heup-extensie-links" ||
         category === "heup-extensie-rechts"
@@ -107,6 +113,7 @@ export default {
           "Laat de patiënt zijn/haar been zo ver mogelijk naar achter bewegen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Hip-extension2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "heup-flexie-links" ||
         category === "heup-flexie-rechts"
@@ -121,6 +128,7 @@ export default {
         this.categoryActionText2 =
           "Laat de patiënt zijn/haar knie zo hoog mogelijk in de lucht heffen";
         this.categoryActionImage = "/src/assets/measureImages/Hip-flexion2.png";
+        this.sensorsNeeded = 3;
       } else if (
         category === "knie-extensie-flexie-links" ||
         category === "knie-extensie-flexie-rechts"
@@ -137,6 +145,7 @@ export default {
           "Laat de patiënt zijn/haar onderbeen zo ver naar achter bewegen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Knee-flexion-extension2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "enkel-dorsaalflexie-links" ||
         category === "enkel-dorsaalflexie-rechts"
@@ -152,6 +161,7 @@ export default {
           "Laat de patiënt zijn/haar voet zo ver mogelijk naar boven bewegen zonder het onderbeen te verplaatsen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Ankle-dorsiflexion2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "enkel-plantairflexie-links" ||
         category === "enkel-plantairflexie-rechts"
@@ -167,6 +177,7 @@ export default {
           "Laat de patiënt zijn/haar voet zo ver mogelijk naar beneden bewegen zonder het onderbeen te verplaatsen (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Ankle-plantar-flexion2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "shouder-flexie-links" ||
         category === "shouder-flexie-rechts"
@@ -183,6 +194,7 @@ export default {
           "Laat de patiënt zijn/haar arm zo ver mogelijk naar voren draaien (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Shoulder-flexion2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "elleboog-pronatie-links" ||
         category === "elleboog-pronatie-rechts"
@@ -199,6 +211,7 @@ export default {
           "Laat de patiënt zijn/haar hand zo ver mogelijk naar rechts draaien (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Elbow-pronation2.png";
+        this.sensorsNeeded = 1;
       } else if (
         category === "elleboog-supinatie-links" ||
         category === "elleboog-supinatie-rechts"
@@ -215,6 +228,7 @@ export default {
           "Laat de patiënt zijn/haar hand zo ver mogelijk naar links draaien (zoals afgebeeld)";
         this.categoryActionImage =
           "/src/assets/measureImages/Elbow-supination2.png";
+        this.sensorsNeeded = 1;
       }
 
       this.indexBox = "1/3";
@@ -228,17 +242,29 @@ export default {
       this.infoBox3 = "";
       this.infoBox4 = "";
     },
-
-    goBackToResults() {
-      this.$router.push({ name: "exerciseResults", params: {} });
-    },
-    goToConnectSensor() {
+    checkConnectedSensor() {
       const patientId = this.route.params.name;
       const category = this.route.params.category;
-      this.$router.push({
-        name: "selectSensor",
-        params: { name: patientId, category: category },
-      });
+
+      if (this.sensorHandler.enoughConnectedSensors(this.sensorsNeeded)) {
+        this.$router.push({
+          name: "sensorCheck",
+          params: {
+            name: patientId,
+            category: category,
+            sensorsNeeded: this.sensorsNeeded,
+          },
+        });
+      } else {
+        this.$router.push({
+          name: "selectSensorFromInfo",
+          params: {
+            name: patientId,
+            category: category,
+            sensorsNeeded: this.sensorsNeeded,
+          },
+        });
+      }
     },
     nextPanel() {
       if (textIndex != 3) {
@@ -305,17 +331,16 @@ export default {
 </script>
 
 <style scoped>
-.page_container {
-  position: relative;
-  overflow: none;
+main {
+  padding-bottom: 30px;
 }
 .title {
   color: white;
-  margin-bottom: 3%;
-  margin-top: 3%;
+  margin-bottom: 2%;
+  margin-top: 2%;
   margin-right: 10%;
   margin-left: 10%;
-  font-size: 3em;
+  font-size: 2.5em;
   width: 80%;
   text-align: center;
 }
@@ -335,7 +360,7 @@ export default {
 
 .infoImage {
   max-width: 100%;
-  height: auto;
+  max-height: 400px;
   padding-right: 2em;
   padding-left: 2em;
   display: block;
@@ -381,50 +406,31 @@ export default {
 }
 
 /* buttons */
-
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
-}
-
 .connectSensorButton {
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  width: 90%;
+  border-radius: 18px;
   background-color: #0275d8;
-  color: #f8f9fa;
-  border-radius: 15px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5em;
+  color: white;
   border: none;
+  width: 200px;
 }
 
-.connectSensorButton:hover {
-  background: #0161b6;
-  border: none;
+.connectSensorButton:hover,
+.connectSensorButton:focus {
+  background: #04359e;
 }
 /* footer */
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-left: 5%;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
 }
 </style>

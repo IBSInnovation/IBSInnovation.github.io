@@ -7,17 +7,21 @@ export default {
     PWAPrompt,
     ReloadPWA,
   },
+  inject: ["sensorHandler"],
+  mounted() {
+    window.addEventListener("beforeunload", () => {
+      this.sensorHandler.diconnectAllSensors();
+    });
+  },
 };
 </script>
 
 <template>
-  <header>
-    <ReloadPWA></ReloadPWA>
-    <div id="app">
-      <RouterView />
-      <PWAPrompt />
-    </div>
-  </header>
+  <ReloadPWA></ReloadPWA>
+  <div id="app">
+    <RouterView />
+    <PWAPrompt />
+  </div>
 </template>
 
 <style>
@@ -26,7 +30,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  background: #00a1e1;
+  background: #1b2235;
+  scroll-behavior: smooth;
 }
 </style>

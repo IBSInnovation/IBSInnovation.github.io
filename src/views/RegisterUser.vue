@@ -1,30 +1,53 @@
 // Register.vue - base vue
 <template>
-  <div class="container" :style="blurrStyle()" @click="closeForm()">
-    <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
+  <div class="fullPage" @click="checkClickOutside">
+    <div class="background">
+      <img
+        class="background-image"
+        alt="hogeschool utrecht achtergrond"
+        src="@/assets/stockImages/huImage.jpg"
+      />
+    </div>
+    <div class="registerButtons">
+      <img class="logo" alt="hogeschool utrecht logo" src="@/assets/logo.png" />
 
-    <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
+      <p class="main-text">Sensor technologie voor de fysiotherapeut</p>
 
-    <GoogleLoginButton @click="RegisterWithGoogle()"></GoogleLoginButton>
+      <GoogleLoginButton
+        tabindex="0"
+        @keyup.enter="RegisterWithGoogle()"
+        @click="RegisterWithGoogle()"
+      ></GoogleLoginButton>
 
-    <EmailLoginButton @click="showLogForm"></EmailLoginButton>
-    <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
-    <p>
-      <button class="registerBtn" @click="showRegisterForm">Registreer</button>
-    </p>
+      <EmailLoginButton
+        tabindex="0"
+        @keyup.enter="showLogForm"
+        @click="showLogForm"
+      ></EmailLoginButton>
+      <p class="acountText">HEB JE NOG GEEN ACCOUNT?</p>
+      <p>
+        <button
+          :disabled="showForm || showLoginForm"
+          class="registerBtn"
+          @click="showRegisterForm"
+        >
+          Registreer
+        </button>
+      </p>
+      <RegisterForm
+        v-if="showForm && !showLoginForm"
+        :firebaseError="authenticationErrorFromRegister"
+        @send="registerWithEmail"
+        @close="closeForm"
+      ></RegisterForm>
+      <LoginForm
+        v-if="showLoginForm"
+        :error-message="errorMessage"
+        @send="login"
+        @close="closeForm"
+      ></LoginForm>
+    </div>
   </div>
-  <RegisterForm
-    v-if="showForm && !showLoginForm"
-    :firebaseError="authenticationErrorFromRegister"
-    @send="registerWithEmail"
-    @close="closeForm"
-  ></RegisterForm>
-  <LoginForm
-    v-if="showLoginForm"
-    :error-message="errorMessage"
-    @send="login"
-    @close="closeForm"
-  ></LoginForm>
 </template>
 
 <script>
@@ -32,7 +55,6 @@ import GoogleLoginButton from "../components/buttons/GoogleLoginButton.vue";
 import EmailLoginButton from "../components/buttons/EmailLoginButton.vue";
 import RegisterForm from "../components/forms/RegisterForm.vue";
 import LoginForm from "../components/forms/LoginForm.vue";
-
 import {
   registerWithEmail,
   login,
@@ -51,8 +73,9 @@ export default {
   data() {
     return {
       showForm: false,
-      user: null,
       showLoginForm: false,
+      showGoogleForm: false,
+      user: null,
       errorMessage: "",
       registerMessage: "",
       authenticationErrorFromRegister: "",
@@ -60,19 +83,15 @@ export default {
   },
   methods: {
     showLogForm(event) {
-      event.stopPropagation();
-      this.showLoginForm = true;
+      if (!this.showForm && !this.showGoogleForm) {
+        event.stopPropagation();
+        this.showLoginForm = true;
+      }
     },
     showRegisterForm(event) {
-      event.stopPropagation();
-      this.showForm = true;
-    },
-    blurrStyle() {
-      if (this.showForm || this.showLoginForm) {
-        let style = "filter: blur(24px); opacity: 0.6;";
-        return style;
-      } else {
-        return "";
+      if (!this.showLoginForm && !this.showGoogleForm) {
+        event.stopPropagation();
+        this.showForm = true;
       }
     },
     closeForm() {
@@ -80,16 +99,22 @@ export default {
       this.showLoginForm = false;
       this.errorMessage = "";
     },
-    RegisterWithGoogle() {
-      RegisterWithGoogle();
+    checkClickOutside(event) {
+      if (!event.target.closest(".form")) {
+        this.closeForm();
+      }
     },
-
+    RegisterWithGoogle() {
+      if (!this.showLoginForm && !this.showForm) {
+        this.showGoogleForm = true;
+        RegisterWithGoogle();
+      }
+    },
     registerWithEmail(value) {
       registerWithEmail(value).then(() => {
         router.push({ path: "/patients" });
       });
     },
-
     login(value) {
       login(value)
         .then(() => {
@@ -104,19 +129,46 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  text-align: center;
+.fullPage {
+  width: 100vw;
+  height: 100vh;
+  background-color: inherit;
 }
-.title {
-  margin-top: 1em;
-}
+
 .main-text {
   color: white;
-  /* font-weight: bold; */
   margin-top: 1em;
   margin-bottom: 1em;
   font-size: 2em;
   padding: 5px;
+}
+
+.background {
+  grid-area: background;
+  height: 100%;
+  width: 100%;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.background-image {
+  height: 100vh;
+  width: 100vw;
+  background-size: contain;
+  object-fit: cover;
+}
+
+.registerButtons {
+  position: relative;
+  width: 800px;
+  height: 100vh;
+  overflow: auto;
+  margin-left: -800px;
+  margin-right: 0px;
+  background: #1b2236;
+  float: left;
+  padding: 90px 150px 50px 100px;
 }
 
 .logo {
@@ -124,6 +176,7 @@ export default {
   height: auto;
   margin-top: 3em;
 }
+
 .registerBtn {
   margin: 10px;
   display: inline-block;
@@ -148,5 +201,20 @@ export default {
 .acountText {
   color: white;
   margin: 1em 0em 0;
+}
+
+@media screen and (max-height: 600px), screen and (max-width: 800px) {
+  .background {
+    display: none;
+  }
+
+  .registerButtons {
+    all: revert;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10%;
+    gap: 1em;
+  }
 }
 </style>

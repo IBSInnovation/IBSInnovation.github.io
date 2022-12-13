@@ -35,8 +35,13 @@ const router = createRouter({
       component: () => import("../views/ExerciseResults.vue"),
     },
     {
-      path: "/:name/:category/selectSensor",
+      path: "/selectSensor",
       name: "selectSensor",
+      component: () => import("../views/SelectSensor.vue"),
+    },
+    {
+      path: "/:name/:category/:sensorsNeeded/selectSensor",
+      name: "selectSensorFromInfo",
       component: () => import("../views/SelectSensor.vue"),
     },
     {
@@ -54,11 +59,15 @@ const router = createRouter({
       name: "addCategorie",
       component: () => import("../views/AddCategorie.vue"),
     },
+    {
+      path: "/:name/:category/:sensorsNeeded/sensorCheck",
+      name: "sensorCheck",
+      component: () => import("../views/SensorCheck.vue"),
+    },
   ],
 });
 
 router.beforeEach(async (to) => {
-  // console.log(import.meta.env.BASE_URL);
   if (to.name !== "register" && !store.getters.isLogedIn)
     return { name: "register" };
 });

@@ -1,40 +1,45 @@
 <template>
-  <div :style="blurrStyle()">
-    <NavBarTop></NavBarTop>
+  <div class="vh" @click="checkClickOutside">
+    <div :style="blurrStyle()">
+      <NavBarTop></NavBarTop>
 
-    <h1 class="title">Patiënten</h1>
+      <h1 class="title">Patiënten</h1>
 
-    <main>
-      <template v-for="[docKey, patient] in patients" :key="patient">
-        <div class="patient">
-          <i class="bi bi-person-square userIcon"></i>
-          <div class="patient-text-holder">
-            <p>
-              <b>{{ patient.name }} </b>
-            </p>
-            <p class="text" style="word-break: break-word">
-              {{ patient.email }}
-            </p>
+      <main>
+        <template v-for="[docKey, patient] in patients" :key="patient">
+          <div class="patient" @click="goToPatient(docKey)">
+            <i class="bi bi-person-square userIcon"></i>
+            <div class="patient-text-holder">
+              <p>
+                <b>{{ patient.name }} </b>
+              </p>
+              <p class="text">
+                {{ patient.email }}
+              </p>
+            </div>
+            <button
+              :disabled="showForm"
+              class="seeResultsButton"
+              @click="goToPatient(docKey)"
+            >
+              <b> Ga naar patiënt</b>
+            </button>
           </div>
-          <button class="seeResultsButton" @click="goToPatient(docKey)">
-            <b> Ga naar patiënt</b>
-          </button>
-        </div>
-      </template>
-    </main>
+        </template>
+      </main>
 
-    <div style="margin-top: 80px"></div>
-    <footer>
-      <button class="seeResultsButton" @click="showPatientForm">
-        <b>Patiënt toevoegen</b>
-      </button>
-    </footer>
+      <footer>
+        <button
+          :disabled="showForm"
+          class="addPatientButton"
+          @click="showPatientForm"
+        >
+          <b>Patiënt toevoegen</b>
+        </button>
+      </footer>
+    </div>
+    <PatientForm v-if="showForm" @close="closeForm"></PatientForm>
   </div>
-  <PatientForm
-    v-if="showForm && !showLoginForm"
-    @send="registerWithEmail"
-    @close="closeForm"
-  ></PatientForm>
 </template>
 
 <script>
@@ -52,9 +57,7 @@ export default {
     return {
       showForm: false,
       user: null,
-      showLoginForm: false,
       patients: null,
-      newPatientForm: false,
     };
   },
   mounted() {
@@ -76,6 +79,7 @@ export default {
     },
     showPatientForm(event) {
       event.stopPropagation();
+      window.scrollTo(0, 0);
       this.showForm = true;
     },
     blurrStyle() {
@@ -93,7 +97,11 @@ export default {
       this.getPatientsFromFireStore(); // Show newly added patients
       return;
     },
-
+    checkClickOutside(event) {
+      if (!event.target.closest(".form")) {
+        this.closeForm();
+      }
+    },
     addNewPatient() {
       this.$router.push({ name: "registerPatient" });
     },
@@ -102,104 +110,102 @@ export default {
 </script>
 
 <style scoped>
+main {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 400px));
+  margin: 0 5% 2rem;
+  padding-bottom: 70px;
+}
+
+.vh {
+  min-height: 100vh;
+}
+
 .title {
   color: white;
-  margin-bottom: 3%;
-  margin-top: 3%;
+  margin-bottom: 2%;
+  margin-top: 2%;
   margin-right: 25%;
   margin-left: 25%;
-  font-size: 3em;
+  font-size: 2.5em;
   width: 50%;
   text-align: center;
 }
 p {
   margin: 0;
   color: black;
+  word-break: break-word;
 }
 .patient {
   cursor: pointer;
   background: white;
-
-  margin-right: 5%;
-  margin-left: 5%;
-  margin-bottom: 2%;
-  width: 90%;
+  color: white;
   padding: 1em;
   border: 1px solid white;
-  color: white;
-  border-radius: 1em;
+  border-radius: 0.5em;
   display: flex;
   flex-wrap: wrap;
 }
 
-.patient-text-holder {
-  margin: 20px;
+.patient:hover {
+  transform: scale(1.1);
+  z-index: 3;
 }
 
-.icons {
-  font-size: 4em;
+.patient-text-holder {
+  margin: 1em 1em 2em 1em;
 }
+
+.text {
+  font-size: 1.3em;
+}
+
 .seeResultsButton {
-  flex: 0 0 100%;
-  border: none;
+  position: relative;
+  width: 100%;
+  height: 3em;
+  bottom: 0.2em;
   background: #0275d8;
   color: white;
   border: none;
-  padding: 0.5em;
   transition: all 0.2s ease-in-out;
   border-radius: 10px;
 }
 
 .seeResultsButton:focus,
 .seeResultsButton:focus-within,
-.seeResultsButton:hover {
-  background: #0161b6;
+.seeResultsButton:hover,
+.addPatientButton:focus,
+.addPatientButton:hover {
+  background: #04359e;
   border: none;
 }
 
-/*Any Mobile Device*/
-@media only screen and (max-width: 500px) {
-  .text {
-    padding: 0;
-    font-size: 0.8em;
-  }
-}
-@media only screen and (max-width: 767px) and (min-width: 500px) {
-  .text {
-    padding: 0;
-    font-size: 0.8em;
-  }
-}
-/* everything in between */
-@media only screen and (max-width: 1281px) and (min-width: 767px) {
-  .text {
-    padding: 0;
-    font-size: 1.3em;
-  }
-}
-
-/* desktops */
-@media (min-width: 1281px) {
-  .text {
-    padding: 0;
-    font-size: 1.3em;
-  }
+.addPatientButton {
+  border: none;
+  background: #0275d8;
+  color: white;
+  border: none;
+  padding: 0.5em 2em;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
 }
 
 footer {
   display: flex;
   position: fixed;
+  justify-content: center;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #1b2235;
 }
 
 .userIcon {
   font-size: 4rem;
   color: #0275d8;
+  width: 100%;
 }
 </style>

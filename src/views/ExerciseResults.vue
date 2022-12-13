@@ -2,7 +2,7 @@
   <div :style="blurrStyle()">
     <nav-bar-top></nav-bar-top>
 
-    <h1 class="title">{{ routeName }}</h1>
+    <h1 class="title">{{ capitalizeString(route.params.category) }}</h1>
     <main>
       <div class="result_container">
         <b>Meest recente metingen </b>
@@ -35,16 +35,15 @@
       </div>
     </main>
 
-    <button class="delete_categoryBtn" @click="showDeleteForm">
-      <b>Verwijder categorie</b>
-    </button>
-
-    <div style="margin-top: 80px"></div>
     <footer>
-      <button class="backBtn" @click="goBackToPatient()"><b>Terug</b></button>
       <button class="addMeasurement" @click="addMeasurement()">
-        <b>Niewe meting</b>
+        <b>Nieuwe meting</b>
       </button>
+
+      <button class="delete_categoryBtn" @click="showDeleteForm">
+        <b>Verwijder categorie</b>
+      </button>
+      <BackButton></BackButton>
     </footer>
   </div>
   <DeleteForm
@@ -60,6 +59,8 @@ import MovementPercentageInTime from "../components/charts/MovementPercentageInT
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import { deleteCategory, getCategoryResults } from "@/db/fdb";
 import { useRoute } from "vue-router";
+import { capitalizeString } from "../service/CapitalizeString";
+import BackButton from "../components/buttons/BackButton.vue";
 
 export default {
   name: "ExerciseResults",
@@ -67,6 +68,7 @@ export default {
     NavBarTop,
     MovementPercentageInTime,
     DeleteForm,
+    BackButton,
   },
 
   data() {
@@ -93,16 +95,16 @@ export default {
       const results = getCategoryResultsConst.results;
       this.routeName = getCategoryResultsConst.name;
 
-      this.graphResults = results.reduce((res, val) => {
-        res[val.date] = val.beweging;
-        return res;
-      }, {});
+      if (typeof results !== "undefined") {
+        this.graphResults = results.reduce((res, val) => {
+          res[val.date] = val.beweging;
+          return res;
+        }, {});
 
-      this.results = results;
+        this.results = results;
+      }
+
       // this.graphResults = this.results;
-    },
-    goBackToPatient() {
-      this.$router.push({ name: "patient" });
     },
     addMeasurement() {
       let name = this.route.params.name;
@@ -112,6 +114,7 @@ export default {
         params: { name: name, category: category },
       });
     },
+    capitalizeString,
     deleteCategory() {
       let docIdPatient = this.route.params.name;
       let docIdCategory = this.route.params.category;
@@ -142,17 +145,27 @@ export default {
 </script>
 
 <style scoped>
+main {
+  padding-bottom: 5em;
+}
+
+@media screen and (max-width: 800px), screen and (max-height: 800px) {
+  main {
+    padding-bottom: 8em;
+  }
+}
+
 .page_container {
   position: relative;
   overflow: none;
 }
 .title {
   color: white;
-  margin-bottom: 3%;
-  margin-top: 3%;
+  margin-bottom: 2%;
+  margin-top: 2%;
   margin-right: 10%;
   margin-left: 10%;
-  font-size: 3em;
+  font-size: 2.5em;
   width: 80%;
   text-align: center;
 }
@@ -180,10 +193,10 @@ export default {
   background: white;
   width: 90%;
   border-radius: 15px;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  margin-bottom: 1rem;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-bottom: 1em;
 }
 
 tr td {
@@ -205,63 +218,42 @@ th {
 }
 
 /* buttons */
-
-.addMeasurement {
-  width: 70%;
-  background-color: #0275d8;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.addMeasurement:hover {
-  background: #0161b6;
-  border: none;
-}
-
-.backBtn {
-  width: 30%;
-  background-color: #e6302b;
-  border-radius: 10px;
-  color: #f8f9fa;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border: none;
-}
-
-.backBtn:hover {
-  background: #d3322c;
-  border: none;
-}
-
+.addMeasurement,
 .delete_categoryBtn {
-  margin-left: 5%;
-  width: 90%;
-  margin-right: 5%;
-  margin-bottom: 5rem;
-  padding: 0.5rem;
-  background-color: #e6302b;
+  border: 1px solid #e43a23;
+  border-radius: 18px;
+  background-color: #e43a23;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5em;
   color: white;
   border: none;
 }
 
-.delete_categoryBtn:hover {
+.addMeasurement,
+.delete_categoryBtn {
+  width: 200px;
+}
+
+.addMeasurement:hover,
+.addMeasurement:focus,
+.delete_categoryBtn:hover,
+.delete_categoryBtn:focus {
   background: #d3322c;
   border: none;
 }
+
 /* footer */
 
 footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding-left: 5%;
   position: fixed;
   bottom: 0;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #1b2235;
 }
 </style>

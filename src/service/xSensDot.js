@@ -8,8 +8,7 @@ import * as THREE from 'three';
 //                            XSENS DOT BLE OBJECT
 // =========================================================================
 
-class XsensDot {
-
+export default class XsensDot {
     constructor(verbose = true) {
         this.device = null;
         this.device_name = null;
@@ -25,11 +24,10 @@ class XsensDot {
         this.min = new THREE.Euler(Infinity, Infinity, Infinity, 'XYZ')
         this.max = new THREE.Euler(-Infinity, -Infinity, -Infinity, 'XYZ')
         this.max_angle = 0
-        this.minQuat = undefined
-        this.maxQuat = undefined
         this.ackEnum = recMsgEnum
         this.NotificationHandler = new notification_handler();
     }
+
 
     /**
      * requestDevice allows you to select a bluetooth device to connect to
@@ -440,6 +438,3 @@ class XsensDot {
     }
 
 }
-
-let XsensDotSensor = new XsensDot()
-export { XsensDotSensor };
