@@ -32,24 +32,6 @@ Register.vue - base vue
               </td>
             </tr>
             <tr>
-              <td class="header_name"><b>x-axis</b></td>
-              <td>
-                <div class="table_data">{{ sensor.x }}</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="header_name"><b>y-axis</b></td>
-              <td>
-                <div class="table_data">{{ sensor.y }}</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="header_name"><b>z-axis</b></td>
-              <td>
-                <div class="table_data">{{ sensor.z }}</div>
-              </td>
-            </tr>
-            <tr>
               <td class="header_name"><b>Biggest angle</b></td>
               <td>
                 <div class="table_data">{{ sensor.angle }}</div>
@@ -76,7 +58,6 @@ Register.vue - base vue
     <div id="buttonGroup" ref="buttonGroup">
       <button class="red-btn" @click="streamData">Start streaming</button>
       <button class="red-btn" @click="stopDataStream">Stop streaming</button>
-      <button class="red-btn" @click="startDataExport">Export data</button>
     </div>
     <BackButton></BackButton>
   </footer>
@@ -144,9 +125,6 @@ export default {
       const sensor = {};
       sensor.device_name = allSensors[i][1].device_name;
       sensor.battery_level = allSensors[i][1].battery_level;
-      sensor.x = allSensors[i][1].rotation._x;
-      sensor.y = allSensors[i][1].rotation._y;
-      sensor.z = allSensors[i][1].rotation._z;
       sensor.sensorstatus = allSensors[i][1].sensor_status;
       sensor.angle = allSensors[i][1].max_angle;
 
