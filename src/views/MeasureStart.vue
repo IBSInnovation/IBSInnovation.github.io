@@ -1,67 +1,68 @@
 <template>
   <NavBarTop></NavBarTop>
 
-  <!-- //! is not dynamic yet -->
-  <h1 class="title">Meet</h1>
-  <!-- //! graph has to be installed and used -->
-  <div class="info_container">
-    <b>Meet resultaten</b>
+  <main>
+    <!-- //! is not dynamic yet -->
+    <h1 class="title">Meet</h1>
+    <!-- //! graph has to be installed and used -->
+    <div class="info_container">
+      <b>Meet resultaten</b>
 
-    <template v-for="sensor in sensorMeasurements" :key="sensor">
-      <div class="sensorCard">
-        <table>
-          <tr>
-            <td class="header_name"><b>Device name</b></td>
-            <td>
-              <div class="table_data">{{ sensor.device_name }}</div>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name">
-              <b class="table_content">Tijd (m:s:ms) </b>
-            </td>
-            <td>
-              <span id="minutes">{{ minutes }}:</span>
-              <span id="seconds">{{ seconds }}:</span>
-              <span id="milliseconds">{{ miliseconds }}</span>
-            </td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>Beweging (graden) </b></td>
-            <td>{{ sensor.max_angle }}°</td>
-          </tr>
-          <tr>
-            <td class="header_name"><b>Procent van de norm </b></td>
-            <td>{{ sensor.norm }}%</td>
-          </tr>
-        </table>
-      </div>
-    </template>
+      <template v-for="sensor in sensorMeasurements" :key="sensor">
+        <div class="sensorCard">
+          <table>
+            <tr>
+              <td class="header_name"><b>Device name</b></td>
+              <td>
+                <div class="table_data">{{ sensor.device_name }}</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="header_name">
+                <b class="table_content">Tijd (m:s:ms) </b>
+              </td>
+              <td>
+                <span id="minutes">{{ minutes }}:</span>
+                <span id="seconds">{{ seconds }}:</span>
+                <span id="milliseconds">{{ miliseconds }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="header_name"><b>Beweging (graden) </b></td>
+              <td>{{ sensor.max_angle }}°</td>
+            </tr>
+            <tr>
+              <td class="header_name"><b>Procent van de norm </b></td>
+              <td>{{ sensor.norm }}%</td>
+            </tr>
+          </table>
+        </div>
+      </template>
 
-    <button id="button1" class="measureButtonBlue" @click="measure()">
-      <b>{{ button1text }}</b>
-    </button>
+      <button id="button1" class="measureButtonBlue" @click="measure()">
+        <b>{{ button1text }}</b>
+      </button>
 
-    <button
-      id="button2"
-      class="measureButtonBlue"
-      style="margin-top: 0.5rem; display: none"
-      @click="saveMeasurement()"
-    >
-      <b>Sla meting op</b>
-    </button>
+      <button
+        id="button2"
+        class="measureButtonBlue"
+        style="margin-top: 0.5rem; display: none"
+        @click="saveMeasurement()"
+      >
+        <b>Sla meting op</b>
+      </button>
 
-    <button
-      id="button3"
-      class="measureButtonRed"
-      style="margin-top: 0.5rem; display: none"
-      @click="deleteMeasurement()"
-    >
-      <b>Verwijder meting</b>
-    </button>
-  </div>
+      <button
+        id="button3"
+        class="measureButtonRed"
+        style="margin-top: 0.5rem; display: none"
+        @click="deleteMeasurement()"
+      >
+        <b>Verwijder meting</b>
+      </button>
+    </div>
+  </main>
 
-  <div style="margin-top: 80px"></div>
   <footer><BackButton></BackButton></footer>
 </template>
 
@@ -137,7 +138,7 @@ export default {
       if (this.sensorMeasurements[0].max_angle > 0) {
         let docIdPatient = this.route.params.name;
         let docIdCategory = this.route.params.category;
-        console.log("voor await")
+        console.log("voor await");
         // gaat nu hier fout.
         await addResultToCategory(
           docIdPatient,
@@ -267,7 +268,6 @@ export default {
         // this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
 
         this.updateMeasuredData(TMPnorm);
-
       } else if (measureState == "results") {
         document.getElementById("button2").style =
           "margin-top: 0.5rem; display: none";
@@ -290,6 +290,9 @@ export default {
 </script>
 
 <style scoped>
+main {
+  padding-bottom: 60px;
+}
 .page_container {
   position: relative;
   overflow: none;
@@ -323,9 +326,9 @@ export default {
   background: white;
   width: 90%;
   border-radius: 15px;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  margin-bottom: 2rem;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  margin-bottom: 2em;
 }
 tr td {
   border: 2px solid #00a1e1;
