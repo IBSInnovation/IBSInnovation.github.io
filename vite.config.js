@@ -7,6 +7,7 @@ const path = require("path");
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/IBS-Fysiotherapy-FE/',
   plugins: [
     vue(),
     VitePWA({
@@ -16,13 +17,13 @@ export default defineConfig({
         "robots.txt",
         "apple-touch-icon.png",
       ],
-      base: "/project334/",
+      base: "/IBS-Fysiotherapy-FE/",
       srcDir: "src",
       filename: "sw.js",
       strategies: "injectManifest",
       manifest: {
-        name: "Project334",
-        short_name: "P334",
+        name: "IBS_Fysiotherapy",
+        short_name: "IBSF",
         description: "Sensortechnologie voor de fysiotherapuit",
         theme_color: "#ffffff",
         icons: [
