@@ -117,10 +117,6 @@ export default {
         this.sensorMeasurements.push(sensorData);
       }
     },
-    // resetSensorMeasurement() {
-    //   this.sensorMeasurements = [];
-    //   this.setSensorMeasurement();
-    // },
     updateMeasuredData(TMPnorm) {
       for (let i = 0; i < this.sensorMeasurements.length; i++) {
         const sensor = this.sensorHandler.getSensor(
@@ -133,22 +129,28 @@ export default {
         ).toFixed(2);
       }
     },
+    getMeasurements() {
+      let measurements = [];
+      for (let i = 0; i < this.sensorMeasurements.length; i++) {
+        let measurement = {
+          max_angle: this.sensorMeasurements[i].max_angle,
+          norm: this.sensorMeasurements[i].norm,
+        };
+        measurements.push(measurement);
+      }
+      return measurements;
+    },
     async saveMeasurement() {
       console.log("voor if");
-      if (this.sensorMeasurements[0].max_angle > 0) {
-        let docIdPatient = this.route.params.name;
-        let docIdCategory = this.route.params.category;
-        console.log("voor await");
-        // gaat nu hier fout.
-        await addResultToCategory(
-          docIdPatient,
-          docIdCategory,
-          this.maxAngle,
-          this.norm
-        );
-        console.log("na await");
-        this.$router.push({ name: "exerciseResults", params: {} });
-      }
+      let docIdPatient = this.route.params.name;
+      let docIdCategory = this.route.params.category;
+      await addResultToCategory(
+        docIdPatient,
+        docIdCategory,
+        this.getMeasurements()
+      );
+      console.log("na await");
+      this.$router.push({ name: "exerciseResults", params: {} });
     },
     deleteMeasurement() {
       this.$router.push({ name: "exerciseResults", params: {} });
