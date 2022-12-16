@@ -36,7 +36,7 @@ npm run preview
 
 ### Compile and Minify for Production and deploy to github pages
 ```sh
-npm run build
+npm run deploy
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
