@@ -34,7 +34,11 @@ npm run build
 npm run preview
 ```
 
-### Compile and Minify for Production and deploy to github pages
+## Deploying
+
+You can manually deploy to github pages or automatically deploy by pushing to the main branche.
+
+### Compile and Minify for Production and deploy to github pages (Manual)
 ```sh
 npm run deploy
 ```
