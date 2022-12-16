@@ -1,12 +1,6 @@
 <script>
-import PWAPrompt from "./components/PWAPrompt.vue";
-import ReloadPWA from "./components/ReloadPWA.vue";
 export default {
   name: "App",
-  components: {
-    PWAPrompt,
-    ReloadPWA,
-  },
   inject: ["sensorHandler"],
   mounted() {
     window.addEventListener("beforeunload", () => {
@@ -17,10 +11,8 @@ export default {
 </script>
 
 <template>
-  <ReloadPWA></ReloadPWA>
   <div id="app">
     <RouterView />
-    <PWAPrompt />
   </div>
 </template>
 
