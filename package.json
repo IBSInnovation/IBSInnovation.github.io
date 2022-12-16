@@ -35,7 +35,6 @@
     "eslint-plugin-vue": "^9.3.0",
     "gh-pages": "^4.0.0",
     "prettier": "^2.7.1",
-    "vite": "^3.0.9",
-    "vite-plugin-pwa": "^0.13.1"
+    "vite": "^3.0.9"
   }
 }

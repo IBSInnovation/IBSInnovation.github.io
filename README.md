@@ -22,14 +22,29 @@ npm install
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
+
+### Compile and Minify for Production (Local)
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Build preview (Local)
 
 ```sh
-npm run lint
+npm run preview
+```
+
+## Deploying
+
+You can manually deploy to github pages or automatically deploy by pushing to the main branch.
+
+### Compile and Minify for Production and deploy to github pages (Manual)
+```sh
+npm run deploy
 ```
