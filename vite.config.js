@@ -6,7 +6,6 @@ const path = require("path");
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/IBS-Fysiotherapy-FE/",
   plugins: [vue()],
   resolve: {
     alias: {
