@@ -22,8 +22,19 @@ npm install
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Compile and Minify for Production (Local)
 
+```sh
+npm run build
+```
+
+### Build preview (Local)
+
+```sh
+npm run preview
+```
+
+### Compile and Minify for Production and deploy to github pages
 ```sh
 npm run build
 ```
