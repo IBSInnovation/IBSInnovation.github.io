@@ -1,17 +1,17 @@
 import {
-  getFirestore,
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  setDoc,
-  deleteDoc,
-  where,
-  getDoc,
-  query,
   arrayUnion,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  updateDoc,
+  where,
 } from "firebase/firestore";
-import { getUnixOfToday } from "@/service/calculators/UnixCalculator";
+import {getUnixOfToday} from "@/service/calculators/UnixCalculator";
 
 const db = getFirestore();
 
@@ -97,13 +97,13 @@ export async function addCategorie(docIdPatient, type) {
   );
 }
 
-export async function addResultToCategory(docIdPatient, type, beweging, norm) {
+export async function addResultToCategory(docIdPatient, type, metingen) {
   const docRef = doc(db, "patienten", docIdPatient);
   const colRef = collection(docRef, "excersizeCategory");
   const docRef2 = doc(colRef, type);
-
+  console.log("in de addresulttocategory");
   await updateDoc(docRef2, {
-    results: arrayUnion({ date: getUnixOfToday(), beweging, norm }),
+    results: arrayUnion({ date: getUnixOfToday(), metingen }),
   });
 }
 
@@ -128,7 +128,29 @@ export async function getCategoryResults(docIdPatient, excersizeCategory) {
   const docRef2 = doc(colRef, excersizeCategory);
 
   const docSnap = await getDoc(docRef2);
-  return docSnap.data();
+
+  //Dit kan verwijderd worden wanneer meerdere sensoren 1 meting terug geven.
+  // Dit is een mock om de tabel op exerciseResults.vue nog goed in te laten laden
+  // --------------------------------------------------------------------------------
+  let docSnapData = docSnap.data().results;
+  let dataList = [];
+  for (let i = 0; i < docSnapData.length; i++) {
+    if (docSnapData[i].hasOwnProperty("metingen")) {
+      console.log("test")
+      dataList.push({
+        norm: docSnapData[i].metingen[0].norm.toString(),
+        date: getUnixOfToday(),
+        beweging: docSnapData[i].metingen[0].max_angle.toString(),
+      });
+    } else {
+      dataList.push(docSnapData[i]);
+    }
+  }
+
+  return { name: docSnap.data().name, results: dataList };
+// --------------------------------------------------------------------------------
+
+  // return docSnap.data();
 }
 
 export async function deleteCategory(docIdPatient, excersizeCategory) {

@@ -41,7 +41,7 @@
       </button>
 
       <button class="delete_categoryBtn" @click="showDeleteForm">
-        <b>Verwijder categorie</b>
+        <b>Verwijder oefening</b>
       </button>
       <BackButton></BackButton>
     </footer>
