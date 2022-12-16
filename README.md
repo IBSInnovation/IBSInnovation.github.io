@@ -36,7 +36,7 @@ npm run preview
 
 ## Deploying
 
-You can manually deploy to github pages or automatically deploy by pushing to the main branche.
+You can manually deploy to github pages or automatically deploy by pushing to the main branch.
 
 ### Compile and Minify for Production and deploy to github pages (Manual)
 ```sh
