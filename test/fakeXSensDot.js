@@ -55,7 +55,7 @@ export default class FakeXSensDot {
 
   stopRTStream() {
     console.log("Sensor " + this.device_name + " stopped streaming for data");
-    this.max_angle += Math.floor(Math.random() * 100);
+    this.max_angle = Math.floor(Math.random() * 100);
     return Promise.resolve();
   }
 }

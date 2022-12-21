@@ -39,23 +39,44 @@
         </div>
       </template>
 
-      <button id="button1" class="measureButtonBlue" @click="measure()">
-        <b>{{ button1text }}</b>
+      <button
+        v-show="measureState == `idle`"
+        id="button1"
+        class="measureButtonBlue"
+        @click="measure()"
+      >
+        <b>Start meting</b>
       </button>
 
       <button
+        v-show="measureState == `measuring`"
+        class="measureButtonRed"
+        @click="measure()"
+      >
+        <b>Stop meting</b>
+      </button>
+
+      <button
+        v-show="measureState == `results`"
+        class="measureButtonBlue"
+        @click="measure()"
+      >
+        <b>Begin opnieuw</b>
+      </button>
+
+      <button
+        v-show="measureState == `results`"
         id="button2"
         class="measureButtonBlue"
-        style="margin-top: 0.5rem; display: none"
         @click="saveMeasurement()"
       >
         <b>Sla meting op</b>
       </button>
 
       <button
+        v-show="measureState == `results`"
         id="button3"
         class="measureButtonRed"
-        style="margin-top: 0.5rem; display: none"
         @click="deleteMeasurement()"
       >
         <b>Verwijder meting</b>
@@ -87,7 +108,6 @@ export default {
       seconds: 0,
       minutes: 0,
       route: useRoute(),
-      button1text: "Start meting",
       patient: null,
       sensorMeasurements: [],
       measureState: "idle",
@@ -145,7 +165,7 @@ export default {
     deleteMeasurement() {
       this.$router.push({ name: "exerciseResults", params: {} });
     },
-    //bron: https://dev.to/walternascimentobarroso/creating-a-timer-with-javascript-8b7
+    // bron: https://dev.to/walternascimentobarroso/creating-a-timer-with-javascript-8b7
     updateTimer() {
       if ((this.miliseconds += 10) == 1000) {
         this.miliseconds = 0;
@@ -220,12 +240,6 @@ export default {
         this.setSensorMeasurement();
         this.sensorHandler.streamMultipleSensors(this.sensorMeasurements);
 
-        document
-          .getElementById("button1")
-          .classList.toggle("measureButtonBlue");
-        document.getElementById("button1").classList.toggle("measureButtonRed");
-        this.button1text = "Stop meting";
-
         clearInterval(this.timer);
         this.timer = setInterval(() => {
           this.updateTimer();
@@ -233,16 +247,6 @@ export default {
 
         this.measureState = "measuring";
       } else if (this.measureState == "measuring") {
-        document
-          .getElementById("button1")
-          .classList.toggle("measureButtonBlue");
-        document.getElementById("button1").classList.toggle("measureButtonRed");
-        this.button1text = "Begin opnieuw";
-
-        document.getElementById("button2").style =
-          "margin-top: 0.5rem; display: inline";
-        document.getElementById("button3").style =
-          "margin-top: 0.5rem; display: inline";
 
         clearInterval(this.timer);
         this.measureState = "results";
@@ -257,19 +261,13 @@ export default {
         });
         this.updateMeasuredData(TMPnorm);
       } else if (this.measureState == "results") {
-        document.getElementById("button2").style =
-          "margin-top: 0.5rem; display: none";
-        document.getElementById("button3").style =
-          "margin-top: 0.5rem; display: none";
-        this.button1text = "Start meting";
 
         this.miliseconds = 0;
         this.seconds = 0;
         this.minutes = 0;
         clearInterval(this.timer);
 
-        this.maxAngle = 0.0;
-        this.norm = 0.0;
+        this.setSensorMeasurement();
         this.measureState = "idle";
       }
     },
@@ -372,7 +370,10 @@ table {
   background: #d3322c;
   border: none;
 }
-/* footer */
+
+#button2, #button3 {
+  margin-top: 0.5em;
+}
 
 footer {
   display: flex;
