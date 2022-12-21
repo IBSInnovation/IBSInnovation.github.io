@@ -74,9 +74,6 @@ import jsonMovementData from "/src/service/movement_data.json";
 import { formatBirthDateToAge } from "../service/calculators/AgeCalculator";
 import BackButton from "../components/buttons/BackButton.vue";
 
-var measureState = "idle";
-var timer;
-
 export default {
   name: "MeasureStart",
   components: {
@@ -93,6 +90,8 @@ export default {
       button1text: "Start meting",
       patient: null,
       sensorMeasurements: [],
+      measureState: "idle",
+      timer: null,
     };
   },
   created() {
@@ -169,7 +168,7 @@ export default {
         return "45+";
       }
     },
-    async calculateTMLnorm() {
+    async calculateTMPnorm() {
       let patient = await getSinglePatient(this.route.params.name);
       let TMPnorm = 0;
       let age = this.getPatientAge(patient);
@@ -215,8 +214,9 @@ export default {
       }
       return TMPnorm;
     },
+
     async measure() {
-      if (measureState == "idle") {
+      if (this.measureState == "idle") {
         this.setSensorMeasurement();
         this.sensorHandler.streamMultipleSensors(this.sensorMeasurements);
 
@@ -226,13 +226,13 @@ export default {
         document.getElementById("button1").classList.toggle("measureButtonRed");
         this.button1text = "Stop meting";
 
-        clearInterval(timer);
-        timer = setInterval(() => {
+        clearInterval(this.timer);
+        this.timer = setInterval(() => {
           this.updateTimer();
         }, 10);
 
-        measureState = "measuring";
-      } else if (measureState == "measuring") {
+        this.measureState = "measuring";
+      } else if (this.measureState == "measuring") {
         document
           .getElementById("button1")
           .classList.toggle("measureButtonBlue");
@@ -244,17 +244,19 @@ export default {
         document.getElementById("button3").style =
           "margin-top: 0.5rem; display: inline";
 
-        clearInterval(timer);
-        measureState = "results";
+        clearInterval(this.timer);
+        this.measureState = "results";
 
         await this.sensorHandler.stopStreamMultipleSensors(
           this.sensorMeasurements
         );
 
-
-        let TMPnorm = this.calculateTMLnorm();
+        let TMPnorm = 0.0;
+        await this.calculateTMPnorm().then((data) => {
+          TMPnorm = data;
+        });
         this.updateMeasuredData(TMPnorm);
-      } else if (measureState == "results") {
+      } else if (this.measureState == "results") {
         document.getElementById("button2").style =
           "margin-top: 0.5rem; display: none";
         document.getElementById("button3").style =
@@ -264,11 +266,11 @@ export default {
         this.miliseconds = 0;
         this.seconds = 0;
         this.minutes = 0;
-        clearInterval(timer);
+        clearInterval(this.timer);
 
         this.maxAngle = 0.0;
         this.norm = 0.0;
-        measureState = "idle";
+        this.measureState = "idle";
       }
     },
   },
