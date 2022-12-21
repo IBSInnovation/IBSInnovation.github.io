@@ -96,14 +96,7 @@ export default {
     };
   },
   created() {
-    let sensorNames = this.$store.getters.getSelectedSensors;
-    for (let i = 0; i < sensorNames.length; i++) {
-      const sensorData = {};
-      sensorData.device_name = sensorNames[i];
-      sensorData.max_angle = 0;
-      sensorData.norm = 0.0;
-      this.sensorMeasurements.push(sensorData);
-    }
+    this.setSensorMeasurement();
   },
   methods: {
     setSensorMeasurement() {
@@ -141,7 +134,6 @@ export default {
       return measurements;
     },
     async saveMeasurement() {
-      console.log("voor if");
       let docIdPatient = this.route.params.name;
       let docIdCategory = this.route.params.category;
       await addResultToCategory(
@@ -149,13 +141,11 @@ export default {
         docIdCategory,
         this.getMeasurements()
       );
-      console.log("na await");
       this.$router.push({ name: "exerciseResults", params: {} });
     },
     deleteMeasurement() {
       this.$router.push({ name: "exerciseResults", params: {} });
     },
-
     //bron: https://dev.to/walternascimentobarroso/creating-a-timer-with-javascript-8b7
     updateTimer() {
       if ((this.miliseconds += 10) == 1000) {
@@ -167,9 +157,64 @@ export default {
         this.minutes++;
       }
     },
+    getPatientAge(patient) {
+      let age = formatBirthDateToAge(patient.dateOfBirth);
+      if (age <= 8) {
+        return "2-8";
+      } else if (age <= 19) {
+        return "9-19";
+      } else if (age <= 44) {
+        return "20-44";
+      } else {
+        return "45+";
+      }
+    },
+    async calculateTMLnorm() {
+      let patient = await getSinglePatient(this.route.params.name);
+      let TMPnorm = 0;
+      let age = this.getPatientAge(patient);
+      let gender = String(patient.gender).toLocaleLowerCase();
 
-    // startRTStream breekt nu, omdat er een device_name meegegeven moet worden
-    // dit moet nog dynamisch gemaakt worden
+      switch (this.route.params.category) {
+        case "elleboog-flexie-extensie-rechts":
+        case "elleboog-flexie-extensie-links":
+          TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
+          break;
+        case "heup-extensie-links":
+        case "heup-extensie-rechts":
+          TMPnorm = jsonMovementData["heup-extensie"][gender][age];
+          break;
+        case "heup-flexie-links":
+        case "heup-flexie-rechts":
+          TMPnorm = jsonMovementData["heup-flexie"][gender][age];
+          break;
+        case "knie-extensie-flexie-links":
+        case "knie-extensie-flexie-rechts":
+          TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
+          break;
+        case "enkel-dorsaalflexie-links":
+        case "enkel-dorsaalflexie-rechts":
+          TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
+          break;
+        case "enkel-plantairflexie-links":
+        case "enkel-plantairflexie-rechts":
+          TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
+          break;
+        case "shouder-flexie-links":
+        case "shouder-flexie-rechts":
+          TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
+          break;
+        case "elleboog-pronatie-links":
+        case "elleboog-pronatie-rechts":
+          TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
+          break;
+        case "elleboog-supinatie-links":
+        case "elleboog-supinatie-rechts":
+          TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
+          break;
+      }
+      return TMPnorm;
+    },
     async measure() {
       if (measureState == "idle") {
         this.setSensorMeasurement();
@@ -206,69 +251,8 @@ export default {
           this.sensorMeasurements
         );
 
-        const docKey = this.route.params.name;
-        let patient = await getSinglePatient(docKey);
 
-        const category = this.route.params.category;
-        let TMPnorm = 0;
-        let age = formatBirthDateToAge(patient.dateOfBirth);
-
-        let gender = String(patient.gender).toLocaleLowerCase();
-
-        if (age <= 8) {
-          age = "2-8";
-        } else if (age <= 19) {
-          age = "9-19";
-        } else if (age <= 44) {
-          age = "20-44";
-        } else {
-          age = "45+";
-        }
-
-        switch (category) {
-          case "elleboog-flexie-extensie-rechts":
-          case "elleboog-flexie-extensie-links":
-            TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
-            break;
-          case "heup-extensie-links":
-          case "heup-extensie-rechts":
-            TMPnorm = jsonMovementData["heup-extensie"][gender][age];
-            break;
-          case "heup-flexie-links":
-          case "heup-flexie-rechts":
-            TMPnorm = jsonMovementData["heup-flexie"][gender][age];
-            break;
-          case "knie-extensie-flexie-links":
-          case "knie-extensie-flexie-rechts":
-            TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
-            break;
-          case "enkel-dorsaalflexie-links":
-          case "enkel-dorsaalflexie-rechts":
-            TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
-            break;
-          case "enkel-plantairflexie-links":
-          case "enkel-plantairflexie-rechts":
-            TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
-            break;
-          case "shouder-flexie-links":
-          case "shouder-flexie-rechts":
-            TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
-            break;
-          case "elleboog-pronatie-links":
-          case "elleboog-pronatie-rechts":
-            TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
-            break;
-          case "elleboog-supinatie-links":
-          case "elleboog-supinatie-rechts":
-            TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
-            break;
-        }
-
-        //Moet nog naar gekeken worden, samen met UI!
-
-        // this.maxAngle = this.sensorHandler.getMaxAngle();
-        // this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
-
+        let TMPnorm = this.calculateTMLnorm();
         this.updateMeasuredData(TMPnorm);
       } else if (measureState == "results") {
         document.getElementById("button2").style =
