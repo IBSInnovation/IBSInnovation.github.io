@@ -285,8 +285,9 @@ table {
 
 .categoryContainer {
   display: grid;
-  gap: 1em;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 416px));
+  column-gap: 6em;
+  row-gap: 2em;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 350px));
   margin-right: 5%;
   margin-left: 5%;
   margin-bottom: 3em;
@@ -296,12 +297,10 @@ table {
   background: white;
   padding: 1em;
   border-radius: 1em;
-  max-width: 500px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  align-content: center;
-  align-items: stretch;
+  align-items: center;
   gap: 1em;
 }
 .text-holder {
@@ -311,6 +310,7 @@ table {
 .see-results {
   background-color: #0275d8;
   color: white;
+  width: 200px;
   font-weight: bold;
   border-radius: 15px;
   border: none;

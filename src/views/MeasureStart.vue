@@ -39,23 +39,44 @@
         </div>
       </template>
 
-      <button id="button1" class="measureButtonBlue" @click="measure()">
-        <b>{{ button1text }}</b>
+      <button
+        v-show="measureState == `idle`"
+        id="button1"
+        class="measureButtonBlue"
+        @click="measure()"
+      >
+        <b>Start meting</b>
       </button>
 
       <button
+        v-show="measureState == `measuring`"
+        class="measureButtonRed"
+        @click="measure()"
+      >
+        <b>Stop meting</b>
+      </button>
+
+      <button
+        v-show="measureState == `results`"
+        class="measureButtonBlue"
+        @click="measure()"
+      >
+        <b>Begin opnieuw</b>
+      </button>
+
+      <button
+        v-show="measureState == `results`"
         id="button2"
         class="measureButtonBlue"
-        style="margin-top: 0.5rem; display: none"
         @click="saveMeasurement()"
       >
         <b>Sla meting op</b>
       </button>
 
       <button
+        v-show="measureState == `results`"
         id="button3"
         class="measureButtonRed"
-        style="margin-top: 0.5rem; display: none"
         @click="deleteMeasurement()"
       >
         <b>Verwijder meting</b>
@@ -74,9 +95,6 @@ import jsonMovementData from "/src/service/movement_data.json";
 import { formatBirthDateToAge } from "../service/calculators/AgeCalculator";
 import BackButton from "../components/buttons/BackButton.vue";
 
-var measureState = "idle";
-var timer;
-
 export default {
   name: "MeasureStart",
   components: {
@@ -90,20 +108,14 @@ export default {
       seconds: 0,
       minutes: 0,
       route: useRoute(),
-      button1text: "Start meting",
       patient: null,
       sensorMeasurements: [],
+      measureState: "idle",
+      timer: null,
     };
   },
   created() {
-    let sensorNames = this.$store.getters.getSelectedSensors;
-    for (let i = 0; i < sensorNames.length; i++) {
-      const sensorData = {};
-      sensorData.device_name = sensorNames[i];
-      sensorData.max_angle = 0;
-      sensorData.norm = 0.0;
-      this.sensorMeasurements.push(sensorData);
-    }
+    this.setSensorMeasurement();
   },
   methods: {
     setSensorMeasurement() {
@@ -141,7 +153,6 @@ export default {
       return measurements;
     },
     async saveMeasurement() {
-      console.log("voor if");
       let docIdPatient = this.route.params.name;
       let docIdCategory = this.route.params.category;
       await addResultToCategory(
@@ -149,14 +160,12 @@ export default {
         docIdCategory,
         this.getMeasurements()
       );
-      console.log("na await");
       this.$router.push({ name: "exerciseResults", params: {} });
     },
     deleteMeasurement() {
       this.$router.push({ name: "exerciseResults", params: {} });
     },
-
-    //bron: https://dev.to/walternascimentobarroso/creating-a-timer-with-javascript-8b7
+    // bron: https://dev.to/walternascimentobarroso/creating-a-timer-with-javascript-8b7
     updateTimer() {
       if ((this.miliseconds += 10) == 1000) {
         this.miliseconds = 0;
@@ -167,124 +176,99 @@ export default {
         this.minutes++;
       }
     },
+    getPatientAge(patient) {
+      let age = formatBirthDateToAge(patient.dateOfBirth);
+      if (age <= 8) {
+        return "2-8";
+      } else if (age <= 19) {
+        return "9-19";
+      } else if (age <= 44) {
+        return "20-44";
+      } else {
+        return "45+";
+      }
+    },
+    async calculateTMPnorm() {
+      let patient = await getSinglePatient(this.route.params.name);
+      let TMPnorm = 0;
+      let age = this.getPatientAge(patient);
+      let gender = String(patient.gender).toLocaleLowerCase();
 
-    // startRTStream breekt nu, omdat er een device_name meegegeven moet worden
-    // dit moet nog dynamisch gemaakt worden
+      switch (this.route.params.category) {
+        case "elleboog-flexie-extensie-rechts":
+        case "elleboog-flexie-extensie-links":
+          TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
+          break;
+        case "heup-extensie-links":
+        case "heup-extensie-rechts":
+          TMPnorm = jsonMovementData["heup-extensie"][gender][age];
+          break;
+        case "heup-flexie-links":
+        case "heup-flexie-rechts":
+          TMPnorm = jsonMovementData["heup-flexie"][gender][age];
+          break;
+        case "knie-extensie-flexie-links":
+        case "knie-extensie-flexie-rechts":
+          TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
+          break;
+        case "enkel-dorsaalflexie-links":
+        case "enkel-dorsaalflexie-rechts":
+          TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
+          break;
+        case "enkel-plantairflexie-links":
+        case "enkel-plantairflexie-rechts":
+          TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
+          break;
+        case "shouder-flexie-links":
+        case "shouder-flexie-rechts":
+          TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
+          break;
+        case "elleboog-pronatie-links":
+        case "elleboog-pronatie-rechts":
+          TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
+          break;
+        case "elleboog-supinatie-links":
+        case "elleboog-supinatie-rechts":
+          TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
+          break;
+      }
+      return TMPnorm;
+    },
+
     async measure() {
-      if (measureState == "idle") {
+      if (this.measureState == "idle") {
         this.setSensorMeasurement();
         this.sensorHandler.streamMultipleSensors(this.sensorMeasurements);
 
-        document
-          .getElementById("button1")
-          .classList.toggle("measureButtonBlue");
-        document.getElementById("button1").classList.toggle("measureButtonRed");
-        this.button1text = "Stop meting";
-
-        clearInterval(timer);
-        timer = setInterval(() => {
+        clearInterval(this.timer);
+        this.timer = setInterval(() => {
           this.updateTimer();
         }, 10);
 
-        measureState = "measuring";
-      } else if (measureState == "measuring") {
-        document
-          .getElementById("button1")
-          .classList.toggle("measureButtonBlue");
-        document.getElementById("button1").classList.toggle("measureButtonRed");
-        this.button1text = "Begin opnieuw";
+        this.measureState = "measuring";
+      } else if (this.measureState == "measuring") {
 
-        document.getElementById("button2").style =
-          "margin-top: 0.5rem; display: inline";
-        document.getElementById("button3").style =
-          "margin-top: 0.5rem; display: inline";
-
-        clearInterval(timer);
-        measureState = "results";
+        clearInterval(this.timer);
+        this.measureState = "results";
 
         await this.sensorHandler.stopStreamMultipleSensors(
           this.sensorMeasurements
         );
 
-        const docKey = this.route.params.name;
-        let patient = await getSinglePatient(docKey);
-
-        const category = this.route.params.category;
-        let TMPnorm = 0;
-        let age = formatBirthDateToAge(patient.dateOfBirth);
-
-        let gender = String(patient.gender).toLocaleLowerCase();
-
-        if (age <= 8) {
-          age = "2-8";
-        } else if (age <= 19) {
-          age = "9-19";
-        } else if (age <= 44) {
-          age = "20-44";
-        } else {
-          age = "45+";
-        }
-
-        switch (category) {
-          case "elleboog-flexie-extensie-rechts":
-          case "elleboog-flexie-extensie-links":
-            TMPnorm = jsonMovementData["elleboog-flexie-extensie"][gender][age];
-            break;
-          case "heup-extensie-links":
-          case "heup-extensie-rechts":
-            TMPnorm = jsonMovementData["heup-extensie"][gender][age];
-            break;
-          case "heup-flexie-links":
-          case "heup-flexie-rechts":
-            TMPnorm = jsonMovementData["heup-flexie"][gender][age];
-            break;
-          case "knie-extensie-flexie-links":
-          case "knie-extensie-flexie-rechts":
-            TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
-            break;
-          case "enkel-dorsaalflexie-links":
-          case "enkel-dorsaalflexie-rechts":
-            TMPnorm = jsonMovementData["enkel-dorsaalflexie"][gender][age];
-            break;
-          case "enkel-plantairflexie-links":
-          case "enkel-plantairflexie-rechts":
-            TMPnorm = jsonMovementData["enkel-plantairflexie"][gender][age];
-            break;
-          case "shouder-flexie-links":
-          case "shouder-flexie-rechts":
-            TMPnorm = jsonMovementData["shouder-flexie"][gender][age];
-            break;
-          case "elleboog-pronatie-links":
-          case "elleboog-pronatie-rechts":
-            TMPnorm = jsonMovementData["elleboog-pronatie"][gender][age];
-            break;
-          case "elleboog-supinatie-links":
-          case "elleboog-supinatie-rechts":
-            TMPnorm = jsonMovementData["elleboog-supinatie"][gender][age];
-            break;
-        }
-
-        //Moet nog naar gekeken worden, samen met UI!
-
-        // this.maxAngle = this.sensorHandler.getMaxAngle();
-        // this.norm = ((this.maxAngle / TMPnorm) * 100).toFixed(2);
-
+        let TMPnorm = 0.0;
+        await this.calculateTMPnorm().then((data) => {
+          TMPnorm = data;
+        });
         this.updateMeasuredData(TMPnorm);
-      } else if (measureState == "results") {
-        document.getElementById("button2").style =
-          "margin-top: 0.5rem; display: none";
-        document.getElementById("button3").style =
-          "margin-top: 0.5rem; display: none";
-        this.button1text = "Start meting";
+      } else if (this.measureState == "results") {
 
         this.miliseconds = 0;
         this.seconds = 0;
         this.minutes = 0;
-        clearInterval(timer);
+        clearInterval(this.timer);
 
-        this.maxAngle = 0.0;
-        this.norm = 0.0;
-        measureState = "idle";
+        this.setSensorMeasurement();
+        this.measureState = "idle";
       }
     },
   },
@@ -386,7 +370,10 @@ table {
   background: #d3322c;
   border: none;
 }
-/* footer */
+
+#button2, #button3 {
+  margin-top: 0.5em;
+}
 
 footer {
   display: flex;

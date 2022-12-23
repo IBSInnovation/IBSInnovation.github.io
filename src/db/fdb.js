@@ -136,7 +136,6 @@ export async function getCategoryResults(docIdPatient, excersizeCategory) {
   let dataList = [];
   for (let i = 0; i < docSnapData.length; i++) {
     if (docSnapData[i].hasOwnProperty("metingen")) {
-      console.log("test")
       dataList.push({
         norm: docSnapData[i].metingen[0].norm.toString(),
         date: getUnixOfToday(),
