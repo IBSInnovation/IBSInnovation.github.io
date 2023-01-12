@@ -48,5 +48,3 @@ You can manually deploy to github pages or automatically deploy by pushing to th
 ```sh
 npm run deploy
 ```
-
-testing for deployment
