@@ -34,6 +34,13 @@
           </tr>
         </tbody>
       </table>
+      <div class="dropdown">
+        <button class="dropbtn">{{ measureMethod }}</button>
+        <div class="dropdown-content">
+          <a @click="chooseMeasureMethod(1)">Hoek in graden</a>
+          <a @click="chooseMeasureMethod(2)">Snelheid beweging</a>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -60,6 +67,7 @@ export default {
       sensorsNeeded: null,
       sensors: [],
       selected: [],
+      measureMethod: "Selecteer methode",
     };
   },
   created() {
@@ -78,6 +86,9 @@ export default {
       const patientId = this.$route.params.name;
       const category = this.$route.params.category;
 
+      //Hier zou je de meet methode kunnen verwerken in de route,
+      // en gebaseerd op de meetmethode de measure pagina kunnen aanpassen
+
       this.$router.push({
         name: "measure",
         params: {
@@ -86,16 +97,10 @@ export default {
         },
       });
     },
-    /**
-     * Vue maakt van de objecten in this.selected een proxy
-     * Deze functie maakt hier objecten van --> haalt de namen hieruit en pushed deze naar de store
-     * Zodat bij MeasureStart alleen de sensoren die geselecteerd zijn, gebruikt worden bij een meting.
-     */
+
     selectSensor() {
       let proxyToArray = JSON.parse(JSON.stringify(this.selected));
       const deviceNames = [];
-      console.log(proxyToArray.length);
-
       // check if enough sensors selected
       if (proxyToArray.length < this.sensorsNeeded) {
         window.alert(`Selecteer minimaal ${this.sensorsNeeded} sensor(en)`);
@@ -108,6 +113,17 @@ export default {
         this.$store.commit("setSelectedSensors", deviceNames);
 
         this.goToMeasureStart();
+      }
+    },
+
+    chooseMeasureMethod(measureMethod) {
+      switch (measureMethod) {
+        case 1:
+          this.measureMethod = "hoek in graden";
+          break;
+        case 2:
+          this.measureMethod = "snelheid beweging";
+          break;
       }
     },
   },
@@ -144,6 +160,47 @@ export default {
   color: #f8f9fa;
   border-radius: 15px;
   border: none;
+}
+
+.dropbtn {
+  background-color: #0275d8;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #336184;
 }
 
 footer {

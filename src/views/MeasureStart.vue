@@ -190,6 +190,7 @@ export default {
     },
     async calculateTMPnorm() {
       let patient = await getSinglePatient(this.route.params.name);
+      console.log(patient);
       let TMPnorm = 0;
       let age = this.getPatientAge(patient);
       let gender = String(patient.gender).toLocaleLowerCase();
@@ -209,7 +210,7 @@ export default {
           break;
         case "knie-extensie-flexie-links":
         case "knie-extensie-flexie-rechts":
-          TMPnorm = jsonMovementData["knie-extensie-flexie"][gender][age];
+          TMPnorm = jsonMovementData["knie-extensie"][gender][age];
           break;
         case "enkel-dorsaalflexie-links":
         case "enkel-dorsaalflexie-rechts":

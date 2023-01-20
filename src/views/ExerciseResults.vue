@@ -26,8 +26,8 @@
             <!-- <template v-for="(obj2, pos2) in obj" :key="pos2"> -->
             <tr>
               <td>{{ result.date }}</td>
-              <td>{{ result.beweging }}°</td>
-              <td>{{ result.norm }}%</td>
+              <td>{{ result.metingen[0].max_angle }}°</td>
+              <td>{{ result.metingen[0].norm }}%</td>
             </tr>
             <!-- </template> -->
           </template>
@@ -92,19 +92,23 @@ export default {
         docIdPatient,
         docIdCategory
       );
+
+      // console.log(getCategoryResultsConst);
+
       const results = getCategoryResultsConst.results;
       this.routeName = getCategoryResultsConst.name;
 
+      console.log(results);
+
       if (typeof results !== "undefined") {
         this.graphResults = results.reduce((res, val) => {
-          res[val.date] = val.beweging;
+          res[val.date] = val.metingen[0].norm;
+          console.log(val.norm);
           return res;
         }, {});
 
         this.results = results;
       }
-
-      // this.graphResults = this.results;
     },
     addMeasurement() {
       let name = this.route.params.name;
