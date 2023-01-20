@@ -128,28 +128,7 @@ export async function getCategoryResults(docIdPatient, excersizeCategory) {
   const docRef2 = doc(colRef, excersizeCategory);
 
   const docSnap = await getDoc(docRef2);
-
-  //Dit kan verwijderd worden wanneer meerdere sensoren 1 meting terug geven.
-  // Dit is een mock om de tabel op exerciseResults.vue nog goed in te laten laden
-  // --------------------------------------------------------------------------------
-  let docSnapData = docSnap.data().results;
-  let dataList = [];
-  for (let i = 0; i < docSnapData.length; i++) {
-    if (docSnapData[i].hasOwnProperty("metingen")) {
-      dataList.push({
-        norm: docSnapData[i].metingen[0].norm.toString(),
-        date: getUnixOfToday(),
-        beweging: docSnapData[i].metingen[0].max_angle.toString(),
-      });
-    } else {
-      dataList.push(docSnapData[i]);
-    }
-  }
-
-  return { name: docSnap.data().name, results: dataList };
-// --------------------------------------------------------------------------------
-
-  // return docSnap.data();
+  return docSnap.data();
 }
 
 export async function deleteCategory(docIdPatient, excersizeCategory) {
