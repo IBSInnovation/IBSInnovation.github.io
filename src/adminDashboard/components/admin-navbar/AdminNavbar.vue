@@ -78,7 +78,7 @@ li {
 
   text-align: center;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-  background-color: var(--sidebar-bg-color);
+  background-color: #151a2c;
 
   float: left;
   position: absolute;
