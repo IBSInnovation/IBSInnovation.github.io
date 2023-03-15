@@ -13,7 +13,6 @@ export default {
 <template>
     <AdminNavbar></AdminNavbar>
     <div class="container">
-        <h1>Hello World!</h1>
-        <h2>u wab</h2>
+
     </div>
 </template>
