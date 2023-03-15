@@ -31,6 +31,16 @@
                 >Development</a
               >
             </li>
+            <li>
+              <a
+                class="dropdown-item"
+                role="menuitem"
+                tabindex="0"
+                @click="goToAdmin()"
+                @keyup.enter="goToAdmin()"
+                >Admin Dashboard</a
+              >
+            </li>
             <div class="dropdown-divider"></div>
             <li>
               <a
@@ -73,6 +83,9 @@ export default {
     },
     goToDevelop() {
       this.$router.push({ name: "dev" });
+    },
+    goToAdmin() {
+      this.$router.push({ name: "admin" });
     },
     getDisplayName() {
       // if registered with mail  -> mail is the displayName

@@ -64,6 +64,27 @@ const router = createRouter({
       name: "sensorCheck",
       component: () => import("../views/SensorCheck.vue"),
     },
+    {
+      path: "/admin",
+      name: "admin",
+      meta: {layout: "admin"},
+      component: () => import("../adminDashboard/views/AdminLandingPage.vue"),
+      children: [
+        {
+          path: "usermanage",
+          name: "usermanage",
+          meta: {layout: "admin"},
+          component: () => import("../adminDashboard/views/UserManage.vue"),
+        },
+        {
+          path: "test",
+          name: "test",
+          meta: {layout: "admin"},
+          component: () => import("../adminDashboard/views/Test.vue"),
+        }
+
+      ]
+    }
   ],
 });
 
