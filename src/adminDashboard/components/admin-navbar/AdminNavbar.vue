@@ -5,31 +5,38 @@
 
     <div class="navitems">
       <ul>
-        <li>
-          <a role="menuitem" tabindex="0" @click="goToPatients()" @keyup.enter="goToPatients()">Home</a>
-        </li>
-        <li>
-          <a role="menuitem" tabindex="0" @click="goToUserManage()" @keyup.enter="goToUserManage()">User Management </a>
-        </li>
-        <li>
-          <a role="menuitem" tabindex="0">Test</a>
-        </li>
+
+        <a role="menuitem" tabindex="0" @click="goToPatients()" @keyup.enter="goToPatients()">
+          <li>Home</li>
+        </a>
+
+        <a role="menuitem" tabindex="0" @click="goToUserManage()" @keyup.enter="goToUserManage()">
+          <li>User Management</li>
+        </a>
+
+        <a role="menuitem" tabindex="0" @click="goToTest()">
+          <li>Test</li>
+        </a>
+
       </ul>
     </div>
-
   </div>
 </template>
   
 <script>
+import router from "../../../router";
 
 export default {
   name: "AdminNavbar",
   methods: {
     goToUserManage() {
-      this.$router.push({ name: "user" });
+      this.$router.push({ name: "usermanage" });
     },
     goToPatients() {
       this.$router.push({ name: "patients" });
+    },
+    goToTest() {
+      this.$router.push({ name: "test" });
     },
     getDisplayName() {
       // if registered with mail  -> mail is the displayName
@@ -54,8 +61,15 @@ export default {
 </style>
 
 <style scoped>
+li {
+  list-style-type: none;
+}
+
 .sidebar {
   color: white;
+
+  text-align: center;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   background-color: var(--sidebar-bg-color);
 
   float: left;
@@ -70,27 +84,31 @@ export default {
   flex-direction: column;
 }
 
-.sidebar h2 {
-  text-align: center;
-  border-style: groove hidden ridge;
-  border-width: 2px;
-  border-color: grey;
-  
-}
+.sidebar h2 {}
 
 .sidebar h3 {
   text-align: center;
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: grey;
 }
 
 .navitems li {
-  padding: 10px;
+  padding: 5px;
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: grey;
+  text-align: left;
+}
 
-  border: 10px;
-  border-color: red;
-  border-radius: 20px;
+.navitems li:hover {
+  background-color: grey;
+  transition: 0.9s;
 }
 
 .navitems a {
   cursor: pointer;
 }
+
+
 </style>
