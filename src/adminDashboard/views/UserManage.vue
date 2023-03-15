@@ -1,8 +1,18 @@
+<template>
+    <div class="container">
+        <div>
+            <h1>
+            hallo
+            </h1>
+        </div>
+    </div>
+</template>
+
 <script>
 import AdminNavbar from '../components/admin-navbar/AdminNavbar.vue';
 
 export default {
-  name: "PatientInfo",
+  name: "UserManage",
   components: {
     AdminNavbar
   }
@@ -10,9 +20,9 @@ export default {
 
 </script>
 
-<template>
-    <AdminNavbar></AdminNavbar>
-    <div class="container">
-
-    </div>
-</template>
+<style scoped>
+h1 {
+    text-align: center;
+    color: aliceblue;
+}
+</style>
