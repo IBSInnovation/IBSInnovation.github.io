@@ -67,8 +67,13 @@ const router = createRouter({
     {
       path: "/admin",
       name: "admin",
-      component: () => import("../adminDashboard/views/UserManage.vue"),
+      component: () => import("../adminDashboard/views/AdminLandingPage.vue"),
       children: [
+        {
+          path: "/user",
+          name: "user",
+          component: () => import("../adminDashboard/views/UserManage.vue"),
+        }
 
       ]
     }
