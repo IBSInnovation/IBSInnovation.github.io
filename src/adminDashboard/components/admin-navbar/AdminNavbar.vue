@@ -32,7 +32,13 @@
 </template>
   
 <script>
-import router from "../../../router";
+// let li = document.querySelectorAll("li");
+// navlinks.array.forEach(li => {
+//   li.addEventListener('click', function(){
+//     navlinks.forEach(a=>a.classList.remove('active'));
+//     this.classList.add('active')
+//   })
+// });
 
 export default {
   name: "AdminNavbar",
@@ -59,8 +65,8 @@ export default {
   }
 }
 
-
 </script>
+
 
 <style>
 :root {
@@ -89,8 +95,6 @@ li {
   padding: 0.5em;
 }
 
-.sidebar h2 {}
-
 .sidebar h3 {
   text-align: center;
   border-bottom: solid;
@@ -112,8 +116,16 @@ li {
   transition: 0.9s;
 }
 
+.navitems a:active {
+  background-color: violet;
+}
+
 .navitems a {
   cursor: pointer;
+}
+
+.active {
+  background-color: pink;
 }
 
 .sidebar .footertext {
