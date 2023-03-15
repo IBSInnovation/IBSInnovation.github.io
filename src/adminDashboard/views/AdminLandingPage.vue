@@ -1,8 +1,17 @@
+<template>
+    <AdminNavbar></AdminNavbar>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p>From here you can configure the website</p>
+    </div>
+    <router-view></router-view>
+</template>
+
 <script>
 import AdminNavbar from '../components/admin-navbar/AdminNavbar.vue';
 
 export default {
-  name: "PatientInfo",
+  name: "AdmingLandingPage",
   components: {
     AdminNavbar
   }
@@ -10,17 +19,9 @@ export default {
 
 </script>
 
-<template>
-    <AdminNavbar></AdminNavbar>
-    <div class="container">
-        <h1>Admin Dashboard</h1>
-        <p>From here you can configure the website</p>
-    </div>
-</template>
-
-<style>
-* {
+<style scoped>
+.container {
     text-align: center;
-    color:aliceblue
+    color:aliceblue;
 }
 </style>
