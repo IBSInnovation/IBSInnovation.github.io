@@ -67,10 +67,11 @@ const router = createRouter({
     {
       path: "/admin",
       name: "admin",
-      component: () => import("../adminDashboard/views/UserManage.vue")
+      component: () => import("../adminDashboard/views/UserManage.vue"),
+      children: [
+
+      ]
     }
-
-
   ],
 });
 
