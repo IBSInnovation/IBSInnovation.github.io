@@ -14,11 +14,19 @@
           <li>User Management</li>
         </a>
 
+        <a role="menuitem" tabindex="0" @click="goToUserManage()" @keyup.enter="goToUserManage()">
+          <li>Therapist Management</li>
+        </a>
+
         <a role="menuitem" tabindex="0" @click="goToTest()">
           <li>Test</li>
         </a>
 
       </ul>
+    </div>
+
+    <div class="footertext">
+      <p>IBS INNOVATION 2023</p>
     </div>
   </div>
 </template>
@@ -73,15 +81,12 @@ li {
   background-color: var(--sidebar-bg-color);
 
   float: left;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   top: 0px;
   left: 0;
   bottom: 0;
   padding: 0.5em;
-
-  display: flex;
-  flex-direction: column;
 }
 
 .sidebar h2 {}
@@ -95,6 +100,7 @@ li {
 
 .navitems li {
   padding: 5px;
+  margin: 4px;
   border-bottom: solid;
   border-width: 2px;
   border-color: grey;
@@ -110,5 +116,12 @@ li {
   cursor: pointer;
 }
 
-
+.sidebar .footertext {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: smaller;
+}
 </style>

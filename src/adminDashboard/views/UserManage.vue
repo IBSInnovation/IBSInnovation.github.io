@@ -1,9 +1,7 @@
 <template>
     <div class="container">
         <div>
-            <h1>
-            hallo
-            </h1>
+            <h1>USER MANAGEMENT</h1>
         </div>
     </div>
 </template>
@@ -12,10 +10,10 @@
 import AdminNavbar from '../components/admin-navbar/AdminNavbar.vue';
 
 export default {
-  name: "UserManage",
-  components: {
-    AdminNavbar
-  }
+    name: "UserManage",
+    components: {
+        AdminNavbar
+    }
 }
 
 </script>
