@@ -4,7 +4,7 @@
 
         <main>
             <template v-for="[docKey, fysio] in this.fysios" :key="fysio">
-                <div class="fysio">
+                <div class="fysio" v-if="fysio.email !== user">
                     <i class="bi bi-person-square userIcon"></i>
                     <div class="fysio-text-holder">
                         <p>
@@ -29,9 +29,8 @@
 </template>
 
 <script>
-import { getAllFysio } from '../../db/fdb';
+import { getAllFysio, deleteFysio } from '../../db/fdb';
 import AdminNavbar from '../components/admin-navbar/AdminNavbar.vue';
-import { deleteFysio } from '../../db/fdb';
 
 export default {
     name: "TherapistManage",
@@ -40,11 +39,14 @@ export default {
     },
     data() {
         return {
-            fysios: null
+            fysios: null,
+            user: {}
         };
     },
     mounted() {
         this.getFysiofromFireStore();
+        this.user = this.$store.getters.getUser.email;
+        console.log(this.user)
 
     },
     methods: {
