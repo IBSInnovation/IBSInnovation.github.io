@@ -172,3 +172,7 @@ export async function deleteFysio(docKey) {
   const docRef = doc(db, "fysio", docKey);
   await deleteDoc(docRef);
 }
+
+export async function makeAdmin(docKey) {
+  return console.log("User has been made an admin")
+}

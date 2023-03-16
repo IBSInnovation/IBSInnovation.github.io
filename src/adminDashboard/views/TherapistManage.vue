@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getAllFysio, deleteFysio } from '../../db/fdb';
+import { getAllFysio, deleteFysio, makeAdmin } from '../../db/fdb';
 import AdminNavbar from '../components/admin-navbar/AdminNavbar.vue';
 
 export default {
@@ -46,7 +46,6 @@ export default {
     mounted() {
         this.getFysiofromFireStore();
         this.user = this.$store.getters.getUser.email;
-        console.log(this.user)
 
     },
     methods: {
@@ -60,11 +59,12 @@ export default {
             if (window.confirm("Do you really want to delete the Fysiotherapist?")) {
                 deleteFysio(dockey);
                 this.fysios.delete(dockey);
-                console.log(fysios);
             }
         },
         confirmAdmin(dockey) {
-            (window.confirm("Do you really want to make this Fysio an Admin?")) 
+            if (window.confirm("Do you really want to make this Fysio an Admin?")) {
+                makeAdmin(dockey);
+            }
         }
     }
 }
