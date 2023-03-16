@@ -10,11 +10,11 @@
           <li>Home</li>
         </a>
 
-        <a role="menuitem" tabindex="0" @click="goToUserManage()" @keyup.enter="goToUserManage()">
+        <a role="menuitem" tabindex="0" @click="" @keyup.enter="">
           <li>User Management</li>
         </a>
 
-        <a role="menuitem" tabindex="0" @click="goToUserManage()" @keyup.enter="goToUserManage()">
+        <a role="menuitem" tabindex="0" @click="goToTherapistManage()" @keyup.enter="goToTherapistManage()">
           <li>Therapist Management</li>
         </a>
 
@@ -32,19 +32,12 @@
 </template>
   
 <script>
-// let li = document.querySelectorAll("li");
-// navlinks.array.forEach(li => {
-//   li.addEventListener('click', function(){
-//     navlinks.forEach(a=>a.classList.remove('active'));
-//     this.classList.add('active')
-//   })
-// });
 
 export default {
   name: "AdminNavbar",
   methods: {
-    goToUserManage() {
-      this.$router.push({ name: "usermanage" });
+    goToTherapistManage() {
+      this.$router.push({ name: "therapistmanage" });
     },
     goToPatients() {
       this.$router.push({ name: "patients" });

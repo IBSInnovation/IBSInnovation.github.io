@@ -71,10 +71,10 @@ const router = createRouter({
       component: () => import("../adminDashboard/views/AdminLandingPage.vue"),
       children: [
         {
-          path: "usermanage",
-          name: "usermanage",
+          path: "therapistmanage",
+          name: "therapistmanage",
           meta: {layout: "admin"},
-          component: () => import("../adminDashboard/views/UserManage.vue"),
+          component: () => import("../adminDashboard/views/TherapistManage.vue"),
         },
         {
           path: "test",
