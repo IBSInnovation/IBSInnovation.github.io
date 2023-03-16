@@ -40,8 +40,7 @@ export default {
     },
     data() {
         return {
-            fysios: null,
-            items: [{ name: "name", email: "email" }, { name: "name2", email: "email2" }]
+            fysios: null
         };
     },
     mounted() {
@@ -53,13 +52,13 @@ export default {
 
             await getAllFysio().then((results) => {
                 this.fysios = results;
-                console.log("all fysios are: " + results);
-                console.log(this.fysios);
             });
         },
         confirmDelete(dockey) {
             if (window.confirm("Do you really want to delete the Fysiotherapist?")) {
                 deleteFysio(dockey);
+                this.fysios.delete(dockey);
+                console.log(fysios);
             }
         },
         confirmAdmin(dockey) {
