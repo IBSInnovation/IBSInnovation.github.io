@@ -15,7 +15,7 @@
                         </p>
                     </div>
                     <div class="actionButtons">
-                        <button class="button adminButton" @click="confirmAdmin(dockey)">
+                        <button class="button adminButton" @click="confirmAdmin(docKey)">
                             <b> Admin </b>
                         </button>
                         <button class="button deleteButton" @click="confirmDelete(docKey)">
