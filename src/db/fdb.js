@@ -11,7 +11,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import {getUnixOfToday} from "@/service/calculators/UnixCalculator";
+import { getUnixOfToday } from "@/service/calculators/UnixCalculator";
 
 const db = getFirestore();
 
@@ -151,4 +151,28 @@ export async function getPatients(uid) {
   } catch (error) {
     console.error("Error getting objects from Firebase Database", error);
   }
+}
+
+export async function getAllFysio() {
+  const map = new Map();
+  try {
+    const q = query(collection(db, "fysio"));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      map.set(doc.id, doc.data())
+    });
+    return map;
+  } catch (error) {
+    console.error("Error getting fysios from Firebase Database", error);
+  }
+}
+
+export async function deleteFysio(docKey) {
+  const docRef = doc(db, "fysio", docKey);
+  await deleteDoc(docRef);
+}
+
+export async function makeAdmin(docKey) {
+  return console.log("User has been made an admin")
 }

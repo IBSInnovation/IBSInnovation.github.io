@@ -10,11 +10,11 @@
           <li>Home</li>
         </a>
 
-        <a role="menuitem" tabindex="0" @click="goToUserManage()" @keyup.enter="goToUserManage()">
+        <a role="menuitem" tabindex="0" @click="" @keyup.enter="">
           <li>User Management</li>
         </a>
 
-        <a role="menuitem" tabindex="0" @click="goToUserManage()" @keyup.enter="goToUserManage()">
+        <a role="menuitem" tabindex="0" @click="goToTherapistManage()" @keyup.enter="goToTherapistManage()">
           <li>Therapist Management</li>
         </a>
 
@@ -32,13 +32,12 @@
 </template>
   
 <script>
-import router from "../../../router";
 
 export default {
   name: "AdminNavbar",
   methods: {
-    goToUserManage() {
-      this.$router.push({ name: "usermanage" });
+    goToTherapistManage() {
+      this.$router.push({ name: "therapistmanage" });
     },
     goToPatients() {
       this.$router.push({ name: "patients" });
@@ -59,8 +58,8 @@ export default {
   }
 }
 
-
 </script>
+
 
 <style>
 :root {
@@ -78,7 +77,7 @@ li {
 
   text-align: center;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-  background-color: var(--sidebar-bg-color);
+  background-color: #151a2c;
 
   float: left;
   position: absolute;
@@ -88,8 +87,6 @@ li {
   bottom: 0;
   padding: 0.5em;
 }
-
-.sidebar h2 {}
 
 .sidebar h3 {
   text-align: center;
@@ -112,8 +109,16 @@ li {
   transition: 0.9s;
 }
 
+.navitems a:active {
+  background-color: violet;
+}
+
 .navitems a {
   cursor: pointer;
+}
+
+.active {
+  background-color: pink;
 }
 
 .sidebar .footertext {

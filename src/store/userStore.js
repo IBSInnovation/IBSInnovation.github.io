@@ -92,5 +92,8 @@ export default new Vuex.Store({
       state.patientEmail = "";
       localStorage.removeItem("patientEmail");
     },
+    deleteFysio(dockey) {
+      deleteFysio(dockey);
+    }
   },
 });
