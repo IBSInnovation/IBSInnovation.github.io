@@ -26,6 +26,16 @@
                 class="dropdown-item"
                 role="menuitem"
                 tabindex="0"
+                @click="goToProfile()"
+                @keyup.enter=""
+                >Profile</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                role="menuitem"
+                tabindex="0"
                 @click="goToDevelop()"
                 @keyup.enter="goToDevelop()"
                 >Development</a
@@ -80,6 +90,9 @@ export default {
     },
     goBackToHome() {
       this.$router.push({ name: "patients" });
+    },
+    goToProfile() {
+      this.$router.push({ name: "profilePage" });
     },
     goToDevelop() {
       this.$router.push({ name: "dev" });
