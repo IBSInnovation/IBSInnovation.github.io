@@ -26,8 +26,8 @@
                 class="dropdown-item"
                 role="menuitem"
                 tabindex="0"
-                @click="goToProfile()"
-                @keyup.enter=""
+                @click="goToProfile(this.uid)"
+                @keyup.enter="goToProfile(this.uid)"
                 >Profile</a
               >
             </li>
@@ -80,9 +80,12 @@ export default {
   data() {
     return {
       user: {},
+      uid: this.$store.getters.getUser.uid,
     };
   },
   computed: {},
+  mounted() {
+  },
   methods: {
     logOut() {
       logOut();
@@ -91,8 +94,11 @@ export default {
     goBackToHome() {
       this.$router.push({ name: "patients" });
     },
-    goToProfile() {
-      this.$router.push({ name: "profilePage" });
+    goToProfile(docKey) {
+      this.$router.push({
+        name: "profilePage",
+        params: { id: docKey },
+      });
     },
     goToDevelop() {
       this.$router.push({ name: "dev" });

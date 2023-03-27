@@ -65,7 +65,7 @@ const router = createRouter({
       component: () => import("../views/SensorCheck.vue"),
     },
     {
-      path: "/profile",
+      path: "/:id/profile",
       name: "profilePage",
       component: () => import("../views/UserProfilePage.vue"),
     },

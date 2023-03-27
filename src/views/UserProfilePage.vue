@@ -22,9 +22,6 @@ export default {
         route: useRoute()
     }
   },
-
-  methods: {},
-  mounted: {},
 };
 </script>
 
