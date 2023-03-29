@@ -2,9 +2,32 @@
   <nav-bar-top></nav-bar-top>
   <div class="profile-wrapper">
 
-    <h2>hallo</h2>
-    <p>{{ name }}</p>
-    <p>{{ email }}</p>
+    <div class="profile">
+
+      <div class="top-icons">
+        <div>
+          <font-awesome-icon icon="fa-solid fa-heart" style="color: #ffffff;" />
+        </div>
+        <div>
+          <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" style="color: #fff;" />
+        </div>
+      </div>
+
+      <i class="bi bi-person-square userIcon"></i>
+      <div class="profileInformation">
+        <h2>{{ name }}</h2>
+        <p>{{ email }}</p>
+
+        <button class="button" @click="">
+          <b> Contact me! </b>
+        </button>
+      </div>
+      <div class="social-media">
+        <div>
+          <img alt="Linked In Picture" src="../assets/socialMedia/LinkedIn.png">
+        </div>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -13,10 +36,13 @@
 </template>
 
 <script>
+
 import { getSingleFysio } from "../db/fdb";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import BackButton from "../components/buttons/BackButton.vue";
 import { useRoute } from "vue-router";
+
+
 export default {
   name: "UserProfilePage",
   components: {
@@ -53,11 +79,75 @@ export default {
 </script>
 
 <style scoped>
-h2,
-p {
-  text-align: center;
-  color: #fff;
+.profile-wrapper {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.userIcon {
+  font-size: 4rem;
+  color: #0275d8;
+  width: 100%;
+}
+
+.profile {
+  width: 90%;
+  max-width: 320px;
+  background: #323232;
+  text-align: center;
+  padding: 30px 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  color: #fff
+}
+
+.top-icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+.profileInformation h2 {
+  font-weight: 500;
+  font-size: 22px;
+  margin-top: 20px;
+}
+
+.profileInformation p {
+  font-size: 12px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 40px;
+  margin: 20px 0;
+  color: white;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+  background: #0275d8;
+  font-size: 15px
+}
+
+.button:hover {
+  background: #024e91;
+}
+
+.social-media {
+  display: flex;
+  justify-content: space-around;
+}
+
+.social-media img{
+  width: 30px;
+  border-radius:20%;
+}
+
 
 footer {
   display: flex;
