@@ -21,6 +21,9 @@
                         <button class="button deleteButton" @click="confirmDelete(docKey)">
                             <b> Delete </b>
                         </button>
+                        <button class="button fullcolumn adminButton" @click="goToProfile(docKey)">
+                            <b> Go to Profile </b>
+                        </button>
                     </div>
                 </div>
             </template>
@@ -53,6 +56,12 @@ export default {
 
             await getAllFysio().then((results) => {
                 this.fysios = results;
+            });
+        },
+        goToProfile(docKey) {
+            this.$router.push({
+                name: "profilePage",
+                params: { id: docKey },
             });
         },
         confirmDelete(dockey) {
@@ -147,6 +156,10 @@ p {
     border: none;
     transition: all 0.2s ease-in-out;
     border-radius: 10px;
+}
+
+.fullcolumn {
+    grid-column: 1 / 3;
 }
 
 .adminButton {

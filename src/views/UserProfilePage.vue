@@ -26,6 +26,8 @@ export default {
   data() {
     return {
       route: useRoute(),
+
+      id: "",
       name: "",
       email: ""
     };
@@ -42,11 +44,9 @@ export default {
       const docKey = this.route.params.id;
       let user = await getSingleFysio(docKey);
 
+      this.id = user.id;
       this.name = user.name;
       this.email = user.email;
-
-      console.log(user)
-      this.$store.commit("setUserProfile", user);
     }
   }
 }
