@@ -153,6 +153,12 @@ export async function getPatients(uid) {
   }
 }
 
+export async function getSingleFysio(docKey) {
+  const docRef = doc(db, "fysio", docKey);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data();
+}
+
 export async function getAllFysio() {
   const map = new Map();
   try {

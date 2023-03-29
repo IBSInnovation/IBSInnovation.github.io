@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { getSingleFysio } from "../db/fdb";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import BackButton from "../components/buttons/BackButton.vue";
 import { useRoute } from "vue-router";
@@ -19,16 +20,30 @@ export default {
   },
   data() {
     return {
-        route: useRoute()
-    }
+      route: useRoute(),
+      fysioUser: null,
+    };
+  },
+  mounted() {
+    this.getUser();
+    console.log(this.fysioUser);
+  },
+  methods: {
+    async getUser() {
+      const docKey = this.route.params.id;
+
+      await getSingleFysio(docKey).then((result) => {
+        this.fysioUser = result
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
 h2 {
-    text-align: center;
-    color: #fff;
+  text-align: center;
+  color: #fff;
 }
 
 footer {
