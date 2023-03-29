@@ -18,13 +18,15 @@
         <h2>{{ name }}</h2>
         <p>{{ email }}</p>
 
-        <button class="button" @click="">
+        <a class="button" :href="'mailto:' + email">
           <b> Contact me! </b>
-        </button>
+        </a>
       </div>
       <div class="social-media">
         <div>
-          <img alt="Linked In Picture" src="../assets/socialMedia/LinkedIn.png">
+          <a href="https://www.linkedin.com">
+            <img alt="Linked In Picture" src="../assets/socialMedia/LinkedIn.png">
+          </a>
         </div>
       </div>
     </div>
@@ -60,7 +62,6 @@ export default {
   },
   mounted() {
     this.user();
-
 
   },
   methods: {
@@ -131,7 +132,8 @@ export default {
   transition: all 0.2s ease-in-out;
   border-radius: 10px;
   background: #0275d8;
-  font-size: 15px
+  font-size: 15px;
+  text-decoration: none;
 }
 
 .button:hover {
@@ -143,9 +145,9 @@ export default {
   justify-content: space-around;
 }
 
-.social-media img{
+.social-media img {
   width: 30px;
-  border-radius:20%;
+  border-radius: 20%;
 }
 
 
