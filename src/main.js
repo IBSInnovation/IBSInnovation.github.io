@@ -24,6 +24,18 @@ import "mdb-ui-kit";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import sensorHandler from "./service/sensorHandler";
 
+/* import the fontawesome core */
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+/* import specific icons */
+import {faEllipsisVertical, faHeart } from '@fortawesome/free-solid-svg-icons'
+
+/* add icons to the library */
+library.add(faEllipsisVertical, faHeart)
+
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
@@ -32,6 +44,7 @@ localStorage.setItem("development", development);
 
 getFirestore();
 createApp(App)
+  .component("font-awesome-icon", FontAwesomeIcon)
   .use(router)
   .use(store)
   .use(VueChartkick)
