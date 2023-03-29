@@ -98,7 +98,7 @@ export default {
   max-width: 320px;
   background: #323232;
   text-align: center;
-  padding: 30px 20px;
+  padding: 15px 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   color: #fff
