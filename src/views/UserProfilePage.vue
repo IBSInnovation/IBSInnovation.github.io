@@ -2,8 +2,12 @@
   <nav-bar-top></nav-bar-top>
 
   <h2>hallo</h2>
-
-  <footer><BackButton /></footer>
+  <p>{{ fysioUser.name }}</p>
+  <p>{{ fysioUser.email }}</p>
+9
+  <footer>
+    <BackButton />
+  </footer>
 </template>
 
 <script>
@@ -11,7 +15,6 @@ import { getSingleFysio } from "../db/fdb";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import BackButton from "../components/buttons/BackButton.vue";
 import { useRoute } from "vue-router";
-
 export default {
   name: "UserProfilePage",
   components: {
@@ -21,27 +24,26 @@ export default {
   data() {
     return {
       route: useRoute(),
-      fysioUser: null,
+      fysioUser: null
     };
   },
-  mounted() {
-    this.getUser();
-    console.log(this.fysioUser);
+  async mounted() {
+    this.fysioUser = await Promise.resolve(this.user())
+    console.log(this.fysioUser)
+
   },
   methods: {
-    async getUser() {
+    user: function() {
       const docKey = this.route.params.id;
-
-      await getSingleFysio(docKey).then((result) => {
-        this.fysioUser = result
-      });
-    },
-  },
-};
+      return getSingleFysio(docKey);
+    }
+  }
+}
 </script>
 
 <style scoped>
-h2 {
+h2,
+p {
   text-align: center;
   color: #fff;
 }
