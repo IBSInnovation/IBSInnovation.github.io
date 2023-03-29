@@ -1,10 +1,12 @@
 <template>
   <nav-bar-top></nav-bar-top>
+  <div class="profile-wrapper">
 
-  <h2>hallo</h2>
-  <p>{{ fysioUser.name }}</p>
-  <p>{{ fysioUser.email }}</p>
-9
+    <h2>hallo</h2>
+    <p>{{ name }}</p>
+    <p>{{ email }}</p>
+  </div>
+
   <footer>
     <BackButton />
   </footer>
@@ -24,18 +26,27 @@ export default {
   data() {
     return {
       route: useRoute(),
-      fysioUser: null
+      name: "",
+      email: ""
     };
   },
-  async mounted() {
-    this.fysioUser = await Promise.resolve(this.user())
-    console.log(this.fysioUser)
+  mounted() {
+    this.user();
+
 
   },
   methods: {
-    user: function() {
+    //If each variable isnt individually set, the object you return keeps shuffling
+    //And then by not setting it will not work only 1/10 times
+    user: async function () {
       const docKey = this.route.params.id;
-      return getSingleFysio(docKey);
+      let user = await getSingleFysio(docKey);
+
+      this.name = user.name;
+      this.email = user.email;
+
+      console.log(user)
+      this.$store.commit("setUserProfile", user);
     }
   }
 }
