@@ -1,22 +1,25 @@
 <template>
   <nav-bar-top></nav-bar-top>
   <div class="profile-wrapper">
-
     <div class="profile">
-
       <div class="top-icons">
         <div>
-          <font-awesome-icon icon="fa-solid fa-heart" style="color: #ffffff;" />
+          <font-awesome-icon icon="fa-solid fa-heart" style="color: #ffffff" />
         </div>
         <div>
-          <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" style="color: #fff;" />
+          <font-awesome-icon
+            icon="fa-solid fa-ellipsis-vertical"
+            style="color: #fff"
+          />
         </div>
       </div>
 
       <i class="bi bi-person-square userIcon"></i>
       <div class="profileInformation">
-        <h2>{{ name }}</h2>
-        <p>{{ email }}</p>
+        <h2>Name: {{ name }}</h2>
+        <p>Email: {{ email }}</p>
+        <p>Role: {{ role }}</p>
+        <p>{{ information }}</p>
 
         <a class="button" :href="'mailto:' + email">
           <b> Contact me! </b>
@@ -25,7 +28,10 @@
       <div class="social-media">
         <div>
           <a href="https://www.linkedin.com">
-            <img alt="Linked In Picture" src="../assets/socialMedia/LinkedIn.png">
+            <img
+              alt="Linked In Picture"
+              src="../assets/socialMedia/LinkedIn.png"
+            />
           </a>
         </div>
       </div>
@@ -38,12 +44,10 @@
 </template>
 
 <script>
-
 import { getSingleFysio } from "../db/fdb";
 import NavBarTop from "../components/navigation/NavBarTop.vue";
 import BackButton from "../components/buttons/BackButton.vue";
 import { useRoute } from "vue-router";
-
 
 export default {
   name: "UserProfilePage",
@@ -57,15 +61,19 @@ export default {
 
       id: "",
       name: "",
-      email: ""
+      email: "",
+      role: "Fysiotherapist (hardcoded)",
+      information:
+        "Has been a licensed fysiotherapist for: " +
+        Math.floor(Math.random() * 21) +
+        " years",
     };
   },
   mounted() {
     this.user();
-
   },
   methods: {
-    //If each variable isnt individually set, the object you return keeps shuffling
+    //If each variable isn't individually set, the object you return keeps shuffling
     //And then by not setting it will not work only 1/10 times
     user: async function () {
       const docKey = this.route.params.id;
@@ -74,9 +82,9 @@ export default {
       this.id = user.id;
       this.name = user.name;
       this.email = user.email;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -102,7 +110,7 @@ export default {
   padding: 15px 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  color: #fff
+  color: #fff;
 }
 
 .top-icons {
@@ -110,7 +118,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
 }
 
 .profileInformation h2 {
@@ -149,7 +156,6 @@ export default {
   width: 30px;
   border-radius: 20%;
 }
-
 
 footer {
   display: flex;
