@@ -82,10 +82,10 @@ const router = createRouter({
           component: () => import("../adminDashboard/views/TherapistManage.vue"),
         },
         {
-          path: "test",
-          name: "test",
+          path: "exercise/create",
+          name: "createExercise",
           meta: {layout: "admin"},
-          component: () => import("../adminDashboard/views/Test.vue"),
+          component: () => import("../adminDashboard/views/CreateExercise.vue"),
         }
 
       ]

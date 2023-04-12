@@ -1,27 +1,32 @@
 <template>
   <div class="sidebar">
     <h2>Admin Dashboard</h2>
-    <h3> {{ getDisplayName() }} </h3>
+    <h3>{{ getDisplayName() }}</h3>
 
     <div class="navitems">
       <ul>
-
-        <a role="menuitem" tabindex="0" @click="goToPatients()" @keyup.enter="goToPatients()">
+        <a
+          role="menuitem"
+          tabindex="0"
+          @click="goToPatients()"
+          @keyup.enter="goToPatients()"
+        >
           <li>Home</li>
         </a>
-
-        <a role="menuitem" tabindex="0" @click="" @keyup.enter="">
-          <li>User Management</li>
-        </a>
-
-        <a role="menuitem" tabindex="0" @click="goToTherapistManage()" @keyup.enter="goToTherapistManage()">
+        <a
+          role="menuitem"
+          tabindex="0"
+          @click="goToTherapistManage()"
+          @keyup.enter="goToTherapistManage()"
+        >
           <li>Therapist Management</li>
         </a>
-
-        <a role="menuitem" tabindex="0" @click="goToTest()">
-          <li>Test</li>
+        <a role="menuitem" tabindex="0" @click="goToCreateExercise()">
+          <li>Create Exercise</li>
         </a>
-
+        <a role="menuitem" tabindex="0" @click="goToTest()">
+          <li>Delete Exercise</li>
+        </a>
       </ul>
     </div>
 
@@ -30,9 +35,8 @@
     </div>
   </div>
 </template>
-  
-<script>
 
+<script>
 export default {
   name: "AdminNavbar",
   methods: {
@@ -45,6 +49,12 @@ export default {
     goToTest() {
       this.$router.push({ name: "test" });
     },
+    goToCreateExercise() {
+      this.$router.push({ name: "createExercise" });
+    },
+    goToDeleteExercise() {
+      this.$router.push({ name: "deleteExercise" });
+    },
     getDisplayName() {
       // if registered with mail  -> mail is the displayName
       let email = this.$store.getters.getUser.email;
@@ -54,12 +64,10 @@ export default {
       } else {
         return displayName;
       }
-    }
-  }
-}
-
+    },
+  },
+};
 </script>
-
 
 <style>
 :root {
