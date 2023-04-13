@@ -138,6 +138,21 @@ export async function deleteCategory(docIdPatient, excersizeCategory) {
   await deleteDoc(docRef2);
 }
 
+export async function createExercise(name, amountSensor, description, steps) {
+  try {
+    const exRef = collection(db, "exercises");
+
+    await setDoc(doc(exRef), {
+      name: name,
+      amountSensor: amountSensor,
+      description: description,
+      steps: steps
+    });
+  } catch (error) {
+    console.error("Error writing new message to Firebase Database", error);
+  }
+}
+
 export async function getPatients(uid) {
   const map = new Map();
   try {
@@ -151,6 +166,12 @@ export async function getPatients(uid) {
   } catch (error) {
     console.error("Error getting objects from Firebase Database", error);
   }
+}
+
+export async function getSingleFysio(docKey) {
+  const docRef = doc(db, "fysio", docKey);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data();
 }
 
 export async function getAllFysio() {
