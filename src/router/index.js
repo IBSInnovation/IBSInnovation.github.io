@@ -86,6 +86,12 @@ const router = createRouter({
           name: "createExercise",
           meta: {layout: "admin"},
           component: () => import("../adminDashboard/views/CreateExercise.vue"),
+        },
+        {
+          path: "exercise/delete",
+          name: "deleteExercise",
+          meta: {layout: "admin"},
+          component: () => import("../adminDashboard/views/DeleteExercise.vue"),
         }
 
       ]

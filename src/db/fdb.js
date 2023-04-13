@@ -153,6 +153,27 @@ export async function createExercise(name, amountSensor, description, steps) {
   }
 }
 
+export async function deleteExercise(docKey) {
+  const docRef = doc(db, "exercises", docKey);
+  await deleteDoc(docRef);
+}
+
+
+export async function getAllExercises() {
+  const map = new Map();
+  try {
+    const q = query(collection(db, "exercises"));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      map.set(doc.id, doc.data())
+    });
+    return map;
+  } catch (error) {
+    console.error("Error getting fysios from Firebase Database", error);
+  }
+}
+
 export async function getPatients(uid) {
   const map = new Map();
   try {
