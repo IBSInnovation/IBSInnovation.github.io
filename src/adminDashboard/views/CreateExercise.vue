@@ -121,8 +121,9 @@ export default {
   width: 100px;
 }
 
-:deep(.btn:hover,
-  .btn:focus) {
+:deep(.btn:focus,
+.btn:focus-within,
+.btn:hover) {
   background: #d3322c;
 }
 

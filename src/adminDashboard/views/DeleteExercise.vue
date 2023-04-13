@@ -58,10 +58,7 @@ export default {
             }
         },
         displayDescription(description) {
-            if (window.confirm(description)) {
-                deleteExercise(docKey);
-                this.exercises.delete(docKey);
-            }
+            window.confirm(description);
         }
     },
 }
