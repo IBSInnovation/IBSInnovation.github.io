@@ -23,12 +23,12 @@
       <div id="input-group">
         <div className="flex input-field">
           <input type="text" id="steps" required placeholder="Step" />
-          <a className="btn" type="button"> X </a>
+          <a className="bttn" type="button">X</a>
         </div>
       </div>
 
       <div className="actionButtons">
-        <button className="btn" type="submit"> Create </button>
+        <button className="bttn" type="submit">Create</button>
       </div>
 
     </form>
@@ -70,7 +70,7 @@ export default {
       const btn = document.createElement("button");
       btn.innerHTML = "X"
       btn.type = "button"
-      btn.classList.add("btn")
+      btn.classList.add("bttn")
       btn.onclick = function () {
         this.parentElement.remove();
       }
@@ -107,23 +107,21 @@ export default {
   font-size: 19px;
 }
 
-:deep(.btn) {
+:deep(.bttn) {
   margin-top: 5px;
   margin-bottom: 5px;
   justify-content: center;
   border-radius: 18px;
   background-color: #e43a23;
-  padding-top: 0.3em;
-  padding-bottom: 0.3em;
   color: white;
   border: none;
   margin-left: auto;
   width: 100px;
 }
 
-:deep(.btn:focus,
-.btn:focus-within,
-.btn:hover) {
+:deep(.bttn:focus,
+.bttn:focus-within,
+.bttn:hover) {
   background: #d3322c;
 }
 
