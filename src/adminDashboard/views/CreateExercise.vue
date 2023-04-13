@@ -108,6 +108,7 @@ export default {
 }
 
 :deep(.bttn) {
+  text-decoration: none;
   margin-top: 5px;
   margin-bottom: 5px;
   justify-content: center;
