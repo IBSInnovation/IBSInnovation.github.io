@@ -8,10 +8,10 @@
                     <h2>Exercise</h2>
                     <div class="exercise-text-holder">
                         <p class="text color-black">
-                            <b>{{ exercise.name }} </b>
+                            <b>Name: {{ exercise.name }} </b>
                         </p>
                         <p class="text color-black">
-                            {{ exercise.amountSensor }}
+                            Sensors needed: {{ exercise.amountSensor }}
                         </p>
                         <a @click="displayDescription(exercise.description)">
                             <p class="text description color-blue">
