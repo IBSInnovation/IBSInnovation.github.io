@@ -24,8 +24,8 @@
         <a role="menuitem" tabindex="0" @click="goToCreateExercise()">
           <li>Create Exercise</li>
         </a>
-        <a role="menuitem" tabindex="0" @click="goToTest()">
-          <li>Delete Exercise</li>
+        <a role="menuitem" tabindex="0" @click="goToDeleteExercise()">
+          <li>Exercise Management</li>
         </a>
       </ul>
     </div>
@@ -45,9 +45,6 @@ export default {
     },
     goToPatients() {
       this.$router.push({ name: "patients" });
-    },
-    goToTest() {
-      this.$router.push({ name: "test" });
     },
     goToCreateExercise() {
       this.$router.push({ name: "createExercise" });
