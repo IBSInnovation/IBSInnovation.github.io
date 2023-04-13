@@ -1,18 +1,18 @@
 <template>
   <div className="container">
-    <form action="">
+    <form ref="createExerciseForm" @submit.prevent="createExerciseFunction">
       <h2>Create Exercise</h2>
 
       <div className="input-field">
-        <input type="text" required placeholder="Name Exercise" />
+        <input type="text" id="name" required placeholder="Name Exercise" />
       </div>
 
       <div className="input-field">
-        <input type="number" required placeholder="Amount of Sensors" />
+        <input type="number" id="amountSen" required placeholder="Amount of Sensors" />
       </div>
 
       <div className="input-field">
-        <textarea rows="2" cols="23" required placeholder="Description..."></textarea>
+        <textarea rows="2" cols="23" id="description" required placeholder="Description..."></textarea>
       </div>
 
       <div className="steps-header">
@@ -22,7 +22,7 @@
 
       <div id="input-group">
         <div className="flex input-field">
-          <input type="text" required placeholder="Step" />
+          <input type="text" id="steps" required placeholder="Step" />
           <a className="btn" type="button"> X </a>
         </div>
       </div>
@@ -36,16 +36,35 @@
 </template>
 
 <script>
+import { createExercise } from "../../db/fdb";
 
 export default {
   name: "createExercise",
   methods: {
+
+    createExerciseFunction() {
+      const name = document.querySelector("#name").value;
+      const amountSen = document.querySelector("#amountSen").value;
+      const description = document.querySelector("#description").value;
+      const steps = [];
+
+      var elements = document.querySelectorAll("#steps")
+
+      for (var i = 0, element; element = elements[i++];) {
+        if (element.value !== "") steps.push(element.value);
+      }
+
+      createExercise(name, amountSen, description, steps)
+      this.$refs.createExerciseForm.reset();
+    },
+
     addInput() {
       const inputDivSelector = document.querySelector("#input-group");
 
       const step = document.createElement("input");
       step.type = "text"
       step.placeholder = "Step"
+      step.id = "steps"
       step.required = true;
 
       const btn = document.createElement("button");
@@ -103,7 +122,7 @@ export default {
 }
 
 :deep(.btn:hover,
-.btn:focus) {
+  .btn:focus) {
   background: #d3322c;
 }
 
