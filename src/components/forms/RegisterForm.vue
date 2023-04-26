@@ -8,6 +8,11 @@
         <ErrorMessage name="email" class="error-feedback" />
       </div>
       <div class="form-group">
+        <label for="displayName" style="font-weight: bold">Volledige naam</label>
+        <Field name="displayName" class="form-control" />
+        <ErrorMessage name="displayName" class="error-feedback" />
+      </div>
+      <div class="form-group">
         <label for="password" style="font-weight: bold">Wachtwoord</label>
         <Field name="password" type="password" class="form-control" />
         <ErrorMessage name="password" class="error-feedback" />
@@ -60,11 +65,16 @@ export default {
   },
   emits: ["close", "send"],
   data() {
+
     const schema = yup.object().shape({
       email: yup
         .string()
         .required("Dit veld is verplicht")
         .email("Email is ongeldig")
+        .max(50, "Karakter limiet bereikt"),
+      displayName: yup
+        .string()
+        .required("Dit veld is verplicht")
         .max(50, "Karakter limiet bereikt"),
       password: yup
         .string()
