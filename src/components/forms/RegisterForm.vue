@@ -8,6 +8,16 @@
         <ErrorMessage name="email" class="error-feedback" />
       </div>
       <div class="form-group">
+        <label for="firstname" style="font-weight: bold">First Name</label>
+        <Field name="firstname" class="form-control" />
+        <ErrorMessage name="firstname" class="error-feedback" />
+      </div>
+      <div class="form-group">
+        <label for="lastname" style="font-weight: bold">Last Name</label>
+        <Field name="lastname" class="form-control" />
+        <ErrorMessage name="lastname" class="error-feedback" />
+      </div>
+      <div class="form-group">
         <label for="password" style="font-weight: bold">Wachtwoord</label>
         <Field name="password" type="password" class="form-control" />
         <ErrorMessage name="password" class="error-feedback" />
@@ -65,6 +75,14 @@ export default {
         .string()
         .required("Dit veld is verplicht")
         .email("Email is ongeldig")
+        .max(50, "Karakter limiet bereikt"),
+        firstname: yup
+        .string()
+        .required("Dit veld is verplicht")
+        .max(50, "Karakter limiet bereikt"),
+        lastname: yup
+        .string()
+        .required("Dit veld is verplicht")
         .max(50, "Karakter limiet bereikt"),
       password: yup
         .string()
