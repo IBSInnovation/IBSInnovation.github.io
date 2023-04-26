@@ -8,7 +8,7 @@
         <ErrorMessage name="email" class="error-feedback" />
       </div>
       <div class="form-group">
-        <label for="displayName" style="font-weight: bold">Full Name</label>
+        <label for="displayName" style="font-weight: bold">Volledige naam</label>
         <Field name="displayName" class="form-control" />
         <ErrorMessage name="displayName" class="error-feedback" />
       </div>
