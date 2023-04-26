@@ -16,7 +16,7 @@ export async function registerWithEmail(value) {
     .then((userCredential) => {
       let user = userCredential.user;
       store.commit("setUser", user);
-      createFysio("", user.email, user.uid);
+      createFysio(value.displayName, user.email, user.uid);
     })
     .catch((error) => {
       return error.code;
