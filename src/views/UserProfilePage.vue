@@ -7,10 +7,7 @@
           <font-awesome-icon icon="fa-solid fa-heart" style="color: #ffffff" />
         </div>
         <div>
-          <font-awesome-icon
-            icon="fa-solid fa-ellipsis-vertical"
-            style="color: #fff"
-          />
+          <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" style="color: #fff" />
         </div>
       </div>
 
@@ -24,16 +21,6 @@
         <a class="button" :href="'mailto:' + email">
           <b> Contact me! </b>
         </a>
-      </div>
-      <div class="social-media">
-        <div>
-          <a href="https://www.linkedin.com">
-            <img
-              alt="Linked In Picture"
-              src="../assets/socialMedia/LinkedIn.png"
-            />
-          </a>
-        </div>
       </div>
     </div>
   </div>
