@@ -49,7 +49,7 @@ export default {
       id: "",
       name: "",
       email: "",
-      role: "Fysiotherapist (hardcoded)",
+      role: "Fysiotherapist",
       information:
         "Has been a licensed fysiotherapist for: " +
         Math.floor(Math.random() * 21) +
@@ -66,9 +66,9 @@ export default {
       const docKey = this.route.params.id;
       let user = await getSingleFysio(docKey);
 
-      this.id = user.id;
-      this.name = user.name;
-      this.email = user.email;
+      this.id = user.id ? user.id : "No user id";
+      this.name = user.name ? user.name: "No username";
+      this.email = user.email ? user.email: "No user email";
     },
   },
 };
