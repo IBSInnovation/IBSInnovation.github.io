@@ -7,10 +7,7 @@
           <font-awesome-icon icon="fa-solid fa-heart" style="color: #ffffff" />
         </div>
         <div>
-          <font-awesome-icon
-            icon="fa-solid fa-ellipsis-vertical"
-            style="color: #fff"
-          />
+          <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" style="color: #fff" />
         </div>
       </div>
 
@@ -24,16 +21,6 @@
         <a class="button" :href="'mailto:' + email">
           <b> Contact me! </b>
         </a>
-      </div>
-      <div class="social-media">
-        <div>
-          <a href="https://www.linkedin.com">
-            <img
-              alt="Linked In Picture"
-              src="../assets/socialMedia/LinkedIn.png"
-            />
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -62,7 +49,7 @@ export default {
       id: "",
       name: "",
       email: "",
-      role: "Fysiotherapist (hardcoded)",
+      role: "Fysiotherapist",
       information:
         "Has been a licensed fysiotherapist for: " +
         Math.floor(Math.random() * 21) +
@@ -79,9 +66,9 @@ export default {
       const docKey = this.route.params.id;
       let user = await getSingleFysio(docKey);
 
-      this.id = user.id;
-      this.name = user.name;
-      this.email = user.email;
+      this.id = user.id ? user.id : "No user id";
+      this.name = user.name ? user.name: "No username";
+      this.email = user.email ? user.email: "No user email";
     },
   },
 };
