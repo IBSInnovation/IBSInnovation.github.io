@@ -38,9 +38,7 @@ export default {
     }
   },
   mounted() {
-    console.log("role: " + this.role)
-    this.user();
-    if (this.role !== "Admin") router.push('/patients')
+    this.userRoleCheck();
   },
   methods: {
     goToTherapistManage() {
@@ -67,12 +65,11 @@ export default {
     },
     //If each variable isn't individually set, the object you return keeps shuffling
     //And then by not setting it will not work only 1/10 times
-    user: async function () {
+    userRoleCheck: async function () {
       const docKey = this.$store.getters.getUser.uid;
       let user = await getSingleFysio(docKey);
-      console.log(user)
 
-      this.role = user.role ? user.role: "no role";
+      if (user.role !== "Admin") router.push('/patients')
     },
   },
 };
