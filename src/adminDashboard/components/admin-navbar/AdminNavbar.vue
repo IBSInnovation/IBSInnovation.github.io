@@ -34,7 +34,7 @@ export default {
   name: "AdminNavbar",
   data() {
     return {
-      role: ""
+      role:this.$store.getters.getUser.role
     }
   },
   mounted() {
@@ -65,11 +65,8 @@ export default {
     },
     //If each variable isn't individually set, the object you return keeps shuffling
     //And then by not setting it will not work only 1/10 times
-    userRoleCheck: async function () {
-      const docKey = this.$store.getters.getUser.uid;
-      let user = await getSingleFysio(docKey);
-
-      if (user.role !== "Admin") router.push('/patients')
+    userRoleCheck: function () {
+      if (this.role !== "Admin") router.push('/patients')
     },
   },
 };
