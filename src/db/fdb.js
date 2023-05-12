@@ -18,13 +18,15 @@ const db = getFirestore();
 export async function createFysio(name, email, uid) {
   try {
     const fysioRef = collection(db, "fysio");
-
+    const role = "Fysio";
+    const user = {uid, email, name, role}
     await setDoc(doc(fysioRef, uid), {
-      uid: uid,
-      name: name,
-      role: "Fysio",
-      email: email,
+      uid: user.uid,
+      email: user.email,
+      name: user.name,
+      role: role
     });
+    return user;
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);
   }

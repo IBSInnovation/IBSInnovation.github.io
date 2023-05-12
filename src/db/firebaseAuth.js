@@ -60,9 +60,18 @@ export async function RegisterWithGoogle() {
   signInWithPopup(auth, provider)
     .then(async (result) => {
       const user = result.user;
-      const userCheck = await getSingleFysio(user.uid)
-      if (userCheck == null) { createFysio(user.displayName, user.email, user.uid) } 
-      store.commit("setUser", userCheck);
+      const uCheck = await getSingleFysio(user.uid)
+
+      if ( uCheck == undefined) { 
+        const newUser = {}
+        createFysio(newUser.displayName, newUser.email, newUser.uid).then(
+          result => console.log(result)
+        )
+        console.log("New User: " + newUser)
+        store.commit("setUser", newUser ) } 
+
+      else store.commit("setUser", uCheck);
+
       router.push({ path: "/patients" });
     })
     .catch((error) => {
