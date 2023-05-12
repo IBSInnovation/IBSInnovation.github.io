@@ -5,20 +5,10 @@
 
     <div class="navitems">
       <ul>
-        <a
-          role="menuitem"
-          tabindex="0"
-          @click="goToPatients()"
-          @keyup.enter="goToPatients()"
-        >
+        <a role="menuitem" tabindex="0" @click="goToPatients()" @keyup.enter="goToPatients()">
           <li>Home</li>
         </a>
-        <a
-          role="menuitem"
-          tabindex="0"
-          @click="goToTherapistManage()"
-          @keyup.enter="goToTherapistManage()"
-        >
+        <a role="menuitem" tabindex="0" @click="goToTherapistManage()" @keyup.enter="goToTherapistManage()">
           <li>Therapist Management</li>
         </a>
         <a role="menuitem" tabindex="0" @click="goToCreateExercise()">
@@ -37,8 +27,21 @@
 </template>
 
 <script>
+import { getSingleFysio } from '../../../db/fdb';
+import router from '../../../router';
+
 export default {
   name: "AdminNavbar",
+  data() {
+    return {
+      role: ""
+    }
+  },
+  mounted() {
+    console.log("role: " + this.role)
+    this.user();
+    if (this.role !== "Admin") router.push('/patients')
+  },
   methods: {
     goToTherapistManage() {
       this.$router.push({ name: "therapistmanage" });
@@ -61,6 +64,15 @@ export default {
       } else {
         return displayName;
       }
+    },
+    //If each variable isn't individually set, the object you return keeps shuffling
+    //And then by not setting it will not work only 1/10 times
+    user: async function () {
+      const docKey = this.$store.getters.getUser.uid;
+      let user = await getSingleFysio(docKey);
+      console.log(user)
+
+      this.role = user.role ? user.role: "no role";
     },
   },
 };
