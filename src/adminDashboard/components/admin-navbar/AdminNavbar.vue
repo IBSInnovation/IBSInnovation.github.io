@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { getSingleFysio } from '../../../db/fdb';
 import router from '../../../router';
 
 export default {
