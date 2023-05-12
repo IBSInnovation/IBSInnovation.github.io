@@ -62,7 +62,7 @@ export async function RegisterWithGoogle() {
       const user = result.user;
       const userCheck = await getSingleFysio(user.uid)
       if (userCheck == null) { createFysio(user.displayName, user.email, user.uid) } 
-      store.commit("setUser", user);
+      store.commit("setUser", userCheck);
       router.push({ path: "/patients" });
     })
     .catch((error) => {
