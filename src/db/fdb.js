@@ -20,7 +20,7 @@ export async function createFysio(name, email, uid) {
     const fysioRef = collection(db, "fysio");
 
     await setDoc(doc(fysioRef, uid), {
-      userID: uid,
+      uid: uid,
       name: name,
       role: "Fysio",
       email: email,
