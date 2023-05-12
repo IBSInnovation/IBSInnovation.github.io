@@ -22,6 +22,7 @@ export async function createFysio(name, email, uid) {
     await setDoc(doc(fysioRef, uid), {
       userID: uid,
       name: name,
+      role: "Fysio",
       email: email,
     });
   } catch (error) {
