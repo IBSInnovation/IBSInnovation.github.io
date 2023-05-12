@@ -9,7 +9,6 @@ export default new Vuex.Store({
     patients: [],
     name: null,
     email: null,
-    role: null,
     weight: null,
     length: null,
     gender: null,
