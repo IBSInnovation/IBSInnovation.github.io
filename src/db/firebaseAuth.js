@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import store from "../store/userStore.js";
 import router from "../router/index.js";
-import { createFysio } from "./fdb";
+import { createFysio, getSingleFysio } from "./fdb";
 
 export async function registerWithEmail(value) {
   const auth = getAuth();
@@ -58,10 +58,20 @@ export async function RegisterWithGoogle() {
   const auth = getAuth();
 
   signInWithPopup(auth, provider)
-    .then((result) => {
+    .then(async (result) => {
       const user = result.user;
-      createFysio(user.displayName, user.email, user.uid);
-      store.commit("setUser", user);
+      const uCheck = await getSingleFysio(user.uid)
+
+      if ( uCheck == undefined) { 
+        const newUser = {}
+        createFysio(newUser.displayName, newUser.email, newUser.uid).then(
+          result => console.log(result)
+        )
+        console.log("New User: " + newUser)
+        store.commit("setUser", newUser ) } 
+
+      else store.commit("setUser", uCheck);
+
       router.push({ path: "/patients" });
     })
     .catch((error) => {

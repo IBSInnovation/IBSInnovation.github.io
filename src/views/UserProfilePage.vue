@@ -49,7 +49,7 @@ export default {
       id: "",
       name: "",
       email: "",
-      role: "Fysiotherapist",
+      role: "",
       information:
         "Has been a licensed fysiotherapist for: " +
         Math.floor(Math.random() * 21) +
@@ -69,6 +69,7 @@ export default {
       this.id = user.id ? user.id : "No user id";
       this.name = user.name ? user.name: "No username";
       this.email = user.email ? user.email: "No user email";
+      this.role = user.role ? user.role: "No role";
     },
   },
 };

@@ -5,20 +5,10 @@
 
     <div class="navitems">
       <ul>
-        <a
-          role="menuitem"
-          tabindex="0"
-          @click="goToPatients()"
-          @keyup.enter="goToPatients()"
-        >
+        <a role="menuitem" tabindex="0" @click="goToPatients()" @keyup.enter="goToPatients()">
           <li>Home</li>
         </a>
-        <a
-          role="menuitem"
-          tabindex="0"
-          @click="goToTherapistManage()"
-          @keyup.enter="goToTherapistManage()"
-        >
+        <a role="menuitem" tabindex="0" @click="goToTherapistManage()" @keyup.enter="goToTherapistManage()">
           <li>Therapist Management</li>
         </a>
         <a role="menuitem" tabindex="0" @click="goToCreateExercise()">
@@ -37,8 +27,18 @@
 </template>
 
 <script>
+import router from '../../../router';
+
 export default {
   name: "AdminNavbar",
+  data() {
+    return {
+      role:this.$store.getters.getUser.role
+    }
+  },
+  mounted() {
+    this.userRoleCheck();
+  },
   methods: {
     goToTherapistManage() {
       this.$router.push({ name: "therapistmanage" });
@@ -61,6 +61,11 @@ export default {
       } else {
         return displayName;
       }
+    },
+    //If each variable isn't individually set, the object you return keeps shuffling
+    //And then by not setting it will not work only 1/10 times
+    userRoleCheck: function () {
+      if (this.role !== "Admin") router.push('/patients')
     },
   },
 };

@@ -41,7 +41,7 @@
                 >Development</a
               >
             </li>
-            <li>
+            <li v-if="this.role == 'Admin'">
               <a
                 class="dropdown-item"
                 role="menuitem"
@@ -81,6 +81,7 @@ export default {
     return {
       user: {},
       uid: this.$store.getters.getUser.uid,
+      role: this.$store.getters.getUser.role
     };
   },
   computed: {},
@@ -115,7 +116,7 @@ export default {
       } else {
         return displayName;
       }
-    },
+    }
   },
 };
 </script>
