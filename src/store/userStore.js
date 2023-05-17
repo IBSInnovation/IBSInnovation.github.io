@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import Vuex from "vuex";
 import App from "../App.vue";
+import http from "@/http-common";
 
 createApp(App).use(Vuex);
 export default new Vuex.Store({
@@ -81,6 +82,20 @@ export default new Vuex.Store({
     },
   },
   actions: {
+
+    loginGoogleBackend(data) {
+      return http.get('/user/this')
+        .then(resp => {
+          state.user = resp.data;
+          localStorage.setItem("user", JSON.stringify(state.user));
+          return resp;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+
+
     logOutUser(state) {
       state.user = "";
       localStorage.removeItem("user");
