@@ -91,6 +91,13 @@
         >
           <b>Verwijder patiënt</b>
         </button>
+        <button
+          :disabled="showFormDelete || showFormEdit"
+          class="deletePatientBtn"
+          @click="downloadFile()"
+        >
+          <b>Download CSV</b>
+        </button>
 
         <BackButton :disabled="showFormDelete || showFormEdit"></BackButton>
       </footer>
@@ -117,6 +124,7 @@ import DeleteForm from "../components/forms/DeleteForm.vue";
 import EditForm from "../components/forms/EditPatientForm.vue";
 import { capitalizeString } from "../service/CapitalizeString";
 import BackButton from "../components/buttons/BackButton.vue";
+import userApiStore from "../store/userApiStore";
 
 export default {
   name: "PatientInfo",
@@ -150,6 +158,26 @@ export default {
   },
 
   methods: {
+    downloadFile(id) {
+      axios({
+        url: `http://localhost:8080/mqtt/csv/${id}`,
+        method: "GET",
+        responseType: "blob",
+      })
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", id + ".json");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
+    },
     async getCategories() {
       const docIdPatient = this.route.params.name;
       let categories = await getCategories(docIdPatient);
