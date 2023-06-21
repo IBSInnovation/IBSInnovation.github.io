@@ -94,7 +94,7 @@
         <button
           :disabled="showFormDelete || showFormEdit"
           class="deletePatientBtn"
-          @click="downloadFile()"
+          @click="downloadFile('4d11f943-36d7-4c74-abfd-31b5e60d4366')"
         >
           <b>Download CSV</b>
         </button>
@@ -120,11 +120,11 @@ import NavBarTop from "../components/navigation/NavBarTop.vue";
 import { formatBirthDateToAge } from "@/service/calculators/AgeCalculator";
 import { getSinglePatient, deletePatient, getCategories } from "@/db/fdb";
 import { useRoute } from "vue-router";
+import axios from "axios";
 import DeleteForm from "../components/forms/DeleteForm.vue";
 import EditForm from "../components/forms/EditPatientForm.vue";
 import { capitalizeString } from "../service/CapitalizeString";
 import BackButton from "../components/buttons/BackButton.vue";
-import userApiStore from "../store/userApiStore";
 
 export default {
   name: "PatientInfo",
@@ -160,7 +160,7 @@ export default {
   methods: {
     downloadFile(id) {
       axios({
-        url: `http://localhost:8080/mqtt/csv/${id}`,
+        url: `http://localhost:8080/mqtt/csv/get/${id}`,
         method: "GET",
         responseType: "blob",
       })
@@ -168,7 +168,7 @@ export default {
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", id + ".json");
+          link.setAttribute("download", id + ".csv");
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);

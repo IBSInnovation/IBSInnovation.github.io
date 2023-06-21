@@ -67,9 +67,9 @@ export default {
       let user = await getSingleFysio(docKey);
 
       this.id = user.id ? user.id : "No user id";
-      this.name = user.name ? user.name: "No username";
-      this.email = user.email ? user.email: "No user email";
-      this.role = user.role ? user.role: "No role";
+      this.name = user.name ? user.name : "No username";
+      this.email = user.email ? user.email : "No user email";
+      this.role = user.role ? user.role : "No role";
     },
   },
 };
